@@ -10,7 +10,11 @@
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     <style>
         body {
-            background-color: #303641;
+            background-image: url('https://static.vecteezy.com/system/resources/previews/008/311/935/non_2x/the-illustration-graphic-consists-of-abstract-background-with-a-blue-gradient-dynamic-shapes-composition-eps10-perfect-for-presentation-background-website-landing-page-wallpaper-vector.jpg');
+            background-size: cover; 
+            background-position: center; 
+            margin: 0;
+            padding: 0;
         }
     </style>
 </head>

@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
     <html>
     <head>
         <title>Custom Auth in Laravel</title>
@@ -30,6 +30,7 @@
             </div>
         </div>
     </nav>
+    <h1>Admin dashboard</h1>
     @yield('content')
     </body>
     </html>

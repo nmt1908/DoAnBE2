@@ -28,7 +28,7 @@ class CustomAuthController extends Controller
                 return redirect()->route('admin.dashboard')
                     ->withSuccess('Signed in');
             } else {
-                return redirect()->intended('dashboard')
+                return redirect()->route('dashboard')
                     ->withSuccess('Signed in');
             }
         }
@@ -70,7 +70,7 @@ class CustomAuthController extends Controller
     public function dashboard()
     {
         if(Auth::check()){
-            return view('dashboard');
+            return view('user/dashboard');
         }
 
         return redirect("login")->withSuccess('You are not allowed to access');

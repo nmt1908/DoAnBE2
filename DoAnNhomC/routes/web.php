@@ -27,6 +27,8 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::get('admin/searchuser',[SearchUserController::class,'searchUser'])->name('admin.searchuser');
     Route::get('admin/adduser',[CrudUserController::class,'addUser'])->name('admin.adduser');
     Route::post('custom-adduser', [CrudUserController::class, 'customAddUser'])->name('admin.customAddUser');
+    Route::delete('/delete-user/{id}', [CrudUserController::class, 'deleteUser'])->name('admin.deleteuser');
+
 });
 Route::get('/', function () {
     return view('welcome');

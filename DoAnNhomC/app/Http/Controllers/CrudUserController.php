@@ -41,4 +41,11 @@ class CrudUserController extends Controller
     {
         return view('admin.adduser');
     }
+    public function deleteUser(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return redirect()->back()->with('success', 'Người dùng đã được xóa thành công');
+    }
 }

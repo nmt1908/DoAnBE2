@@ -30,6 +30,7 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::delete('/delete-user/{id}', [CrudUserController::class, 'deleteUser'])->name('admin.deleteuser');
 
 });
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('user/dashboard');
+// });
+Route::get('/', [CustomAuthController::class, 'dashboardFirstLogin']);

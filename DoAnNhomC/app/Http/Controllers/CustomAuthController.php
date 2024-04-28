@@ -26,10 +26,10 @@ class CustomAuthController extends Controller
             $user = Auth::user();
             if ($user->role == 1) {
                 return redirect()->route('admin.dashboard')
-                    ->withSuccess('Signed in');
+                    ->withSuccess('Đăng nhập thành công');
             } else {
                 return redirect()->route('dashboard')
-                    ->withSuccess('Signed in');
+                    ->withSuccess('Đăng nhập thành công');
             }
         }
     
@@ -43,6 +43,7 @@ class CustomAuthController extends Controller
     public function adminDashboard()
     {
         return view('admin/dashboard');
+        
     }
     public function customRegistration(Request $request)
     {
@@ -55,7 +56,7 @@ class CustomAuthController extends Controller
         $data = $request->all();
         $check = $this->create($data);
 
-        return redirect("dashboard")->withSuccess('You have signed-in');
+        return redirect("login")->withSuccess('Đăng kí thành công! Bạn có thể đăng nhập vào tài khoản');
     }
 
     public function create(array $data)
@@ -73,9 +74,16 @@ class CustomAuthController extends Controller
             return view('user/dashboard');
         }
 
-        return redirect("login")->withSuccess('You are not allowed to access');
+        return redirect("login")->withSuccess('Bạn cần phải đăng nhập!');
     }
-
+    // public function dashboardFirstLogin()
+    // {
+    //         return view('user/dashboard');
+    // }
+    public function dashboardFirstLogin()
+    {
+        return view('auth.login');
+    }
     public function signOut() {
         Session::flush();
         Auth::logout();

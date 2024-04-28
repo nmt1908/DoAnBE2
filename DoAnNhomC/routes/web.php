@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\SearchUserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,6 +23,7 @@ Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout')
 Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::get('admin/dashboard', [CustomAuthController::class, 'adminDashboard'])->name('admin.dashboard');
     Route::get('admin/user',[PageController::class,'adminListUser'])->name('admin.listuser');
+    Route::get('admin/searchuser',[SearchUserController::class,'searchUser'])->name('admin.searchuser');
 });
 Route::get('/', function () {
     return view('welcome');

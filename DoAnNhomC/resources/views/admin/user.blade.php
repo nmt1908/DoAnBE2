@@ -11,7 +11,7 @@
                     <h1>Users</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="" class="btn btn-primary">New User</a>
+                    <a href="{{route('admin.adduser')}}" class="btn btn-primary">New User</a>
                 </div>
             </div>
         </div>

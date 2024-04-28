@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\SearchUserController;
+use App\Http\Controllers\CrudUserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,6 +25,8 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::get('admin/dashboard', [CustomAuthController::class, 'adminDashboard'])->name('admin.dashboard');
     Route::get('admin/user',[PageController::class,'adminListUser'])->name('admin.listuser');
     Route::get('admin/searchuser',[SearchUserController::class,'searchUser'])->name('admin.searchuser');
+    Route::get('admin/adduser',[CrudUserController::class,'addUser'])->name('admin.adduser');
+    Route::post('custom-adduser', [CrudUserController::class, 'customAddUser'])->name('admin.customAddUser');
 });
 Route::get('/', function () {
     return view('welcome');

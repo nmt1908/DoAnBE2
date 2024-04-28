@@ -54,7 +54,7 @@
 				</div>
 			</div>			
 		</div>
-        <a href="{{ route('signout') }}"></a>
+        <a href="{{ route('signout') }}">as</a>
 	</header><!-- /header -->
 	<!-- endheader -->
     @yield('content')

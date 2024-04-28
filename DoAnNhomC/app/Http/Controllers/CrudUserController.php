@@ -23,7 +23,7 @@ class CrudUserController extends Controller
         $data = $request->all();
         $check = $this->create($data);
 
-        return redirect()->route('admin.listuser')->withSuccess('You have signed-in');
+        return redirect()->route('admin.listuser')->withSuccess('Tạo user thành công!');
     }
 
     public function create(array $data)
@@ -44,6 +44,10 @@ class CrudUserController extends Controller
     public function deleteUser(Request $request, $id)
     {
         $user = User::findOrFail($id);
+        if ($user->role === 1) {
+            return redirect()->back()->with('error', 'Không thể xóa người dùng có vai trò là Admin');
+        }
+
         $user->delete();
 
         return redirect()->back()->with('success', 'Người dùng đã được xóa thành công');

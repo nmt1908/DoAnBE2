@@ -10,19 +10,29 @@ body {
     background-color: #1D1F20;
     position: relative;
     top: 20%;
-    margin: 30px auto 0;
+    margin: 250px auto 0;
     width: 340px;
     height: 445px;
     border-radius: 0.35em;
     box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2);
     text-align: center;
 }
+.alert.alert-success {
+    position: absolute;
+    top: 20px; /* Điều chỉnh giá trị top tùy theo vị trí mong muốn */
+    left: 50%; /* Đặt nó ở giữa theo chiều ngang */
+    transform: translateX(-50%); /* Dịch chuyển nó 50% về bên trái để căn giữa */
+    z-index: 999; /* Đảm bảo nó hiển thị trên tất cả các phần tử khác */
+}
 
+.container-relative {
+    position: relative; /* Phần tử cha của form đăng nhập và alert cần có position: relative */
+}
 #container-register {
     background-color: #1D1F20;
     position: relative;
     top: 20%;
-    margin: 30px auto 0;
+    margin: 210px auto 0;
     width: 340px;
     height: 480px;
     border-radius: 0.35em;

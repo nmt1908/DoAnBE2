@@ -37,23 +37,36 @@
                                 <input type="text" name="email" id="email" class="form-control" placeholder="Email">
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="password">Password</label>
                                 <input type="password" name="password" id="password" class="form-control" placeholder="Password">
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="phone">Address</label>
+                                <label for="phone">Phone</label>
+                                <input type="text" name="phone" id="phone" class="form-control" placeholder="Phone">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="gender">Gender</label>
+                                <input type="text" name="gender" id="gender" class="form-control" placeholder="Gender">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="address">Address</label>
                                 <textarea name="address" id="address" class="form-control" cols="30" rows="5"></textarea>
                             </div>
                         </div>
+                  
                     </div>
                     <!-- Kết thúc form -->
                     <div class="pb-5 pt-3">
                         <button type="submit" class="btn btn-primary">Create</button>
-                        <a href="{{ route('admin.customAddUser') }}" class="btn btn-outline-dark ml-3">Cancel</a>
+                        <a href="{{ route('admin.listuser') }}" class="btn btn-outline-dark ml-3">Cancel</a>
                     </div>
                 </form>
             </div>

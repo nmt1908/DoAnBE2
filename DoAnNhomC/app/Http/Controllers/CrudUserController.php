@@ -14,6 +14,9 @@ class CrudUserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
+            'gender' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
             
         ]);
 
@@ -28,7 +31,10 @@ class CrudUserController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password'])
+            'password' => Hash::make($data['password']),
+            'gender' => $data['gender'],
+            'phone' => $data['phone'],
+            'address' => $data['address'],
         ]);
     }
     public function addUser()

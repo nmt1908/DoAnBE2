@@ -22,7 +22,7 @@
         <div class="card">
             <div class="card-body">
                 <!-- Bắt đầu form -->
-                <form action="{{ route('admin.postUpdateUser') }}" method="POST">
+                <form action="{{ route('admin.postUpdateUser') }}" method="POST" enctype="multipart/form-data">
                     @csrf <!-- Thêm token CSRF -->
                     <input name="id" type="hidden" value="{{$user->id}}">
                     <div class="row">
@@ -78,6 +78,7 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="col-md-6"></div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="address">New Address</label>
@@ -87,7 +88,17 @@
                                     @endif
                             </div>
                         </div>
-                  
+                        <div class="col-md-6"></div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="img">Image</label>
+                                <input type="file" name="img" id="img" class="form-control" accept="image/*">
+                                <div id="imagePreview"></div>
+                                @if ($errors->has('image'))
+                                    <span class="text-danger">{{ $errors->first('image') }}</span>
+                                @endif
+                            </div>
+                        </div>
                     </div>
                     <!-- Kết thúc form -->
                     <div class="pb-5 pt-3">
@@ -106,4 +117,32 @@
         alert('Không được phép sửa email!');
     });
 </script>
+<script>
+    document.getElementById('img').addEventListener('change', function() {
+        var file = this.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                var imagePreview = document.getElementById('imagePreview');
+                imagePreview.innerHTML = '<img src="' + event.target.result + '" style="max-width:100%; max-height:200px;padding-top:20px" />';
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Hiển thị ảnh người dùng hiện tại trong imagePreview khi trang tải
+    window.addEventListener('DOMContentLoaded', function() {
+        var currentImage = document.getElementById('currentImage');
+        if (currentImage) {
+            var imagePreview = document.getElementById('imagePreview');
+            imagePreview.innerHTML = '<img src="' + currentImage.src + '" style="max-width:100%; max-height:200px;padding-top:20px" />';
+        }
+    });
+</script>
+@if($user->img)
+    <img src="{{ asset('user-image/images/' . $user->img) }}" id="currentImage" style="display: none;">
+    <div id="imagePreview"></div>
+@else
+    <p>No image available</p>
+@endif
 @endsection

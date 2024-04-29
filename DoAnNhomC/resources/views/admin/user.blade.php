@@ -50,6 +50,7 @@
                     <thead>
                         <tr>
                             <th width="60">ID</th>
+                            <th>Avatar</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Phone</th>
@@ -62,6 +63,9 @@
                         @foreach($users as $user)
                         <tr>
                             <td>{{ $user->id }}</td>
+                            <td>
+                            <img src="{{ asset('user-image/images/' . $user->img) }}" alt="Avatar" class="rounded-circle avatar">
+                            </td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->phone }}</td>

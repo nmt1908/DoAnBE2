@@ -22,6 +22,7 @@ Route::get('registration', [CustomAuthController::class, 'registration'])->name(
 Route::post('custom-registration', [CustomAuthController::class, 'customRegistration'])->name('register.custom');
 Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout');
 Route::get('account', [PageController::class, 'accountProfile'])->name('accountProfile');
+
 Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::get('admin/dashboard', [CustomAuthController::class, 'adminDashboard'])->name('admin.dashboard');
     Route::get('admin/user',[PageController::class,'adminListUser'])->name('admin.listuser');
@@ -29,6 +30,8 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::get('admin/adduser',[CrudUserController::class,'addUser'])->name('admin.adduser');
     Route::post('custom-adduser', [CrudUserController::class, 'customAddUser'])->name('admin.customAddUser');
     Route::delete('/delete-user/{id}', [CrudUserController::class, 'deleteUser'])->name('admin.deleteuser');
+    Route::get('update', [CrudUserController::class, 'updateUser'])->name('admin.updateUser');
+    Route::post('update', [CrudUserController::class, 'postUpdateUser'])->name('admin.postUpdateUser');
 
 });
 // Route::get('/', function () {

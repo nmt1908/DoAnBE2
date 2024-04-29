@@ -33,7 +33,7 @@ class CustomAuthController extends Controller
             }
         }
     
-        return redirect("login")->withSuccess('Login details are not valid');
+        return redirect("login")->withSuccess('Sai tài khoản hoặc mật khẩu!');
     }
 
     public function registration()

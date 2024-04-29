@@ -22,7 +22,7 @@
         <div class="card">
             <div class="card-body">
                 <!-- Bắt đầu form -->
-                <form action="{{ route('admin.customAddUser') }}" method="POST">
+                <form action="{{ route('admin.customAddUser') }}" method="POST" enctype="multipart/form-data">
                     @csrf <!-- Thêm token CSRF -->
                     <div class="row">
                         <div class="col-md-6">
@@ -75,13 +75,24 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="col-md-6"></div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="address">Address</label>
                                 <textarea name="address" id="address" class="form-control" cols="30" rows="5"></textarea>
                             </div>
                         </div>
-                  
+                        <div class="col-md-6"></div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="img">Image</label>
+                                <input type="file" name="img" id="img" class="form-control" accept="image/*">
+                                <div id="imagePreview"></div>
+                                @if ($errors->has('image'))
+                                    <span class="text-danger">{{ $errors->first('image') }}</span>
+                                @endif
+                            </div>
+                        </div>
                     </div>
                     <!-- Kết thúc form -->
                     <div class="pb-5 pt-3">
@@ -95,4 +106,17 @@
     <!-- /.card -->
 </section>
 <!-- /.content -->
+<script>
+    document.getElementById('img').addEventListener('change', function() {
+        var file = this.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                var imagePreview = document.getElementById('imagePreview');
+                imagePreview.innerHTML = '<img  src="' + event.target.result + '" style="max-width:100%; max-height:200px;padding-top:20px" />';
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
 @endsection

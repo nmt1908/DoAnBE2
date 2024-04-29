@@ -21,6 +21,7 @@ Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name(
 Route::get('registration', [CustomAuthController::class, 'registration'])->name('register-user');
 Route::post('custom-registration', [CustomAuthController::class, 'customRegistration'])->name('register.custom');
 Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout');
+Route::get('account', [PageController::class, 'accountProfile'])->name('accountProfile');
 Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::get('admin/dashboard', [CustomAuthController::class, 'adminDashboard'])->name('admin.dashboard');
     Route::get('admin/user',[PageController::class,'adminListUser'])->name('admin.listuser');
@@ -33,4 +34,4 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
 // Route::get('/', function () {
 //     return view('user/dashboard');
 // });
-Route::get('/', [CustomAuthController::class, 'dashboardFirstLogin']);
+Route::get('/', [CustomAuthController::class, 'dashboardFirstLogin'])->name('dashboardFirstLogin');

@@ -84,7 +84,7 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="#">
+                                <a href="{{ route('admin.updateCategories', ['id' => $category->id] )}}">
                                     <svg class="filament-link-icon w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                         <path
@@ -119,7 +119,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Hủy</button>
-                                        <form action="{{ route('admin.deletecategory', ['id' => $category->id]) }}"
+                                        <form action="{{ route('admin.deletecategories', ['id' => $category->id]) }}"
                                             method="POST">
                                             @csrf
                                             @method('DELETE')

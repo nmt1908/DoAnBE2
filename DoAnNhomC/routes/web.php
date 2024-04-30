@@ -6,6 +6,8 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\SearchUserController;
 use App\Http\Controllers\CrudUserController;
 use App\Http\Controllers\admin\CategoryController;
+use App\Http\Controllers\admin\BrandController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,6 +46,15 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::get('update-categories', [CategoryController::class, 'updateCategories'])->name('admin.updateCategories');
     Route::post('update-categories', [CategoryController::class, 'postUpdateCategories'])->name('admin.postUpdateCategories');
     Route::get('admin/searchcategories',[CategoryController::class,'searchCategories'])->name('admin.searchCategories');
+
+    // Brand routes
+    Route::get('admin/brand',[BrandController::class,'adminListBrand'])->name('admin.listbrand');
+    Route::get('admin/addbrand',[BrandController::class,'addBrand'])->name('admin.addBrand');
+    Route::post('custom-addbrand', [BrandController::class, 'customAddBrand'])->name('admin.customAddBrand');
+    Route::delete('/delete-brand/{id}', [BrandController::class, 'deleteBrand'])->name('admin.deleteBrand');
+    Route::get('update-brand', [BrandController::class, 'updateBrand'])->name('admin.updateBrand');
+    Route::post('update-brand', [BrandController::class, 'postUpdateBrand'])->name('admin.postUpdateBrand');
+    Route::get('admin/searchbrand',[BrandController::class,'searchBrand'])->name('admin.searchBrand');
 
 });
 // Route::get('/', function () {

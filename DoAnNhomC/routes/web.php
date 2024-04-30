@@ -43,6 +43,7 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::delete('/delete-category/{id}', [CategoryController::class, 'deleteCategories'])->name('admin.deletecategories');
     Route::get('update-categories', [CategoryController::class, 'updateCategories'])->name('admin.updateCategories');
     Route::post('update-categories', [CategoryController::class, 'postUpdateCategories'])->name('admin.postUpdateCategories');
+    Route::get('admin/searchcategories',[CategoryController::class,'searchCategories'])->name('admin.searchCategories');
 
 });
 // Route::get('/', function () {

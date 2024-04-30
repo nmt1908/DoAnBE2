@@ -92,9 +92,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ asset('admin-acess/brands.html') }}" class="nav-link">
+                        <a href="{{ route('admin.listbrand') }}" class="nav-link">
                             <i class="fas fa-layer-group nav-icon"></i>
-                            <p>Brands</p>
+                            <p>Brand</p>
                         </a>
                     </li>
                     <li class="nav-item">

@@ -40,6 +40,7 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::get('admin/categories',[CategoryController::class,'adminListCategory'])->name('admin.listcategories');
     Route::get('admin/addcategories',[CategoryController::class,'addCategories'])->name('admin.addcategories');
     Route::post('custom-addcategories', [CategoryController::class, 'customAddCategories'])->name('admin.customAddCategories');
+    Route::delete('/delete-category/{id}', [CategoryController::class, 'deleteCategories'])->name('admin.deletecategory');
 
 });
 // Route::get('/', function () {

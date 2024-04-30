@@ -59,6 +59,13 @@ class CategoryController extends Controller
     public function addCategories() {
         return view('admin.category.addcategories');
     }
+    public function deleteCategories(Request $request, $id)
+    {
+        $categories = Categories::findOrFail($id);
+        $categories->delete();
+        return redirect()->back()->with('success', 'Người dùng đã được xóa thành công');
+    }
+
     public function editCategory() {
 
     }

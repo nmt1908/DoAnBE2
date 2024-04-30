@@ -5,6 +5,7 @@ use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\SearchUserController;
 use App\Http\Controllers\CrudUserController;
+use App\Http\Controllers\admin\CategoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,6 +26,8 @@ Route::get('account', [PageController::class, 'accountProfile'])->name('accountP
 
 Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::get('admin/dashboard', [CustomAuthController::class, 'adminDashboard'])->name('admin.dashboard');
+
+    // User routes
     Route::get('admin/user',[PageController::class,'adminListUser'])->name('admin.listuser');
     Route::get('admin/searchuser',[SearchUserController::class,'searchUser'])->name('admin.searchuser');
     Route::get('admin/adduser',[CrudUserController::class,'addUser'])->name('admin.adduser');
@@ -32,6 +35,10 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::delete('/delete-user/{id}', [CrudUserController::class, 'deleteUser'])->name('admin.deleteuser');
     Route::get('update', [CrudUserController::class, 'updateUser'])->name('admin.updateUser');
     Route::post('update', [CrudUserController::class, 'postUpdateUser'])->name('admin.postUpdateUser');
+
+    // Category routes
+    Route::get('admin/categories',[CategoryController::class,'adminListCategory'])->name('admin.categories');
+
 
 });
 // Route::get('/', function () {

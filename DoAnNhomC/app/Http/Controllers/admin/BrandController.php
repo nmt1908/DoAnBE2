@@ -111,6 +111,13 @@ class BrandController extends Controller
     }
     
     public function searchBrand(Request $request){
-
+        $search = $request->input('search');
+        
+        // Thực hiện truy vấn để tìm kiếm người dùng
+        $brands = Brand::where('name', 'like', "%$search%")
+                        ->orWhere('slug', 'like', "%$search%")
+                        ->paginate(5);
+        
+        return view('admin.brand.list', compact('brands'));
     }
 }

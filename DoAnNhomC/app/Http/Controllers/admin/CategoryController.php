@@ -122,6 +122,6 @@ class CategoryController extends Controller
                         ->orWhere('slug', 'like', "%$search%")
                         ->paginate(5);
         
-        return view('admin.category.search', compact('categories'));
+        return view('admin.category.categories', compact('categories'));
     }
 }

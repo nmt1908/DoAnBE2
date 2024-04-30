@@ -33,9 +33,8 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-tools">
-                
-                <form action="#" method="GET" class="input-group"
-                        style="width: 250px;">
+
+                    <form action="#" method="GET" class="input-group" style="width: 250px;">
                         <input type="text" name="search" class="form-control float-right" placeholder="Search">
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-default">
@@ -93,7 +92,8 @@
                                         </path>
                                     </svg>
                                 </a>
-                                <a href="#" class="text-danger w-4 h-4 mr-1" data-bs-toggle="modal" data-bs-target="#">
+                                <a href="#" class="text-danger w-4 h-4 mr-1" data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal{{$brand->id}}">
                                     <svg wire:loading.remove.delay="" wire:target=""
                                         class="filament-link-icon w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -104,7 +104,33 @@
                                 </a>
                             </td>
                         </tr>
-                       
+                        <!-- Modal -->
+                        <div class="modal fade" id="deleteModal{{$brand->id}}" tabindex="-1"
+                            aria-labelledby="deleteModalLabel{{$brand->id}}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel{{$brand->id}}">Xác nhận xóa</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Bạn có chắc chắn muốn xóa thương hiệu này không?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Hủy</button>
+                                        <form action="{{ route('admin.deleteBrand', ['id' => $brand->id]) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Xóa</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Modal -->
                         @endforeach
                     </tbody>
                 </table>

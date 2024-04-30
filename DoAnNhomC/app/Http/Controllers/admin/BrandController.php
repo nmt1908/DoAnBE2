@@ -61,7 +61,16 @@ class BrandController extends Controller
     }
     public function deleteBrand(Request $request, $id)
     {
-       
+        $brands = Brand::findOrFail($id);
+        $imagePath = public_path('category-image/images/' . $brands->image);
+
+    // Kiểm tra xem tệp ảnh tồn tại trước khi xóa
+    if (file_exists($imagePath)) {
+        // Xóa tệp ảnh từ thư mục
+        unlink($imagePath);
+    }
+        $brands->delete();
+        return redirect()->back()->with('success', 'Người dùng đã được xóa thành công');
     }
 
     public function updateBrand(Request $request)

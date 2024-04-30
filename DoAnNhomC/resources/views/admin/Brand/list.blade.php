@@ -33,8 +33,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-tools">
-
-                    <form action="#" method="GET" class="input-group" style="width: 250px;">
+                    <form action="{{ route('admin.searchBrand') }}" method="GET" class="input-group" style="width: 250px;">
                         <input type="text" name="search" class="form-control float-right" placeholder="Search">
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-default">

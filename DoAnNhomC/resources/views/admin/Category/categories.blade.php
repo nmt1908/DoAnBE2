@@ -49,6 +49,7 @@
                     <thead>
                         <tr>
                             <th width="60">ID</th>
+                            <th>Image</th>
                             <th>Name</th>
                             <th>Slug</th>
                             <th width="100">Status</th>
@@ -59,7 +60,9 @@
                         @foreach($categories as $category)
                         <tr>
                             <td>{{ $category->id }}</td>
-
+                            <td>
+                            <img src="{{ asset('category-image/images/' . $category->image) }}" alt="Avatar" class="rounded-circle avatar">
+                            </td>
                             <td>{{ $category->name }}</td>
                             <td>{{ $category->slug }}</td>
 

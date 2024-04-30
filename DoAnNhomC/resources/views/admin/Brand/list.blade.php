@@ -20,7 +20,7 @@
                 <h1>Brand</h1>
             </div>
             <div class="col-sm-6 text-right">
-                <a href="#" class="btn btn-primary">New Brand</a>
+                <a href="{{ route('admin.addBrand') }}" class="btn btn-primary">New Brand</a>
             </div>
         </div>
     </div>

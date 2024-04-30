@@ -113,4 +113,15 @@ class CategoryController extends Controller
         return redirect()->route('admin.listcategories')->withSuccess('Sửa categories thành công!');
     }
     
+    public function searchCategories(Request $request){
+
+        $search = $request->input('search');
+        
+        // Thực hiện truy vấn để tìm kiếm người dùng
+        $categories = Categories::where('name', 'like', "%$search%")
+                        ->orWhere('slug', 'like', "%$search%")
+                        ->paginate(5);
+        
+        return view('admin.category.search', compact('categories'));
+    }
 }

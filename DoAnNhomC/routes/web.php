@@ -37,8 +37,9 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::post('update', [CrudUserController::class, 'postUpdateUser'])->name('admin.postUpdateUser');
 
     // Category routes
-    Route::get('admin/categories',[CategoryController::class,'adminListCategory'])->name('admin.categories');
-
+    Route::get('admin/categories',[CategoryController::class,'adminListCategory'])->name('admin.listcategories');
+    Route::get('admin/addcategories',[CategoryController::class,'addCategories'])->name('admin.addcategories');
+    Route::post('custom-addcategories', [CategoryController::class, 'customAddCategories'])->name('admin.customAddCategories');
 
 });
 // Route::get('/', function () {

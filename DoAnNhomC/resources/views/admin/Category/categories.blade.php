@@ -20,7 +20,7 @@
                 <h1>Categories</h1>
             </div>
             <div class="col-sm-6 text-right">
-                <a href="create-category.html" class="btn btn-primary">New Category</a>
+                <a href="{{ route('admin.addcategories') }}" class="btn btn-primary">New Category</a>
             </div>
         </div>
     </div>
@@ -49,6 +49,7 @@
                     <thead>
                         <tr>
                             <th width="60">ID</th>
+                            <th>Image</th>
                             <th>Name</th>
                             <th>Slug</th>
                             <th width="100">Status</th>
@@ -59,12 +60,14 @@
                         @foreach($categories as $category)
                         <tr>
                             <td>{{ $category->id }}</td>
-
+                            <td>
+                            <img src="{{ asset('category-image/images/' . $category->image) }}" alt="Avatar" class="rounded-circle avatar">
+                            </td>
                             <td>{{ $category->name }}</td>
                             <td>{{ $category->slug }}</td>
 
                             <td>
-                                @if($category->status == 'active')
+                                @if($category->status == '1')
                                 <svg class="text-success-500 h-6 w-6 text-success" xmlns="http://www.w3.org/2000/svg"
                                     fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                     aria-hidden="true">

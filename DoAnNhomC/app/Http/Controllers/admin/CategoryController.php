@@ -70,7 +70,7 @@ class CategoryController extends Controller
         unlink($imagePath);
     }
         $categories->delete();
-        return redirect()->back()->with('success', 'Người dùng đã được xóa thành công');
+        return redirect()->back()->with('success', 'Categories đã được xóa thành công');
     }
 
     public function updateCategories(Request $request)

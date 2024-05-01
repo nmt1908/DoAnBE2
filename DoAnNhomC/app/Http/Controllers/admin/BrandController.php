@@ -67,7 +67,7 @@ class BrandController extends Controller
         unlink($imagePath);
     }
         $brands->delete();
-        return redirect()->back()->with('success', 'Người dùng đã được xóa thành công');
+        return redirect()->back()->with('success', 'Brand đã được xóa thành công');
     }
 
     public function updateBrand(Request $request)

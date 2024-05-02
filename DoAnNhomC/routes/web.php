@@ -7,6 +7,7 @@ use App\Http\Controllers\SearchUserController;
 use App\Http\Controllers\CrudUserController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\BrandController;
+use App\Http\Controllers\admin\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,7 +56,8 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::get('update-brand', [BrandController::class, 'updateBrand'])->name('admin.updateBrand');
     Route::post('update-brand', [BrandController::class, 'postUpdateBrand'])->name('admin.postUpdateBrand');
     Route::get('admin/searchbrand',[BrandController::class,'searchBrand'])->name('admin.searchBrand');
-
+    //Brand products
+    Route::get('admin/product',[ProductController::class,'adminListProduct'])->name('admin.listProduct');
 });
 // Route::get('/', function () {
 //     return view('user/dashboard');

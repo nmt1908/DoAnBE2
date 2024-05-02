@@ -13,6 +13,8 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('admin-acess/css/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin-acess/css/custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin-acess/plugins/summernote/summernote-bs4.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('admin-acess/plugins/dropzone/dropzone.css') }}">
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
@@ -154,5 +156,33 @@
 <script src="{{ asset('admin-acess/js/adminlte.min.js') }}"></script>
 <script src="{{ asset('admin-acess/js/demo.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="{{ asset('admin-acess/plugins/summernote/summernote-bs4.min.js') }}"></script>
+
+<script src="{{ asset('admin-acess/plugins/dropzone/dropzone.js') }}"></script>
+		<script src="js/demo.js"></script>
+        <script>
+            Dropzone.autoDiscover = false;    
+            $(function () {
+                // Summernote
+                $('.summernote').summernote({
+                    height: '300px'
+                });
+               
+                const dropzone = $("#image").dropzone({ 
+                    url:  "create-product.html",
+                    maxFiles: 5,
+                    addRemoveLinks: true,
+                    acceptedFiles: "image/jpeg,image/png,image/gif",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }, success: function(file, response){
+                        $("#image_id").val(response.id);
+                    }
+                });
+
+            });
+        </script>
+
+
 </body>
 </html>

@@ -5,6 +5,9 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Categories;
+use App\Models\Brand;
+use App\Models\ProductImage;
 
 class ProductController extends Controller
 {
@@ -16,48 +19,71 @@ class ProductController extends Controller
         $products = Product::paginate(5);
         return view('admin.product.listproduct', compact('products'));
     }
-    public function customAddCategories(Request $request) {
+    public function customAddProduct(Request $request) {
         $request->validate([
-            'name' => 'required',
-            'slug' => 'required|unique:categories',
+            'product_name' => 'required',
+            'price' => 'required',
+            'description' => 'required',
+            'quantity' => 'required',
             'status' => 'required',
-            'image' => 'required', // Thêm validation cho ảnh
+            'image' => 'required',
+             
         ]);
     
-        $data = $request->all();
-    
-        // Truy vấn dữ liệu từ model Categories
-        $categories = new Categories();
+        $productData = $request->except('image'); // Lấy dữ liệu sản phẩm trừ ảnh
+        $product = Product::create($productData); // Tạo mới sản phẩm
     
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = $image->getClientOriginalName(); // Lấy tên gốc của ảnh
-            // Kiểm tra xem có ảnh đã được tải lên trước đó hay không
-            if (!empty($categories->image)) {
-                // Nếu có, sử dụng lại ảnh đã được tải lên trước đó
-                $data['image'] = $categories->image;
-            } else {
-                // Nếu không có, xử lý tệp tin ảnh mới
-                $image->move(public_path('category-image/images'), $imageName);
-                $data['image'] = $imageName;
-            }
-        }
+            $image->move(public_path('product-images'), $imageName); // Di chuyển và lưu ảnh vào thư mục public
     
-        $check = $this->create($data);
-        
-        return redirect()->route('admin.listcategories')->withSuccess('Tạo categories thành công!');
+            // Tạo mới bản ghi trong bảng product_images
+            ProductImage::create([
+                'product_id' => $product->id,
+                'image_path' => $imageName,
+            ]);
+        }
+        dd($request->all());
+    
+        return redirect()->route('admin.listProduct')->withSuccess('Tạo sản phẩm thành công!');
     }
     public function create(array $data)
     {
-        return Categories::create([
-            'name' => $data['name'],
-            'slug' => $data['slug'],
+        // Tạo mới sản phẩm
+        $product = Product::create([
+            'product_name' => $data['product_name'],
+            'price' => $data['price'],
+            'description' => $data['description'],
+            'quantity' => $data['quantity'],
+            'is_featured' => $data['is_featured'],
+            'category_id' => $data['category_id'],
+            'brand_id' => $data['brand_id'],
             'status' => $data['status'],
-            'image' => isset($data['image']) ? $data['image'] : null, // Lưu tên ảnh vào cột image
         ]);
+        dd($product);
+        // Tạo mới bản ghi trong bảng product_images
+        if (isset($data['images'])) {
+            foreach ($data['images'] as $image) {
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'img' => $image->getClientOriginalName(), // hoặc làm theo cách bạn đã lưu trữ tên ảnh
+                    'sort_order' => 1, // giá trị mặc định cho sắp xếp
+                ]);
+            }
+        }
+        
+        return $product;
     }
-    public function addCategories() {
-        return view('admin.category.addcategories');
+    public function addProduct() {
+        // Lấy danh sách các category từ bảng categories
+        $categories = Categories::all();
+
+        // Lấy danh sách các brand từ bảng brands
+        $brands = Brand::all();
+
+        // Trả về view 'admin.product.addproduct' và truyền danh sách các category và brand vào đó
+        return view('admin.product.addproduct', compact('categories', 'brands'));
     }
     public function deleteCategories(Request $request, $id)
     {

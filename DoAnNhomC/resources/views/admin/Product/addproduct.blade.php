@@ -56,11 +56,12 @@
                                     <div class="card mb-3">
                                         <div class="card-body">
                                             <h2 class="h4 mb-3">Image</h2>								
-                                            <div id="image" class="dropzone dz-clickable" name="image">
+                                            <!-- <div id="image" class="dropzone dz-clickable" name="image">
                                                 <div class="dz-message needsclick">    
                                                     <br>Drop files here or click to upload.<br><br>                                            
                                                 </div>
-                                            </div>
+                                            </div> -->
+                                            <input type="file" name="images[]" id="images" multiple>
                                         </div>	                                                                      
                                     </div>
                                     <div class="card mb-3">

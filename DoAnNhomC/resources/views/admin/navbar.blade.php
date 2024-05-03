@@ -159,7 +159,7 @@
 <script src="{{ asset('admin-acess/plugins/summernote/summernote-bs4.min.js') }}"></script>
 
 <script src="{{ asset('admin-acess/plugins/dropzone/dropzone.js') }}"></script>
-		<script src="js/demo.js"></script>
+		<script src="{{ asset('admin-acess/js/demo.js') }}"></script>
         <script>
             Dropzone.autoDiscover = false;    
             $(function () {
@@ -169,14 +169,15 @@
                 });
                
                 const dropzone = $("#image").dropzone({ 
-                    url:  "create-product.html",
+                    url:  "{{ route('admin.customAddProduct') }}", // Thay đổi URL để trỏ đến hàm xử lý PHP trong controller
                     maxFiles: 5,
                     addRemoveLinks: true,
-                    acceptedFiles: "image/jpeg,image/png,image/gif",
+                    acceptedFiles: "image",
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                    }, success: function(file, response){
-                        $("#image_id").val(response.id);
+                    }, 
+                    success: function(file, response){
+                        // Không cần phải gán ID của hình ảnh vào đây nếu bạn không sử dụng nó
                     }
                 });
 

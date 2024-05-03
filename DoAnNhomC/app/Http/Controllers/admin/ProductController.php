@@ -19,6 +19,28 @@ class ProductController extends Controller
         $products = Product::paginate(5);
         return view('admin.product.listproduct', compact('products'));
     }
+    // public function customAddProduct(Request $request) {
+    //     $request->validate([
+    //         'product_name' => 'required',
+    //         'price' => 'required',
+    //         'description' => 'required',
+    //         'quantity' => 'required',
+    //         'status' => 'required',
+    //         'is_featured' => 'required',
+    //         'image' => 'nullable',
+    //         'category_id' => 'required',
+    //         'brand_id' => 'required',
+
+             
+    //     ]);
+    
+    //     $productData = $request->except('image'); // Lấy dữ liệu sản phẩm trừ ảnh
+    //     $product = Product::create($productData); // Tạo mới sản phẩm
+    
+        
+    
+    //     return redirect()->route('admin.listProduct')->withSuccess('Tạo sản phẩm thành công!');
+    // }
     public function customAddProduct(Request $request) {
         $request->validate([
             'product_name' => 'required',
@@ -27,26 +49,37 @@ class ProductController extends Controller
             'quantity' => 'required',
             'status' => 'required',
             'is_featured' => 'required',
-            'image' => 'nullable',
+            'images.*' => 'nullable', // Điều kiện cho hình ảnh
             'category_id' => 'required',
             'brand_id' => 'required',
-
-             
         ]);
     
-        $productData = $request->except('image'); // Lấy dữ liệu sản phẩm trừ ảnh
-        $product = Product::create($productData); // Tạo mới sản phẩm
+        // Tạo mới sản phẩm
+        $product = Product::create($request->except('image'));
     
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = $image->getClientOriginalName(); // Lấy tên gốc của ảnh
-            $image->move(public_path('product-images'), $imageName); // Di chuyển và lưu ảnh vào thư mục public
-    
-            // Tạo mới bản ghi trong bảng product_images
-            ProductImage::create([
-                'product_id' => $product->id,
-                'image_path' => $imageName,
-            ]);
+       // Lưu tất cả hình ảnh vào thư mục và tên gốc vào bảng product_images
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $imageName = $image->getClientOriginalName();
+                
+                // Kiểm tra xem tên file đã tồn tại trong bảng product_images hay chưa
+                $existingImage = ProductImage::where('img', $imageName)->first();
+                
+                if (!$existingImage) {
+                    // Nếu tên file chưa tồn tại, lưu ảnh vào thư mục và tên vào bảng product_images
+                    $image->move(public_path('product-image'), $imageName);
+                    $product->images()->create([
+                        'img' => $imageName,
+                        'sort_order' => 1, // Số thứ tự hình ảnh, nếu có
+                    ]);
+                } else {
+                    // Nếu tên file đã tồn tại, chỉ cần lưu tên vào bảng product_images
+                    $product->images()->create([
+                        'img' => $imageName,
+                        'sort_order' => 1, // Số thứ tự hình ảnh, nếu có
+                    ]);
+                }
+            }
         }
     
         return redirect()->route('admin.listProduct')->withSuccess('Tạo sản phẩm thành công!');
@@ -64,16 +97,7 @@ class ProductController extends Controller
             'brand_id' => $data['brand_id'],
             'status' => $data['status'],
         ]);
-        // // Tạo mới bản ghi trong bảng product_images
-        // if (isset($data['images'])) {
-        //     foreach ($data['images'] as $image) {
-        //         ProductImage::create([
-        //             'product_id' => $product->id,
-        //             'img' => $image->getClientOriginalName(), // hoặc làm theo cách bạn đã lưu trữ tên ảnh
-        //             'sort_order' => 1, // giá trị mặc định cho sắp xếp
-        //         ]);
-        //     }
-        // }
+        
         
         return $product;
     }

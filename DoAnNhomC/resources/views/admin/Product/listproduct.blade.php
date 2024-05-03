@@ -63,11 +63,19 @@
                                         @foreach($products as $product)
 										<tr>
 											<td>{{ $product->id }}</td>
-											<td><img src="img/product-1.jpg" class="img-thumbnail" width="50" ></td>
+											<td>
+												@php
+													$image = \App\Models\ProductImage::where('product_id', $product->id)->where('sort_order', 1)->first();
+													$imagePath = $image ? asset('product-image/' . $image->img) : '';
+												@endphp
+												@if($imagePath)
+													<img src="{{ $imagePath }}" class="img-thumbnail" width="50">
+												@endif
+											</td>
 											<td><a href="#">{{ $product->product_name }}</a></td>
 											<td>${{ $product->price }}</td>
 											<td>{{ $product->quantity }} left in Stock</td>
-											<td>{{ $product->description }}</td>											
+											<td>{{ substr($product->description, 0, 100) }}</td>											
 											<td>
 												@if ($product->status == 1)
 													<!-- Hiển thị biểu tượng khi status = 1 -->

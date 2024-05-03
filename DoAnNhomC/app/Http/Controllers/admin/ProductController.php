@@ -122,7 +122,7 @@ class ProductController extends Controller
         unlink($imagePath);
     }
         $product->delete();
-        return redirect()->back()->with('success', 'Đã xóa sản phẩm thành công');
+        return redirect()->route('admin.listProduct')->with('success', 'Đã xóa sản phẩm thành công');
     }
 
     public function updateCategories(Request $request)

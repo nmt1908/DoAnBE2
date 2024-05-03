@@ -26,7 +26,11 @@ class ProductController extends Controller
             'description' => 'required',
             'quantity' => 'required',
             'status' => 'required',
-            'image' => 'required',
+            'is_featured' => 'required',
+            'image' => 'nullable',
+            'category_id' => 'required',
+            'brand_id' => 'required',
+
              
         ]);
     
@@ -44,7 +48,6 @@ class ProductController extends Controller
                 'image_path' => $imageName,
             ]);
         }
-        dd($request->all());
     
         return redirect()->route('admin.listProduct')->withSuccess('Tạo sản phẩm thành công!');
     }
@@ -61,17 +64,16 @@ class ProductController extends Controller
             'brand_id' => $data['brand_id'],
             'status' => $data['status'],
         ]);
-        dd($product);
-        // Tạo mới bản ghi trong bảng product_images
-        if (isset($data['images'])) {
-            foreach ($data['images'] as $image) {
-                ProductImage::create([
-                    'product_id' => $product->id,
-                    'img' => $image->getClientOriginalName(), // hoặc làm theo cách bạn đã lưu trữ tên ảnh
-                    'sort_order' => 1, // giá trị mặc định cho sắp xếp
-                ]);
-            }
-        }
+        // // Tạo mới bản ghi trong bảng product_images
+        // if (isset($data['images'])) {
+        //     foreach ($data['images'] as $image) {
+        //         ProductImage::create([
+        //             'product_id' => $product->id,
+        //             'img' => $image->getClientOriginalName(), // hoặc làm theo cách bạn đã lưu trữ tên ảnh
+        //             'sort_order' => 1, // giá trị mặc định cho sắp xếp
+        //         ]);
+        //     }
+        // }
         
         return $product;
     }

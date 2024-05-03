@@ -140,7 +140,7 @@
                                         <div class="card-body">	
                                             <h2 class="h4 mb-3">Featured product</h2>
                                             <div class="mb-3">
-                                                <select name="status" id="status" class="form-control">
+                                                <select name="is_featured" id="is_featured" class="form-control">
                                                     <option value="0">No</option>
                                                     <option value="1">Yes</option>                                                
                                                 </select>

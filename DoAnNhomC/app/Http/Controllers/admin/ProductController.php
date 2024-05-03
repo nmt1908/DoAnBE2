@@ -137,36 +137,25 @@ class ProductController extends Controller
         return view('admin.product.updateproduct', ['product' => $product],compact('categories', 'brands'));
     }
     public function postUpdateProduct(Request $request) {
-        $input = $request->all();
-    
-        // Kiểm tra dữ liệu
-        $validator = validator([
-            'name' => 'required',
-            'slug' => 'required|unique:categories',
+        $request->validate([
+            'product_name' => 'required',
+            'price' => 'required',
+            'description' => 'required',
+            'quantity' => 'required',
             'status' => 'required',
-            'image' => 'required|image', // Kiểm tra xem ảnh có đúng định dạng không
+            'is_featured' => 'required',
+            'category_id' => 'required',
+            'brand_id' => 'required',
         ]);
     
-        $category = Categories::find($input['id']);
-        $category->name = $input['name'];
-        $category->slug = $input['slug'];
-        $category->status = $input['status'];
+        $input = $request->except(['_token', 'id']); // Loại bỏ các trường không cần thiết
     
-        // Kiểm tra xem người dùng đã cung cấp một tệp tin ảnh mới hay không
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = $image->getClientOriginalName(); // Lấy tên gốc của ảnh
-            $image->move(public_path('category-image/images'), $imageName);
-            $category->image = $imageName;
-        } elseif (empty($input['image'])) {
-            // Nếu không có tệp tin ảnh mới được tải lên và không có giá trị trong trường img, 
-            // tức là người dùng không muốn thay đổi ảnh, sử dụng ảnh cũ.
-            $category->image = $category->image;
-        }
+        $product = Product::find($request->id);
     
-        $category->save();
+        // Cập nhật thông tin sản phẩm
+        $product->update($input);
     
-        return redirect()->route('admin.listcategories')->withSuccess('Sửa categories thành công!');
+        return redirect()->route('admin.listProduct')->withSuccess('Cập nhật sản phẩm thành công!');
     }
     
     public function searchCategories(Request $request){
@@ -180,4 +169,5 @@ class ProductController extends Controller
         
         return view('admin.category.categories', compact('categories'));
     }
+    
 }

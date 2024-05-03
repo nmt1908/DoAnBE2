@@ -5,6 +5,9 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Categories;
+use App\Models\Brand;
+use App\Models\ProductImage;
 
 class ProductController extends Controller
 {
@@ -16,61 +19,110 @@ class ProductController extends Controller
         $products = Product::paginate(5);
         return view('admin.product.listproduct', compact('products'));
     }
-    public function customAddCategories(Request $request) {
+    // public function customAddProduct(Request $request) {
+    //     $request->validate([
+    //         'product_name' => 'required',
+    //         'price' => 'required',
+    //         'description' => 'required',
+    //         'quantity' => 'required',
+    //         'status' => 'required',
+    //         'is_featured' => 'required',
+    //         'image' => 'nullable',
+    //         'category_id' => 'required',
+    //         'brand_id' => 'required',
+
+             
+    //     ]);
+    
+    //     $productData = $request->except('image'); // Lấy dữ liệu sản phẩm trừ ảnh
+    //     $product = Product::create($productData); // Tạo mới sản phẩm
+    
+        
+    
+    //     return redirect()->route('admin.listProduct')->withSuccess('Tạo sản phẩm thành công!');
+    // }
+    public function customAddProduct(Request $request) {
         $request->validate([
-            'name' => 'required',
-            'slug' => 'required|unique:categories',
+            'product_name' => 'required',
+            'price' => 'required',
+            'description' => 'required',
+            'quantity' => 'required',
             'status' => 'required',
-            'image' => 'required', // Thêm validation cho ảnh
+            'is_featured' => 'required',
+            'images.*' => 'nullable', // Điều kiện cho hình ảnh
+            'category_id' => 'required',
+            'brand_id' => 'required',
         ]);
     
-        $data = $request->all();
+        // Tạo mới sản phẩm
+        $product = Product::create($request->except('image'));
     
-        // Truy vấn dữ liệu từ model Categories
-        $categories = new Categories();
-    
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = $image->getClientOriginalName(); // Lấy tên gốc của ảnh
-            // Kiểm tra xem có ảnh đã được tải lên trước đó hay không
-            if (!empty($categories->image)) {
-                // Nếu có, sử dụng lại ảnh đã được tải lên trước đó
-                $data['image'] = $categories->image;
-            } else {
-                // Nếu không có, xử lý tệp tin ảnh mới
-                $image->move(public_path('category-image/images'), $imageName);
-                $data['image'] = $imageName;
+       // Lưu tất cả hình ảnh vào thư mục và tên gốc vào bảng product_images
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $imageName = $image->getClientOriginalName();
+                
+                // Kiểm tra xem tên file đã tồn tại trong bảng product_images hay chưa
+                $existingImage = ProductImage::where('img', $imageName)->first();
+                
+                if (!$existingImage) {
+                    // Nếu tên file chưa tồn tại, lưu ảnh vào thư mục và tên vào bảng product_images
+                    $image->move(public_path('product-image'), $imageName);
+                    $product->images()->create([
+                        'img' => $imageName,
+                        'sort_order' => 1, // Số thứ tự hình ảnh, nếu có
+                    ]);
+                } else {
+                    // Nếu tên file đã tồn tại, chỉ cần lưu tên vào bảng product_images
+                    $product->images()->create([
+                        'img' => $imageName,
+                        'sort_order' => 1, // Số thứ tự hình ảnh, nếu có
+                    ]);
+                }
             }
         }
     
-        $check = $this->create($data);
-        
-        return redirect()->route('admin.listcategories')->withSuccess('Tạo categories thành công!');
+        return redirect()->route('admin.listProduct')->withSuccess('Tạo sản phẩm thành công!');
     }
     public function create(array $data)
     {
-        return Categories::create([
-            'name' => $data['name'],
-            'slug' => $data['slug'],
+        // Tạo mới sản phẩm
+        $product = Product::create([
+            'product_name' => $data['product_name'],
+            'price' => $data['price'],
+            'description' => $data['description'],
+            'quantity' => $data['quantity'],
+            'is_featured' => $data['is_featured'],
+            'category_id' => $data['category_id'],
+            'brand_id' => $data['brand_id'],
             'status' => $data['status'],
-            'image' => isset($data['image']) ? $data['image'] : null, // Lưu tên ảnh vào cột image
         ]);
+        
+        
+        return $product;
     }
-    public function addCategories() {
-        return view('admin.category.addcategories');
+    public function addProduct() {
+        // Lấy danh sách các category từ bảng categories
+        $categories = Categories::all();
+
+        // Lấy danh sách các brand từ bảng brands
+        $brands = Brand::all();
+
+        // Trả về view 'admin.product.addproduct' và truyền danh sách các category và brand vào đó
+        return view('admin.product.addproduct', compact('categories', 'brands'));
     }
-    public function deleteCategories(Request $request, $id)
+    public function deleteProduct(Request $request, $id)
     {
-        $categories = Categories::findOrFail($id);
-        $imagePath = public_path('category-image/images/' . $categories->image);
+        $product = Product::findOrFail($id);
+        $imagePath = public_path('product-image/' . $product->image);
 
     // Kiểm tra xem tệp ảnh tồn tại trước khi xóa
-    if (file_exists($imagePath)) {
+    if (realpath($imagePath) && !is_dir($imagePath)) {
         // Xóa tệp ảnh từ thư mục
         unlink($imagePath);
     }
-        $categories->delete();
-        return redirect()->back()->with('success', 'Categories đã được xóa thành công');
+        $product->delete();
+        return redirect()->back()->with('success', 'Đã xóa sản phẩm thành công');
     }
 
     public function updateCategories(Request $request)

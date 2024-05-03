@@ -13,6 +13,8 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('admin-acess/css/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin-acess/css/custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin-acess/plugins/summernote/summernote-bs4.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('admin-acess/plugins/dropzone/dropzone.css') }}">
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
@@ -36,7 +38,7 @@
 			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link p-0 pr-3" data-toggle="dropdown" href="#">
-					<img src="{{ asset('admin-acess/img/avatar5.png') }}" class='img-circle elevation-2' width="40" height="40" alt="">
+                    <img src="{{ asset('user-image/images/' . Auth::user()->img) }}" class='img-circle elevation-2' width="40" height="40" alt="">
 				</a>
 				<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-3">
 					<h4 class="h4 mb-0"><strong>{{ Auth::user()->name }}</strong></h4>
@@ -154,5 +156,34 @@
 <script src="{{ asset('admin-acess/js/adminlte.min.js') }}"></script>
 <script src="{{ asset('admin-acess/js/demo.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="{{ asset('admin-acess/plugins/summernote/summernote-bs4.min.js') }}"></script>
+
+<script src="{{ asset('admin-acess/plugins/dropzone/dropzone.js') }}"></script>
+		<script src="{{ asset('admin-acess/js/demo.js') }}"></script>
+        <script>
+            Dropzone.autoDiscover = false;    
+            $(function () {
+                // Summernote
+                $('.summernote').summernote({
+                    height: '300px'
+                });
+               
+                const dropzone = $("#image").dropzone({ 
+                    url:  "{{ route('admin.customAddProduct') }}", // Thay đổi URL để trỏ đến hàm xử lý PHP trong controller
+                    maxFiles: 5,
+                    addRemoveLinks: true,
+                    acceptedFiles: "image",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }, 
+                    success: function(file, response){
+                        // Không cần phải gán ID của hình ảnh vào đây nếu bạn không sử dụng nó
+                    }
+                });
+
+            });
+        </script>
+
+
 </body>
 </html>

@@ -58,6 +58,9 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::get('admin/searchbrand',[BrandController::class,'searchBrand'])->name('admin.searchBrand');
     //Brand products
     Route::get('admin/product',[ProductController::class,'adminListProduct'])->name('admin.listProduct');
+    Route::get('admin/addproduct',[ProductController::class,'addProduct'])->name('admin.addProduct');
+    Route::post('custom-addproduct', [ProductController::class, 'customAddProduct'])->name('admin.customAddProduct');
+    Route::delete('/delete-product/{id}', [ProductController::class, 'deleteProduct'])->name('admin.deleteProduct');
 });
 // Route::get('/', function () {
 //     return view('user/dashboard');

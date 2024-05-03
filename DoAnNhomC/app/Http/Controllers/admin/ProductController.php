@@ -125,14 +125,18 @@ class ProductController extends Controller
         return redirect()->route('admin.listProduct')->with('success', 'Đã xóa sản phẩm thành công');
     }
 
-    public function updateCategories(Request $request)
+    public function updateProduct(Request $request)
     {
-        $category_id = $request->get('id');
-        $category = Categories::find($category_id);
+        $product_id = $request->get('id');
+        $product = Product::find($product_id);
+        // Lấy danh sách các category từ bảng categories
+        $categories = Categories::all();
 
-        return view('admin.category.update', ['category' => $category]);
+        // Lấy danh sách các brand từ bảng brands
+        $brands = Brand::all();
+        return view('admin.product.updateproduct', ['product' => $product],compact('categories', 'brands'));
     }
-    public function postUpdateCategories(Request $request) {
+    public function postUpdateProduct(Request $request) {
         $input = $request->all();
     
         // Kiểm tra dữ liệu

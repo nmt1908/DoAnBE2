@@ -61,6 +61,8 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::get('admin/addproduct',[ProductController::class,'addProduct'])->name('admin.addProduct');
     Route::post('custom-addproduct', [ProductController::class, 'customAddProduct'])->name('admin.customAddProduct');
     Route::delete('/delete-product/{id}', [ProductController::class, 'deleteProduct'])->name('admin.deleteProduct');
+    Route::get('update-product', [ProductController::class, 'updateProduct'])->name('admin.updateProduct');
+    Route::post('update-product', [ProductController::class, 'postUpdateProduct'])->name('admin.postUpdateProduct');
 });
 // Route::get('/', function () {
 //     return view('user/dashboard');

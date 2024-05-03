@@ -111,18 +111,18 @@ class ProductController extends Controller
         // Trả về view 'admin.product.addproduct' và truyền danh sách các category và brand vào đó
         return view('admin.product.addproduct', compact('categories', 'brands'));
     }
-    public function deleteCategories(Request $request, $id)
+    public function deleteProduct(Request $request, $id)
     {
-        $categories = Categories::findOrFail($id);
-        $imagePath = public_path('category-image/images/' . $categories->image);
+        $product = Product::findOrFail($id);
+        $imagePath = public_path('product-image/' . $product->image);
 
     // Kiểm tra xem tệp ảnh tồn tại trước khi xóa
-    if (file_exists($imagePath)) {
+    if (realpath($imagePath) && !is_dir($imagePath)) {
         // Xóa tệp ảnh từ thư mục
         unlink($imagePath);
     }
-        $categories->delete();
-        return redirect()->back()->with('success', 'Categories đã được xóa thành công');
+        $product->delete();
+        return redirect()->back()->with('success', 'Đã xóa sản phẩm thành công');
     }
 
     public function updateCategories(Request $request)

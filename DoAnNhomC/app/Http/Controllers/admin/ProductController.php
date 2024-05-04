@@ -16,8 +16,13 @@ class ProductController extends Controller
     }
     public function adminListProduct()
     {
-        $products = Product::paginate(5);
-        return view('admin.product.listproduct', compact('products'));
+        $products = Product::with('categories', 'brands')->paginate(5);
+        // $products = Product::paginate(5);
+        // $categories = Categories::all();
+
+        // Lấy danh sách các brand từ bảng brands
+        // $brands = Brand::all();
+        return view('admin.product.listproduct', compact('products','categories', 'brands'));
     }
     // public function customAddProduct(Request $request) {
     //     $request->validate([
@@ -158,16 +163,25 @@ class ProductController extends Controller
         return redirect()->route('admin.listProduct')->withSuccess('Cập nhật sản phẩm thành công!');
     }
     
-    public function searchCategories(Request $request){
+    public function searchProduct(Request $request){
 
         $search = $request->input('search');
         
         // Thực hiện truy vấn để tìm kiếm người dùng
-        $categories = Categories::where('name', 'like', "%$search%")
-                        ->orWhere('slug', 'like', "%$search%")
+        $products = Product::where('product_name', 'like', "%$search%")
+                        ->orWhere('price', 'like', "%$search%")
+                        ->orWhere('description', 'like', "%$search%")
+                        // ->orWhere('category_id', 'like', "%$search%")
+                        ->orWhereHas('category', function ($query) use ($search) {
+                            $query->where('name', 'like', "%$search%");
+                        })
+                        // ->orWhere('brand_id', 'like', "%$search%")
+                        ->orWhereHas('brand', function ($query) use ($search) {
+                            $query->where('name', 'like', "%$search%");
+                        })
                         ->paginate(5);
         
-        return view('admin.category.categories', compact('categories'));
+        return view('admin.product.listproduct', compact('products'));
     }
     
 }

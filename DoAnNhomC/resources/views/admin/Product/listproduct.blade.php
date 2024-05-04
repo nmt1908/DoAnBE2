@@ -34,15 +34,15 @@
 						<div class="card">
 							<div class="card-header">
 								<div class="card-tools">
-									<div class="input-group input-group" style="width: 250px;">
-										<input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-					
+									<form action="{{ route('admin.searchProduct') }}" method="GET" class="input-group"
+										style="width: 250px;">
+										<input type="text" name="search" class="form-control float-right" placeholder="Search">
 										<div class="input-group-append">
-										  <button type="submit" class="btn btn-default">
-											<i class="fas fa-search"></i>
-										  </button>
+											<button type="submit" class="btn btn-default">
+												<i class="fas fa-search"></i>
+											</button>
 										</div>
-									  </div>
+									</form>
 								</div>
 							</div>
 							<div class="card-body table-responsive p-0">								
@@ -55,6 +55,8 @@
 											<th>Price</th>
 											<th>Qty</th>
 											<th>Description</th>
+											<th>Category</th>
+											<th>Brand</th>
 											<th width="100">Status</th>
 											<th width="100">Action</th>
 										</tr>
@@ -75,7 +77,13 @@
 											<td><a href="#">{{ $product->product_name }}</a></td>
 											<td>${{ $product->price }}</td>
 											<td>{{ $product->quantity }} left in Stock</td>
-											<td>{{ substr($product->description, 0, 100) }}</td>											
+											<td>{{ substr($product->description, 0, 40) }}</td>
+											<td>
+												{{$product->category->name}}
+											</td>
+											<td>
+												{{$product->brand->name}}
+											</td>											
 											<td>
 												@if ($product->status == 1)
 													<!-- Hiển thị biểu tượng khi status = 1 -->

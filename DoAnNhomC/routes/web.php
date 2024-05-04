@@ -64,6 +64,7 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::get('update-product', [ProductController::class, 'updateProduct'])->name('admin.updateProduct');
     Route::post('update-product', [ProductController::class, 'postUpdateProduct'])->name('admin.postUpdateProduct');
     Route::get('/product-images', [ProductController::class, 'getImage']);
+    Route::get('admin/searchproduct',[ProductController::class,'searchProduct'])->name('admin.searchProduct');
 });
 // Route::get('/', function () {
 //     return view('user/dashboard');

@@ -34,15 +34,15 @@
 						<div class="card">
 							<div class="card-header">
 								<div class="card-tools">
-									<div class="input-group input-group" style="width: 250px;">
-										<input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-					
+									<form action="{{ route('admin.searchProduct') }}" method="GET" class="input-group"
+										style="width: 250px;">
+										<input type="text" name="search" class="form-control float-right" placeholder="Search">
 										<div class="input-group-append">
-										  <button type="submit" class="btn btn-default">
-											<i class="fas fa-search"></i>
-										  </button>
+											<button type="submit" class="btn btn-default">
+												<i class="fas fa-search"></i>
+											</button>
 										</div>
-									  </div>
+									</form>
 								</div>
 							</div>
 							<div class="card-body table-responsive p-0">								
@@ -55,6 +55,8 @@
 											<th>Price</th>
 											<th>Qty</th>
 											<th>Description</th>
+											<th>Category</th>
+											<th>Brand</th>
 											<th width="100">Status</th>
 											<th width="100">Action</th>
 										</tr>
@@ -63,11 +65,25 @@
                                         @foreach($products as $product)
 										<tr>
 											<td>{{ $product->id }}</td>
-											<td><img src="img/product-1.jpg" class="img-thumbnail" width="50" ></td>
+											<td>
+												@php
+													$image = \App\Models\ProductImage::where('product_id', $product->id)->where('sort_order', 1)->first();
+													$imagePath = $image ? asset('product-image/' . $image->img) : '';
+												@endphp
+												@if($imagePath)
+													<img src="{{ $imagePath }}" class="img-thumbnail" width="50">
+												@endif
+											</td>
 											<td><a href="#">{{ $product->product_name }}</a></td>
 											<td>${{ $product->price }}</td>
 											<td>{{ $product->quantity }} left in Stock</td>
-											<td>{{ $product->description }}</td>											
+											<td>{{ substr($product->description, 0, 40) }}</td>
+											<td>
+												{{$product->category->name}}
+											</td>
+											<td>
+												{{$product->brand->name}}
+											</td>											
 											<td>
 												@if ($product->status == 1)
 													<!-- Hiển thị biểu tượng khi status = 1 -->
@@ -82,7 +98,7 @@
 												@endif
 											</td>
 											<td>
-												<a href="#">
+												<a href="{{ route('admin.updateProduct', ['id' => $product->id] )}}">
 													<svg class="filament-link-icon w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
 														<path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
 													</svg>

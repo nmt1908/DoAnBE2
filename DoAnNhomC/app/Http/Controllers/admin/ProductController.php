@@ -16,8 +16,13 @@ class ProductController extends Controller
     }
     public function adminListProduct()
     {
-        $products = Product::paginate(5);
-        return view('admin.product.listproduct', compact('products'));
+        $products = Product::with('categories', 'brands')->paginate(5);
+        // $products = Product::paginate(5);
+        // $categories = Categories::all();
+
+        // Lấy danh sách các brand từ bảng brands
+        // $brands = Brand::all();
+        return view('admin.product.listproduct', compact('products','categories', 'brands'));
     }
     // public function customAddProduct(Request $request) {
     //     $request->validate([
@@ -125,55 +130,58 @@ class ProductController extends Controller
         return redirect()->route('admin.listProduct')->with('success', 'Đã xóa sản phẩm thành công');
     }
 
-    public function updateCategories(Request $request)
+    public function updateProduct(Request $request)
     {
-        $category_id = $request->get('id');
-        $category = Categories::find($category_id);
+        $product_id = $request->get('id');
+        $product = Product::find($product_id);
+        // Lấy danh sách các category từ bảng categories
+        $categories = Categories::all();
 
-        return view('admin.category.update', ['category' => $category]);
+        // Lấy danh sách các brand từ bảng brands
+        $brands = Brand::all();
+        return view('admin.product.updateproduct', ['product' => $product],compact('categories', 'brands'));
     }
-    public function postUpdateCategories(Request $request) {
-        $input = $request->all();
-    
-        // Kiểm tra dữ liệu
-        $validator = validator([
-            'name' => 'required',
-            'slug' => 'required|unique:categories',
+    public function postUpdateProduct(Request $request) {
+        $request->validate([
+            'product_name' => 'required',
+            'price' => 'required',
+            'description' => 'required',
+            'quantity' => 'required',
             'status' => 'required',
-            'image' => 'required|image', // Kiểm tra xem ảnh có đúng định dạng không
+            'is_featured' => 'required',
+            'category_id' => 'required',
+            'brand_id' => 'required',
         ]);
     
-        $category = Categories::find($input['id']);
-        $category->name = $input['name'];
-        $category->slug = $input['slug'];
-        $category->status = $input['status'];
+        $input = $request->except(['_token', 'id']); // Loại bỏ các trường không cần thiết
     
-        // Kiểm tra xem người dùng đã cung cấp một tệp tin ảnh mới hay không
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = $image->getClientOriginalName(); // Lấy tên gốc của ảnh
-            $image->move(public_path('category-image/images'), $imageName);
-            $category->image = $imageName;
-        } elseif (empty($input['image'])) {
-            // Nếu không có tệp tin ảnh mới được tải lên và không có giá trị trong trường img, 
-            // tức là người dùng không muốn thay đổi ảnh, sử dụng ảnh cũ.
-            $category->image = $category->image;
-        }
+        $product = Product::find($request->id);
     
-        $category->save();
+        // Cập nhật thông tin sản phẩm
+        $product->update($input);
     
-        return redirect()->route('admin.listcategories')->withSuccess('Sửa categories thành công!');
+        return redirect()->route('admin.listProduct')->withSuccess('Cập nhật sản phẩm thành công!');
     }
     
-    public function searchCategories(Request $request){
+    public function searchProduct(Request $request){
 
         $search = $request->input('search');
         
         // Thực hiện truy vấn để tìm kiếm người dùng
-        $categories = Categories::where('name', 'like', "%$search%")
-                        ->orWhere('slug', 'like', "%$search%")
+        $products = Product::where('product_name', 'like', "%$search%")
+                        ->orWhere('price', 'like', "%$search%")
+                        ->orWhere('description', 'like', "%$search%")
+                        // ->orWhere('category_id', 'like', "%$search%")
+                        ->orWhereHas('category', function ($query) use ($search) {
+                            $query->where('name', 'like', "%$search%");
+                        })
+                        // ->orWhere('brand_id', 'like', "%$search%")
+                        ->orWhereHas('brand', function ($query) use ($search) {
+                            $query->where('name', 'like', "%$search%");
+                        })
                         ->paginate(5);
         
-        return view('admin.category.categories', compact('categories'));
+        return view('admin.product.listproduct', compact('products'));
     }
+    
 }

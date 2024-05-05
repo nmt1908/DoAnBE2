@@ -49,32 +49,29 @@
                 <div class="col-md-9">
                     <div class="card">
                         <div class="card-header">
-                            <h2 class="h5 mb-0 pt-2 pb-2">Personal Information</h2>
+                            <h2 class="h5 mb-0 pt-2 pb-2">Change Password</h2>
                         </div>
                         <div class="card-body p-4">
-                            <div class="row">
-                                <div class="mb-3">               
-                                    <label for="name">Name</label>
-                                    <input type="text" name="name" id="name" placeholder="Enter Your Name" class="form-control" value="{{ $user->name }}">
+                            <form method="POST" action="{{ route('change-password') }}">
+                                @csrf
+                                <div class="row">
+                                    <div class="mb-3">               
+                                        <label for="old_password">Old Password</label>
+                                        <input type="password" name="old_password" id="old_password" placeholder="Old Password" class="form-control">
+                                    </div>
+                                    <div class="mb-3">               
+                                        <label for="new_password">New Password</label>
+                                        <input type="password" name="new_password" id="new_password" placeholder="New Password" class="form-control">
+                                    </div>
+                                    <div class="mb-3">               
+                                        <label for="confirm_password">Confirm Password</label>
+                                        <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password" class="form-control">
+                                    </div>
+                                    <div class="d-flex">
+                                        <button type="submit" class="btn btn-dark">Save</button>
+                                    </div>
                                 </div>
-                                <div class="mb-3">            
-                                    <label for="email">Email</label>
-                                    <input type="text" name="email" id="email" placeholder="Enter Your Email" class="form-control" value="{{ $user->email }}">
-                                </div>
-                                <div class="mb-3">                                    
-                                    <label for="phone">Phone</label>
-                                    <input type="text" name="phone" id="phone" placeholder="Enter Your Phone" class="form-control" value="{{ $user->phone }}">
-                                </div>
-
-                                <div class="mb-3">                                    
-                                    <label for="phone">Address</label>
-                                    <textarea name="address" id="address" class="form-control" cols="30" rows="5" placeholder="Enter Your Address">{{$user->address}}</textarea>
-                                </div>
-
-                                <div class="d-flex">
-                                    <button class="btn btn-dark">Update</button>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>

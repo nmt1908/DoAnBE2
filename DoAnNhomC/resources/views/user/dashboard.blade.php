@@ -289,7 +289,14 @@
                         <div class="col-md-3">
                             <div class="card product-card">
                                 <div class="product-image position-relative">
-                                    <a href="" class="product-img"><img class="card-img-top" src="{{ asset('user-acess/images/product-1.jpg') }}" alt=""></a>
+                                @php
+                                $productImage = $product->images->where('sort_order', 1)->first();
+                                $imagePath = $productImage ? asset('product-image/' . $productImage->img) : '';
+                                @endphp
+                                @if($productImage)
+                                    <a href="" class="product-img"><img class="card-img-top" src="{{ $imagePath }}" alt=""></a>
+                                @endif
+                                    
                                     <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
 
                                     <div class="product-action">

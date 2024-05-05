@@ -16,13 +16,13 @@ class ProductController extends Controller
     }
     public function adminListProduct()
     {
-        $products = Product::with('categories', 'brands')->paginate(5);
+        $products = Product::with('category', 'brand')->paginate(5);
         // $products = Product::paginate(5);
         // $categories = Categories::all();
 
         // Lấy danh sách các brand từ bảng brands
         // $brands = Brand::all();
-        return view('admin.product.listproduct', compact('products','categories', 'brands'));
+        return view('admin.product.listproduct', compact('products'));
     }
     // public function customAddProduct(Request $request) {
     //     $request->validate([

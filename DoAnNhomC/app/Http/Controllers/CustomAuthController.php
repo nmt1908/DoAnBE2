@@ -5,7 +5,7 @@ use Hash;
 use Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\Product;
 //Unknow
 class CustomAuthController extends Controller
 {
@@ -71,9 +71,10 @@ class CustomAuthController extends Controller
     public function dashboard()
     {
         if(Auth::check()){
-            return view('user/dashboard');
+            $products = Product::all();
+            return view('user/dashboard', compact('products'));
         }
-
+        
         return redirect("login")->withSuccess('Bạn cần phải đăng nhập!');
     }
     // public function dashboardFirstLogin()

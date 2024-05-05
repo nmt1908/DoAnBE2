@@ -91,4 +91,40 @@ class CustomAuthController extends Controller
 
         return Redirect('login');
     }
+    public function showChangePasswordForm(Request $request)
+    {
+        // Xử lý thay đổi mật khẩu ở đây
+
+        // Sau khi thay đổi mật khẩu thành công, chuyển hướng người dùng đến một trang khác
+        return view('user.change-password');
+    }
+    public function changePassword(Request $request)
+    {
+            // Validate the form data
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required',
+            'confirm_password' => 'required',
+        ]);
+        if ($request->new_password !== $request->confirm_password) {
+            // Return the change-password view with error message
+            return redirect()->back()->with('error', 'Mật khẩu mới và xác nhận mật khẩu không giống nhau.');
+        }
+        // Get the currently authenticated user
+        $user = Auth::user();
+
+        // Check if the current password matches the password in the database
+        if (!Hash::check($request->old_password, $user->password)) {
+            // Return the change-password view with error message
+            return redirect()->back()->with('error', 'Mật khẩu hiện tại không chính xác.');
+        }
+        
+        // Update the user's password
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        // Redirect the user with a success message
+        return redirect()->route('accountProfile')->withSuccess('Mật khẩu của bạn đã được thay đổi thành công.');
+
+    }
 }

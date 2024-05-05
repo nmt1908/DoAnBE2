@@ -26,6 +26,10 @@ Route::get('registration', [CustomAuthController::class, 'registration'])->name(
 Route::post('custom-registration', [CustomAuthController::class, 'customRegistration'])->name('register.custom');
 Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout');
 Route::get('account', [PageController::class, 'accountProfile'])->name('accountProfile');
+Route::get('change-password', [CustomAuthController::class, 'showChangePasswordForm'])->name('change-passwordPage');
+Route::post('change-password', [CustomAuthController::class, 'changePassword'])->name('change-password');
+
+
 
 
 

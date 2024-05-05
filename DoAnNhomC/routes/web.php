@@ -27,6 +27,8 @@ Route::post('custom-registration', [CustomAuthController::class, 'customRegistra
 Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout');
 Route::get('account', [PageController::class, 'accountProfile'])->name('accountProfile');
 
+
+
 Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::get('admin/dashboard', [CustomAuthController::class, 'adminDashboard'])->name('admin.dashboard');
 

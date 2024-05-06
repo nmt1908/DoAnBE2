@@ -8,6 +8,7 @@ use App\Http\Controllers\CrudUserController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\BrandController;
 use App\Http\Controllers\admin\ProductController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,8 @@ Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout')
 Route::get('account', [PageController::class, 'accountProfile'])->name('accountProfile');
 Route::get('change-password', [CustomAuthController::class, 'showChangePasswordForm'])->name('change-passwordPage');
 Route::post('change-password', [CustomAuthController::class, 'changePassword'])->name('change-password');
+Route::get('/cart',[CartController::class,'cart'])->name('user.cart');
+Route::post('/add-to-cart',[CartController::class,'addToCart'])->name('user.addToCart');
 
 
 

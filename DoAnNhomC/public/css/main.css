@@ -17,7 +17,36 @@ body {
     box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2);
     text-align: center;
 }
+#container-resetpassword{
+    background-color: #1D1F20;
+    position: relative;
+    top: 20%;
+    margin: 400px auto 0;
+    width: 340px;
+    height: 300px;
+    border-radius: 0.35em;
+    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+#container-forgotpassword {
+    background-color: #1D1F20;
+    position: relative;
+    top: 20%;
+    margin: 350px auto 0;
+    width: 340px;
+    height: 200px;
+    border-radius: 0.35em;
+    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
 .alert.alert-success {
+    position: absolute;
+    top: 20px; /* Điều chỉnh giá trị top tùy theo vị trí mong muốn */
+    left: 50%; /* Đặt nó ở giữa theo chiều ngang */
+    transform: translateX(-50%); /* Dịch chuyển nó 50% về bên trái để căn giữa */
+    z-index: 999; /* Đảm bảo nó hiển thị trên tất cả các phần tử khác */
+}
+.alert.alert-error {
     position: absolute;
     top: 20px; /* Điều chỉnh giá trị top tùy theo vị trí mong muốn */
     left: 50%; /* Đặt nó ở giữa theo chiều ngang */
@@ -56,6 +85,7 @@ body {
 }
 
 .input {
+    
     margin: auto;
     width: 240px;
     border-radius: 4px;

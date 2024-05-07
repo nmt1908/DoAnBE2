@@ -1,5 +1,6 @@
 <?php
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PasswordResetMail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\PageController;
@@ -21,6 +22,14 @@ use App\Http\Controllers\CartController;
 |
 */
 Route::get('dashboard', [CustomAuthController::class, 'dashboard'])->name('dashboard');
+Route::get('mail', function () {
+    Mail::to('ducmanh2017vtel@gmail.com')->send(new PasswordResetMail);
+    // return view('user/dashboard');
+});
+Route::get('reset-password/{token}', [CustomAuthController::class, 'showResetPasswordForm'])->name('reset-password');
+Route::post('reset-password', [CustomAuthController::class, 'resetPassword'])->name('reset-password.post');
+Route::get('forgotpassword', [CustomAuthController::class, 'goForgotPassword'])->name('goforgotpassword');
+Route::post('forgotpassword', [CustomAuthController::class, 'forgotPassword'])->name('forgotpassword');
 Route::get('login', [CustomAuthController::class, 'index'])->name('login')->middleware('checkLogin');
 Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name('login.custom');
 Route::get('registration', [CustomAuthController::class, 'registration'])->name('register-user');

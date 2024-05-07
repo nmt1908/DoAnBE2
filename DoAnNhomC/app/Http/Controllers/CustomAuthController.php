@@ -6,6 +6,13 @@ use Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PasswordResetMail;
+use Carbon\Carbon; 
+use App\Models\PasswordResetToken;
+
 //Unknow
 class CustomAuthController extends Controller
 {
@@ -44,6 +51,69 @@ class CustomAuthController extends Controller
     {
         return view('admin/dashboard');
         
+    }
+    public function goForgotPassword()
+    {
+        return view('auth.forgotpassword');
+    }
+    public function showResetPasswordForm($token)
+    {
+        return view('auth.reset-password', compact('token'));
+    }
+    public function resetPassword(Request $request)
+    {
+        
+        $request->validate([
+            'newpassword' => 'required',
+            'confirmpassword' => 'required',
+        ]);
+        if ($request->newpassword !== $request->confirmpassword) {
+            return redirect()->back()->with('error', 'Mật khẩu mới và xác nhận mật khẩu không giống nhau.');
+        }
+        $tokenRecord = PasswordResetToken::where('token', $request->token)->first();
+        $user = User::where('email', $tokenRecord->email)->first();
+        $user->password = Hash::make($request->newpassword);
+        $user->save();
+        $tokenRecord->delete();
+        return redirect()->route('login')->with('success', 'Mật khẩu đã được thay đổi thành công!.');
+        
+    }
+    public function forgotPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+    
+        $user = User::where('email', $request->email)->first();
+    
+        if (!$user) {
+            return back()->with('success', 'Email không tồn tại!');
+        }
+    
+        // Kiểm tra xem đã tồn tại token cho email này chưa
+        $existingToken = DB::table('password_reset_tokens')
+                            ->where('email', $user->email)
+                            ->first();
+    
+        if ($existingToken) {
+            // Nếu tồn tại, cập nhật lại token hiện tại
+            $token = $existingToken->token;
+        } else {
+            // Nếu không tồn tại, tạo token mới
+            $token = Str::random(60);
+    
+            // Lưu token vào cơ sở dữ liệu
+            DB::table('password_reset_tokens')->insert([
+                'email' => $user->email,
+                'token' => $token,
+                'created_at' => now()
+            ]);
+        }
+    
+        // Gửi email với token
+        Mail::to($user->email)->send(new PasswordResetMail($token));
+    
+        return back()->with('success', 'Email khôi phục mật khẩu đã được gửi!');
     }
     public function customRegistration(Request $request)
     {

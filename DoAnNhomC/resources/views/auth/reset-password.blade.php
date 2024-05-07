@@ -31,18 +31,20 @@
             {{ session('error') }}
         </div>
     @endif
-    <div id="container-login">
+    <div id="container-resetpassword">
         <div id="title">
-            <i class="material-icons lock">lock</i> Login
+            <i class="material-icons lock">lock</i> Reset Password
         </div>
 
-        <form method="POST" action="{{ route('login.custom') }}">
+        <form method="POST" action="{{ route('reset-password.post') }}">
         @csrf
+        
+            <input type="hidden" name="token" value="{{ $token }}">
             <div class="input">
                 <div class="input-addon">
-                    <i class="material-icons">face</i>
+                    <i class="material-icons">vpn_key</i>
                 </div>
-                <input id="email" name="email" placeholder="Username" type="text" required class="validate" autocomplete="off">
+                <input id="newpassword" name="newpassword" placeholder="New password" type="text" required class="validate" autocomplete="off">
             </div>
 
             <div class="clearfix"></div>
@@ -51,25 +53,11 @@
                 <div class="input-addon">
                     <i class="material-icons">vpn_key</i>
                 </div>
-                <input id="password" name="password" placeholder="Password" type="password" required class="validate" autocomplete="off">
+                <input id="confirmpassword" name="confirmpassword" placeholder="Confirmpassword" type="password" required class="validate" autocomplete="off">
             </div>
-
-            <div class="remember-me">
-                <input type="checkbox">
-                <span style="color: #DDD">Remember Me</span>
-            </div>
-
-            <input type="submit" value="Log In" />
+            <div class="clearfix"></div>
+            <input type="submit" value="OK" />
         </form>
-
-        <div class="register">
-            Don't have an account yet?
-            <a href="{{route('register-user')}}"><button id="register-link">Register here</button></a>
-        </div>
-        <div class="forgotpassword">
-            
-            <a href="{{route('goforgotpassword')}}"><button id="register-link">Forgot Password?</button></a>
-        </div>
         
     </div>
 </body>

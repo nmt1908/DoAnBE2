@@ -30,18 +30,23 @@ class CustomAuthController extends Controller
         ]);
     
         $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-            if ($user->role == 1) {
-                return redirect()->route('admin.dashboard')
-                    ->withSuccess('Đăng nhập thành công');
-            } else {
-                return redirect()->route('dashboard')
-                    ->withSuccess('Đăng nhập thành công');
-            }
+    
+        $user = User::where('email', $credentials['email'])->first();
+    
+        if (!$user || !Hash::check($credentials['password'], $user->password)) {
+            return redirect("login")->withSuccess('Sai tài khoản hoặc mật khẩu!');
         }
     
-        return redirect("login")->withSuccess('Sai tài khoản hoặc mật khẩu!');
+        if (is_null($user->email_verified_at) || is_null($user->remember_token)) {
+            return redirect("login")->withSuccess('Tài khoản chưa được xác minh hoặc không hợp lệ!');
+        }
+        Auth::login($user);
+    
+        if ($user->role == 1) {
+            return redirect()->route('admin.dashboard')->withSuccess('Đăng nhập thành công');
+        } else {
+            return redirect()->route('dashboard')->withSuccess('Đăng nhập thành công');
+        }
     }
 
     public function registration()

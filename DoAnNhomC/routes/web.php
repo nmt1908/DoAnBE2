@@ -40,6 +40,7 @@ Route::get('change-password', [CustomAuthController::class, 'showChangePasswordF
 Route::post('change-password', [CustomAuthController::class, 'changePassword'])->name('change-password');
 Route::get('/cart',[CartController::class,'cart'])->name('user.cart');
 Route::post('/add-to-cart',[CartController::class,'addToCart'])->name('user.addToCart');
+Route::get('/verify-email', [CustomAuthController::class, 'verifyEmail'])->name('verify.email');
 
 
 

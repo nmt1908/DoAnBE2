@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PasswordResetMail;
+use App\Mail\VerifyEmail;
 use Carbon\Carbon; 
 use App\Models\PasswordResetToken;
 
@@ -117,18 +118,56 @@ class CustomAuthController extends Controller
     }
     public function customRegistration(Request $request)
     {
+        // $request->validate([
+        //     'name' => 'required',
+        //     'email' => 'required|email|unique:users',
+        //     'password' => 'required|min:6',
+        // ]);
+
+        // $data = $request->all();
+        // $check = $this->create($data);
+
+        // return redirect("login")->withSuccess('Đăng kí thành công! Bạn có thể đăng nhập vào tài khoản');
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
         ]);
-
-        $data = $request->all();
-        $check = $this->create($data);
-
-        return redirect("login")->withSuccess('Đăng kí thành công! Bạn có thể đăng nhập vào tài khoản');
+    
+        // Tạo mới user
+        $user = $this->create($request->all());
+    
+        // Tạo token xác nhận
+        $token = Str::random(60); // Sử dụng Illuminate\Support\Str;
+    
+        // Lưu token vào cột remember_token
+        $user->forceFill([
+            'remember_token' => $token,
+        ])->save();
+    
+        // Gửi email xác nhận
+        Mail::to($user->email)->send(new VerifyEmail($token));
+    
+        // Chuyển hướng đến trang đăng nhập với thông báo
+        return redirect("login")->withSuccess('Đăng kí thành công! Vui lòng kiểm tra email để xác nhận.');
     }
+    public function verifyEmail(Request $request)
+    {
+        // Tìm user theo token trong remember_token
+        $user = User::where('remember_token', $request->token)->first();
 
+        if ($user) {
+            // Xác nhận email và cập nhật trường email_verified_at
+            $user->email_verified_at = now();
+            $user->save();
+
+            // Chuyển hướng đến trang đăng nhập với thông báo
+            return redirect("login")->withSuccess('Xác nhận email thành công! Bạn có thể đăng nhập vào tài khoản.');
+        } else {
+            // Token không hợp lệ
+            return redirect("login")->withErrors('Token không hợp lệ.');
+        }
+    }
     public function create(array $data)
     {
         return User::create([

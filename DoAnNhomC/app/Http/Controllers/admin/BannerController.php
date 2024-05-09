@@ -13,6 +13,8 @@ class BannerController extends Controller
         $banner = Banner::paginate(5);
         return view('admin.banner.listbanner', compact('banner'));
     }
+
+    
     public function customAddBanner(Request $request) {
         $request->validate([
             'name' => 'required|unique:banners,name_banner',
@@ -75,6 +77,8 @@ class BannerController extends Controller
         $banner->delete();
         return redirect()->route('admin.listbanner')->with('success', 'Banner đã được xóa thành công');
     }
+
+    
     public function updateBanner(Request $request)
     {
         $banner_id = $request->get('id');

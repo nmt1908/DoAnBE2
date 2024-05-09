@@ -88,6 +88,11 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::get('admin/searchproduct',[ProductController::class,'searchProduct'])->name('admin.searchProduct');
     //Banner routes
     Route::get('admin/banner',[BannerController::class,'adminListBanner'])->name('admin.listbanner');
+    Route::get('admin/addcbanner',[BannerController::class,'addBanner'])->name('admin.addbanner');
+    Route::post('custom-addbanner', [BannerController::class, 'customAddBanner'])->name('admin.customaddbanner');
+    Route::delete('/delete-banner/{id}', [BannerController::class, 'deleteBanner'])->name('admin.deletebanner');
+    Route::get('update-banner', [BannerController::class, 'updateBanner'])->name('admin.updateBanner');
+    Route::post('update-banner', [BannerController::class, 'postUpdateBanner'])->name('admin.postUpdateBanner');
 });
 // Route::get('/', function () {
 //     return view('user/dashboard');

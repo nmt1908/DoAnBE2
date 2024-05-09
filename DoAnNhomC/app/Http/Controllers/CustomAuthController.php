@@ -13,7 +13,7 @@ use App\Mail\PasswordResetMail;
 use App\Mail\VerifyEmail;
 use Carbon\Carbon; 
 use App\Models\PasswordResetToken;
-
+use App\Models\Banner;
 //Unknow
 class CustomAuthController extends Controller
 {
@@ -186,7 +186,8 @@ class CustomAuthController extends Controller
     {
         if(Auth::check()){
             $products = Product::all();
-            return view('user/dashboard', compact('products'));
+            $banners = Banner::all();
+            return view('user/dashboard', compact('products', 'banners'));
         }
         
         return redirect("login")->withSuccess('Bạn cần phải đăng nhập!');

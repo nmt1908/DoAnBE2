@@ -65,6 +65,8 @@
             <h2>Categories</h2>
         </div>           
         <div class="row pb-3">
+        @foreach ($categories as $category)
+        
             <div class="col-lg-3">
                 <div class="cat-card">
                     <div class="left">
@@ -72,104 +74,13 @@
                     </div>
                     <div class="right">
                         <div class="cat-data">
-                            <h2>Mens</h2>
+                            <h2>{{$category->name}}</h2>
                             <p>100 Products</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3">
-                <div class="cat-card">
-                    <div class="left">
-                        <img src="{{ asset('user-acess/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                    </div>
-                    <div class="right">
-                        <div class="cat-data">
-                            <h2>Mens</h2>
-                            <p>100 Products</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="cat-card">
-                    <div class="left">
-                        <img src="{{ asset('user-acess/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                    </div>
-                    <div class="right">
-                        <div class="cat-data">
-                            <h2>Mens</h2>
-                            <p>100 Products</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="cat-card">
-                    <div class="left">
-                        <img src="{{ asset('user-acess/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                    </div>
-                    <div class="right">
-                        <div class="cat-data">
-                            <h2>Mens</h2>
-                            <p>100 Products</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="cat-card">
-                    <div class="left">
-                        <img src="{{ asset('user-acess/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                    </div>
-                    <div class="right">
-                        <div class="cat-data">
-                            <h2>Mens</h2>
-                            <p>100 Products</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="cat-card">
-                    <div class="left">
-                        <img src="{{ asset('user-acess/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                    </div>
-                    <div class="right">
-                        <div class="cat-data">
-                            <h2>Mens</h2>
-                            <p>100 Products</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="cat-card">
-                    <div class="left">
-                        <img src="{{ asset('user-acess/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                    </div>
-                    <div class="right">
-                        <div class="cat-data">
-                            <h2>Mens</h2>
-                            <p>100 Products</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="cat-card">
-                    <div class="left">
-                        <img src="{{ asset('user-acess/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                    </div>
-                    <div class="right">
-                        <div class="cat-data">
-                            <h2>Mens</h2>
-                            <p>100 Products</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @endforeach
     </div>
 </section>
 <section class="section-4 pt-5">

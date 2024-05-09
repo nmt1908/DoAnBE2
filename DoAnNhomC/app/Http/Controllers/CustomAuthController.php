@@ -14,6 +14,8 @@ use App\Mail\VerifyEmail;
 use Carbon\Carbon; 
 use App\Models\PasswordResetToken;
 use App\Models\Banner;
+use App\Models\Categories;
+use App\Models\Brand;
 //Unknow
 class CustomAuthController extends Controller
 {
@@ -187,7 +189,9 @@ class CustomAuthController extends Controller
         if(Auth::check()){
             $products = Product::all();
             $banners = Banner::all();
-            return view('user/dashboard', compact('products', 'banners'));
+            $brand = Brand::all();
+            $categories = Categories::all();
+            return view('user/dashboard', compact('products', 'banners','brand','categories'));
         }
         
         return redirect("login")->withSuccess('Bạn cần phải đăng nhập!');

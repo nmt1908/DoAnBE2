@@ -118,4 +118,15 @@ class BannerController extends Controller
     
         return redirect()->route('admin.listbanner')->withSuccess('Sửa banner thành công!');
     }
+    public function searchBanner(Request $request){
+
+        $search = $request->input('search');
+        
+        // Thực hiện truy vấn để tìm kiếm người dùng
+        $banner = Banner::where('name_banner', 'like', "%$search%")
+                        ->orWhere('description_banner', 'like', "%$search%")
+                        ->paginate(5);
+        
+        return view('admin.banner.listbanner', compact('banner'));
+    }
 }

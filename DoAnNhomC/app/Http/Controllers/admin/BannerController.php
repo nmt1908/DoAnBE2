@@ -61,6 +61,7 @@ class BannerController extends Controller
     public function addBanner() {
         return view('admin.banner.addbanner');
     }
+    
     public function deleteBanner(Request $request, $id)
     {
         $banner = Banner::findOrFail($id);

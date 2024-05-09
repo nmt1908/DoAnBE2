@@ -93,6 +93,7 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::delete('/delete-banner/{id}', [BannerController::class, 'deleteBanner'])->name('admin.deletebanner');
     Route::get('update-banner', [BannerController::class, 'updateBanner'])->name('admin.updateBanner');
     Route::post('update-banner', [BannerController::class, 'postUpdateBanner'])->name('admin.postUpdateBanner');
+    Route::get('admin/searchbanner',[BannerController::class,'searchBanner'])->name('admin.searchBanner');
 });
 // Route::get('/', function () {
 //     return view('user/dashboard');

@@ -32,6 +32,9 @@ Route::post('change-password', [CustomAuthController::class, 'changePassword'])-
 Route::get('/cart',[CartController::class,'cart'])->name('user.cart');
 Route::post('/cart/add', [CartController::class, 'addCart'])->name('cart.add2');
 
+Route::get('/cart/total', [CartController::class, 'updateCart'])->name('total.product');
+Route::delete('/cart/delete/{id}', [CartController::class, 'deleteCart'])->name('cart.delete');
+
 
 
 

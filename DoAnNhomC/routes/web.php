@@ -10,6 +10,8 @@ use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\BrandController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\admin\BannerController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -84,6 +86,8 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::post('update-product', [ProductController::class, 'postUpdateProduct'])->name('admin.postUpdateProduct');
     Route::get('/product-images', [ProductController::class, 'getImage']);
     Route::get('admin/searchproduct',[ProductController::class,'searchProduct'])->name('admin.searchProduct');
+    //Banner routes
+    Route::get('admin/banner',[BannerController::class,'adminListBanner'])->name('admin.listbanner');
 });
 // Route::get('/', function () {
 //     return view('user/dashboard');

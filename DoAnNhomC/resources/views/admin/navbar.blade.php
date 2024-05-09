@@ -131,6 +131,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{ route('admin.listbanner') }}" class="nav-link">
+                            <i class="nav-icon  far fa-file-alt"></i>
+                            <p>Banner</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{ asset('admin-acess/pages.html') }}" class="nav-link">
                             <i class="nav-icon  far fa-file-alt"></i>
                             <p>Pages</p>

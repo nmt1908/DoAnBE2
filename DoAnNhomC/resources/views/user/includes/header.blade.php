@@ -58,13 +58,14 @@
 			</div>
 			<div class="col-lg-6 col-6 text-left  d-flex justify-content-end align-items-center">
 				<a href="{{route('accountProfile')}}" class="nav-link text-dark">Hi! {{ Auth::user()->name }}</a>
-				<form action="">					
+				<form action="{{ route('searchProduct') }}" method="GET">					
 					<div class="input-group">
-						<input type="text" placeholder="Search For Products" class="form-control" aria-label="Amount (to the nearest dollar)">
-						<span class="input-group-text">
+						<input type="text" id="search" name="search" placeholder="Search For Products" class="form-control" aria-label="Amount (to the nearest dollar)">
+						<button type="submit"><span class="input-group-text">
 							<i class="fa fa-search"></i>
-					  	</span>
+					  	</span></button>
 					</div>
+					
 				</form>
 			</div>		
 		</div>

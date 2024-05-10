@@ -100,6 +100,24 @@ class CustomAuthController extends Controller
         // Trả về view với sản phẩm đã được sắp xếp
         return view('user.shop', compact('brands','categories','products'));
     }
+    public function searchProduct(Request $request) {
+        $search = $request->input('search');
+        $brands = Brand::all(); 
+        $categories = Categories::all(); 
+        // Thực hiện truy vấn để tìm kiếm người dùng
+        $products = Product::where('product_name', 'like', "%$search%")
+                        ->orWhere('price', 'like', "%$search%")
+                        ->orWhere('description', 'like', "%$search%")
+                        ->orWhereHas('category', function ($query) use ($search) {
+                            $query->where('name', 'like', "%$search%");
+                        })
+                        ->orWhereHas('brand', function ($query) use ($search) {
+                            $query->where('name', 'like', "%$search%");
+                        })
+                        ->paginate(5);
+    
+        return view('user.shop', compact('brands','categories','products'));
+    }
     public function goForgotPassword()
     {
         return view('auth.forgotpassword');

@@ -83,6 +83,23 @@ class CustomAuthController extends Controller
         })->paginate(3);
         return view('user.shop', compact('brands','categories','products'));
     }
+    public function sortByPrice(Request $request, $type)
+    {
+        $brands = Brand::all(); 
+        $categories = Categories::all(); 
+        // Kiểm tra loại sắp xếp được yêu cầu
+        if ($type == 'asc') {
+            $products = Product::orderBy('price')->paginate(10);
+        } elseif ($type == 'desc') {
+            $products = Product::orderByDesc('price')->paginate(10);
+        } else {
+            // Xử lý trường hợp không hợp lệ hoặc mặc định
+            $products = Product::paginate(10);
+        }
+
+        // Trả về view với sản phẩm đã được sắp xếp
+        return view('user.shop', compact('brands','categories','products'));
+    }
     public function goForgotPassword()
     {
         return view('auth.forgotpassword');

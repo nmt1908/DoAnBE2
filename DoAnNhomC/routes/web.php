@@ -46,6 +46,7 @@ Route::get('/verify-email', [CustomAuthController::class, 'verifyEmail'])->name(
 Route::get('shop', [CustomAuthController::class, 'showProductOnShop'])->name('goToShop');
 Route::get('shop/by-brand/{brandId}', [CustomAuthController::class, 'showProductOnShopByBrand'])->name('products.by.brand');
 Route::get('shop/by-category/{categoryId}', [CustomAuthController::class, 'showProductOnShopByCategory'])->name('products.by.category');
+Route::get('shop/sort/{type}', [CustomAuthController::class, 'sortByPrice'])->name('products.sortbyprice');
 
 
 

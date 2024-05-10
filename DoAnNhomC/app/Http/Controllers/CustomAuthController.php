@@ -75,6 +75,14 @@ class CustomAuthController extends Controller
         })->paginate(3);
         return view('user.shop', compact('brands','categories','products'));
     }
+    public function showProductOnShopByCategory($categoryId) {
+        $brands = Brand::all(); 
+        $categories = Categories::all(); 
+        $products = Product::whereHas('category', function ($query) use ($categoryId) {
+            $query->where('id', $categoryId);
+        })->paginate(3);
+        return view('user.shop', compact('brands','categories','products'));
+    }
     public function goForgotPassword()
     {
         return view('auth.forgotpassword');

@@ -24,83 +24,27 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="accordion accordion-flush" id="accordionExample">
+                            @foreach($categories as $category)
                                 <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingOne">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                            Electronics
+                                    <h2 class="accordion-header" id="heading{{$category->id}}">
+                                        <button onclick="window.location=''" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$category->id}}" aria-expanded="true" aria-controls="collapse{{$category->id}}">
+                                            {{$category->name}}
                                         </button>
                                     </h2>
-                                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
+                                    <div id="collapse{{$category->id}}" class="accordion-collapse collapse show" aria-labelledby="heading{{$category->id}}" data-bs-parent="#accordionExample" style="">
                                         <div class="accordion-body">
                                             <div class="navbar-nav">
-                                                <a href="" class="nav-item nav-link">Mobile</a>
-                                                <a href="" class="nav-item nav-link">Tablets</a>
-                                                <a href="" class="nav-item nav-link">Laptops</a>
-                                                <a href="" class="nav-item nav-link">Speakers</a>
-                                                <a href="" class="nav-item nav-link">Watches</a>                                            
+                                                @foreach($category->products as $product)
+                                                    <a href="" class="nav-item nav-link">{{$product->product_name}}</a>
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
-                                </div>  
+                                </div>
+                            @endforeach
 
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingOne">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                            Men's Fashion
-                                        </button>
-                                    </h2>
-                                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
-                                        <div class="accordion-body">
-                                            <div class="navbar-nav">
-                                                <a href="" class="nav-item nav-link">Shirts</a>
-                                                <a href="" class="nav-item nav-link">Jeans</a>
-                                                <a href="" class="nav-item nav-link">Shoes</a>
-                                                <a href="" class="nav-item nav-link">Watches</a>
-                                                <a href="" class="nav-item nav-link">Perfumes</a>                                            
-                                            </div>
-                                        </div>
-                                    </div>                                                              
-                                </div> 
-                                
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingOne">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                            Women's Fashion
-                                        </button>
-                                    </h2>
-                                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
-                                        <div class="accordion-body">
-                                            <div class="navbar-nav">
-                                                <a href="" class="nav-item nav-link">T-Shirts</a>
-                                                <a href="" class="nav-item nav-link">Tops</a>
-                                                <a href="" class="nav-item nav-link">Jeans</a>
-                                                <a href="" class="nav-item nav-link">Shoes</a>
-                                                <a href="" class="nav-item nav-link">Watches</a>
-                                                <a href="" class="nav-item nav-link">Perfumes</a>                                            
-                                            </div>
-                                        </div>
-                                    </div>                                                              
-                                </div> 
 
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingOne">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                            Applicances
-                                        </button>
-                                    </h2>
-                                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
-                                        <div class="accordion-body">
-                                            <div class="navbar-nav">
-                                                <a href="" class="nav-item nav-link">TV</a>
-                                                <a href="" class="nav-item nav-link">Washing Machines</a>
-                                                <a href="" class="nav-item nav-link">Air Conditioners</a>
-                                                <a href="" class="nav-item nav-link">Vacuum Cleaner</a>
-                                                <a href="" class="nav-item nav-link">Fans</a>
-                                                <a href="" class="nav-item nav-link">Air Coolers</a>                                            
-                                            </div>
-                                        </div>
-                                    </div>                                                              
-                                </div>                 
+                                               
                                                     
                             </div>
                         </div>
@@ -112,65 +56,17 @@
                     
                     <div class="card">
                         <div class="card-body">
+                            
+                            @foreach($brands as $brand)
                             <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    Canon
-                                </label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                <label class="form-check-label" for="flexCheckChecked">
-                                    Sony
-                                </label>
-                            </div>                 
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                <label class="form-check-label" for="flexCheckChecked">
-                                    Oppo
-                                </label>
+                                <a  href="{{ route('products.by.brand', $brand->id) }}" class="nav-item nav-link">{{$brand->name}}</a>
                             </div> 
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                <label class="form-check-label" for="flexCheckChecked">
-                                    Vivo
-                                </label>
-                            </div>                 
+                            @endforeach                
                         </div>
                     </div>
 
-                    <div class="sub-title mt-5">
-                        <h2>Price</h3>
-                    </div>
                     
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    $0-$100
-                                </label>
-                            </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                <label class="form-check-label" for="flexCheckChecked">
-                                    $100-$200
-                                </label>
-                            </div>                 
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                <label class="form-check-label" for="flexCheckChecked">
-                                    $200-$500
-                                </label>
-                            </div> 
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                <label class="form-check-label" for="flexCheckChecked">
-                                    $500+
-                                </label>
-                            </div>                 
-                        </div>
-                    </div>
+                    
                 </div>
                 <div class="col-md-9">
                     <div class="row pb-3">
@@ -228,4 +124,18 @@
         </div>
     </section>
 </main>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var checkboxes = document.querySelectorAll('.form-check-input');
+
+        checkboxes.forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    var brandId = this.value;
+                    window.location.href = "{{ route('products.by.brand', ':brandId') }}".replace(':brandId', brandId);
+                }
+            });
+        });
+    });
+</script>
 @endsection

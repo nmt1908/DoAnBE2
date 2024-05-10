@@ -43,6 +43,7 @@ Route::post('change-password', [CustomAuthController::class, 'changePassword'])-
 Route::get('/cart',[CartController::class,'cart'])->name('user.cart');
 Route::post('/add-to-cart',[CartController::class,'addToCart'])->name('user.addToCart');
 Route::get('/verify-email', [CustomAuthController::class, 'verifyEmail'])->name('verify.email');
+Route::get('shop', [CustomAuthController::class, 'showProductOnShop'])->name('goToShop');
 
 
 

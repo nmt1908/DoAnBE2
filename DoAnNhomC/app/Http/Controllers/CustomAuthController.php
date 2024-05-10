@@ -60,6 +60,12 @@ class CustomAuthController extends Controller
         return view('admin/dashboard');
         
     }
+    public function showProductOnShop()
+    {
+        $products=Product::paginate(3);
+        return view('user.shop',compact('products'));
+    }
+    
     public function goForgotPassword()
     {
         return view('auth.forgotpassword');

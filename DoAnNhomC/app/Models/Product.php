@@ -22,7 +22,7 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsTo(Categories::class, 'id');
+        return $this->belongsTo(Categories::class);
     }
 
     public function brand()

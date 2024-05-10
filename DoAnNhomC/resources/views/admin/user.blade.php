@@ -12,6 +12,30 @@
         {{ session('error') }}
     </div>
 @endif
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var successAlert = document.querySelector('.alert-danger');
+
+        if (successAlert) {
+            
+            setTimeout(function () {
+                successAlert.style.display = 'none'; 
+            }, 3000); 
+        }
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var successAlert = document.querySelector('.alert-success');
+
+        if (successAlert) {
+            
+            setTimeout(function () {
+                successAlert.style.display = 'none'; 
+            }, 3000); 
+        }
+    });
+</script>
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <div class="container-fluid my-2">

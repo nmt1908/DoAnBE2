@@ -69,7 +69,7 @@
     <div class="col-lg-3">
         <div class="cat-card">
             <div class="left">
-                <img src="{{ asset('category-image/images/' . $category->image) }}" alt="" class="img-fluid">
+                <img src="{{ asset('category-image/images/' . $category->image) }}"  alt="" class="img-fluid">
             </div>
             <div class="right">
                 <div class="cat-data">

@@ -45,6 +45,7 @@ Route::post('/add-to-cart',[CartController::class,'addToCart'])->name('user.addT
 Route::get('/verify-email', [CustomAuthController::class, 'verifyEmail'])->name('verify.email');
 Route::get('shop', [CustomAuthController::class, 'showProductOnShop'])->name('goToShop');
 Route::get('shop/by-brand/{brandId}', [CustomAuthController::class, 'showProductOnShopByBrand'])->name('products.by.brand');
+Route::get('shop/by-category/{categoryId}', [CustomAuthController::class, 'showProductOnShopByCategory'])->name('products.by.category');
 
 
 

@@ -27,7 +27,7 @@
                             @foreach($categories as $category)
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="heading{{$category->id}}">
-                                        <button onclick="window.location=''" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$category->id}}" aria-expanded="true" aria-controls="collapse{{$category->id}}">
+                                        <button onclick="window.location='{{ route('products.by.category', ['categoryId' => $category->id]) }}'" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$category->id}}" aria-expanded="true" aria-controls="collapse{{$category->id}}">
                                             {{$category->name}}
                                         </button>
                                     </h2>

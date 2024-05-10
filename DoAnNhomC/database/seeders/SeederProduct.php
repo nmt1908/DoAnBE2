@@ -18,8 +18,8 @@ class SeederProduct extends Seeder
             'description' => 'Sản phẩm mới ra mắt của hãng Apple, với thiết kế sang trọng quý phái phù hợp với người có tiền nhiều...',
             'quantity' => 10 ,
             'is_featured' => 1 ,
-            'category_id' => 8 ,
-            'brand_id' => 12 ,
+            'category_id' => 1 ,
+            'brand_id' => 5 ,
             'status' => 1,
         ]);
         DB::table('products')->insert([
@@ -28,8 +28,8 @@ class SeederProduct extends Seeder
             'description' => 'Sản phẩm mới ra mắt của hãng Samsung, với thiết kế mới kèm bút thông minh...',
             'quantity' => 10 ,
             'is_featured' => 1 ,
-            'category_id' => 8 ,
-            'brand_id' => 10 ,
+            'category_id' => 1 ,
+            'brand_id' => 3 ,
             'status' => 1,
         ]);
         DB::table('products')->insert([
@@ -38,8 +38,8 @@ class SeederProduct extends Seeder
             'description' => 'Sản phẩm mới ra mắt của hãng Oppo, với thiết kế camera mới chụp hình siêu nét...',
             'quantity' => 10 ,
             'is_featured' => 1 ,
-            'category_id' => 8 ,
-            'brand_id' => 11 ,
+            'category_id' => 1 ,
+            'brand_id' => 4 ,
             'status' => 1,
         ]);
         DB::table('products')->insert([
@@ -48,8 +48,8 @@ class SeederProduct extends Seeder
             'description' => 'Sản phẩm mới ra mắt của hãng LG, với kích thước 55inch độ phân giải 4K, xem CR7 đá banh thì hết nói...',
             'quantity' => 10 ,
             'is_featured' => 1 ,
-            'category_id' => 11 ,
-            'brand_id' => 13 ,
+            'category_id' => 4 ,
+            'brand_id' => 6 ,
             'status' => 1,
         ]);
     }

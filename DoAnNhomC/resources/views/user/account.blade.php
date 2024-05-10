@@ -28,21 +28,31 @@
         <div class="container  mt-5">
             <div class="row">
                 <div class="col-md-3">
-                    <ul id="account-panel" class="nav nav-pills flex-column" >
+                    <ul id="account-panel" class="nav nav-pills flex-column">
                         <li class="nav-item">
-                            <a href="{{route('accountProfile')}}"  class="nav-link font-weight-bold" role="tab" aria-controls="tab-login" aria-expanded="false"><i class="fas fa-user-alt"></i> My Profile</a>
+                            <a href="{{route('accountProfile')}}" class="nav-link font-weight-bold" role="tab"
+                                aria-controls="tab-login" aria-expanded="false"><i class="fas fa-user-alt"></i> My
+                                Profile</a>
                         </li>
                         <li class="nav-item">
-                            <a href="my-orders.php"  class="nav-link font-weight-bold" role="tab" aria-controls="tab-register" aria-expanded="false"><i class="fas fa-shopping-bag"></i>My Orders</a>
+                            <a href="my-orders.php" class="nav-link font-weight-bold" role="tab"
+                                aria-controls="tab-register" aria-expanded="false"><i class="fas fa-shopping-bag"></i>My
+                                Orders</a>
                         </li>
                         <li class="nav-item">
-                            <a href="wishlist.php"  class="nav-link font-weight-bold" role="tab" aria-controls="tab-register" aria-expanded="false"><i class="fas fa-heart"></i> Wishlist</a>
+                            <a href="wishlist.php" class="nav-link font-weight-bold" role="tab"
+                                aria-controls="tab-register" aria-expanded="false"><i class="fas fa-heart"></i>
+                                Wishlist</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('change-passwordPage')}}"  class="nav-link font-weight-bold" role="tab" aria-controls="tab-register" aria-expanded="false"><i class="fas fa-lock"></i> Change Password</a>
+                            <a href="{{route('change-passwordPage')}}" class="nav-link font-weight-bold" role="tab"
+                                aria-controls="tab-register" aria-expanded="false"><i class="fas fa-lock"></i> Change
+                                Password</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('signout')}}" class="nav-link font-weight-bold" role="tab" aria-controls="tab-register" aria-expanded="false"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                            <a href="{{route('signout')}}" class="nav-link font-weight-bold" role="tab"
+                                aria-controls="tab-register" aria-expanded="false"><i class="fas fa-sign-out-alt"></i>
+                                Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -51,7 +61,36 @@
                         <div class="card-header">
                             <h2 class="h5 mb-0 pt-2 pb-2">Personal Information</h2>
                         </div>
-                        <div class="card-body p-4">
+                        <div class="card-body p-4 personal-info"> <!-- Thêm class personal-info vào đây -->
+                            <div class="row">
+                                <div class="col-md-12 text-center"> <!-- Thêm class text-center để căn giữa theo chiều ngang -->
+                                    <div class="mb-3">
+                                        <td>
+                                            <img src="{{ asset('user-image/images/' . $user->img) }}" alt="Avatar" class="rounded-circle avatar">
+                                        </td>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="name">Name: {{ $user->name }}</label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="email">Email: {{ $user->email }}</label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="phone">Phone: {{ $user->phone }}</label>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="phone">Address: {{$user->address}}</label>
+                                    </div>
+
+                                    <div class="d-flex justify-content-center"> <!-- Thay đổi class d-flex thành justify-content-center để căn giữa theo chiều ngang -->
+                                        <button class="btn btn-dark">Cập nhật Profile</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="card-body p-4">
                             <div class="row">
                                 <div class="mb-3">               
                                     <label for="name">Name</label>
@@ -75,7 +114,7 @@
                                     <button class="btn btn-dark">Update</button>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -83,3 +122,9 @@
     </section>
 </main>
 @endsection
+
+
+
+
+
+

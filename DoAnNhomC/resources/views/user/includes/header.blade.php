@@ -198,6 +198,7 @@
 <script src="{{ asset('user-acess/js/lazyload.17.6.0.min.js') }}"></script>
 <script src="{{ asset('user-acess/js/slick.min.js') }}"></script>
 <script src="{{ asset('user-acess/js/custom.js') }}"></script>
+
 <script>
 window.onscroll = function() {myFunction()};
 

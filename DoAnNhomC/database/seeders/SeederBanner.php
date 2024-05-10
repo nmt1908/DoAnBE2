@@ -16,7 +16,7 @@ class SeederBanner extends Seeder
         DB::table('banners')->insert([
             'img_banner' => 'banner1.jpg',
             'name_banner' => 'Giảm giá Samsung',
-            'description_banner' => 'Samsung đang có chương trình mua 2 được 5 tính tiền 7 =))',
+            'description_banner' => 'Samsung đang có chương trình mua 2 tặng 5 tính tiền 7 =))',
             'status' => 1 
         ]);
         DB::table('banners')->insert([

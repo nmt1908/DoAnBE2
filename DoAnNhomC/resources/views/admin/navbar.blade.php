@@ -88,12 +88,6 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ asset('admin-acess/subcategory.html') }}" class="nav-link">
-                            <i class="nav-icon fas fa-file-alt"></i>
-                            <p>Sub Category</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a href="{{ route('admin.listBrand') }}" class="nav-link">
                             <i class="fas fa-layer-group nav-icon"></i>
                             <p>Brand</p>
@@ -103,13 +97,6 @@
                         <a href="{{ route('admin.listProduct') }}" class="nav-link">
                             <i class="nav-icon fas fa-tag"></i>
                             <p>Products</p>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="fas fa-truck nav-icon"></i>
-                            <p>Shipping</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -137,7 +124,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ asset('admin-acess/pages.html') }}" class="nav-link">
+                        <a href="{{ route('admin.listpage') }}" class="nav-link">
                             <i class="nav-icon  far fa-file-alt"></i>
                             <p>Pages</p>
                         </a>

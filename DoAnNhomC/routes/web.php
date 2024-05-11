@@ -11,6 +11,7 @@ use App\Http\Controllers\admin\BrandController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\admin\BannerController;
+use App\Http\Controllers\admin\PagesController;
 
 
 /*
@@ -80,6 +81,7 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::get('update-brand', [BrandController::class, 'updateBrand'])->name('admin.updateBrand');
     Route::post('update-brand', [BrandController::class, 'postUpdateBrand'])->name('admin.postUpdateBrand');
     Route::get('admin/searchbrand',[BrandController::class,'searchBrand'])->name('admin.searchBrand');
+
     //Brand products
     Route::get('admin/product',[ProductController::class,'adminListProduct'])->name('admin.listProduct');
     Route::get('admin/addproduct',[ProductController::class,'addProduct'])->name('admin.addProduct');
@@ -89,6 +91,7 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::post('update-product', [ProductController::class, 'postUpdateProduct'])->name('admin.postUpdateProduct');
     Route::get('/product-images', [ProductController::class, 'getImage']);
     Route::get('admin/searchproduct',[ProductController::class,'searchProduct'])->name('admin.searchProduct');
+
     //Banner routes
     Route::get('admin/banner',[BannerController::class,'adminListBanner'])->name('admin.listbanner');
     Route::get('admin/addcbanner',[BannerController::class,'addBanner'])->name('admin.addbanner');
@@ -97,6 +100,10 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::get('update-banner', [BannerController::class, 'updateBanner'])->name('admin.updateBanner');
     Route::post('update-banner', [BannerController::class, 'postUpdateBanner'])->name('admin.postUpdateBanner');
     Route::get('admin/searchbanner',[BannerController::class,'searchBanner'])->name('admin.searchBanner');
+
+    //Page router
+    Route::get('admin/page',[PagesController::class,'adminListPage'])->name('admin.listpage');
+
 });
 // Route::get('/', function () {
 //     return view('user/dashboard');

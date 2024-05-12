@@ -96,6 +96,41 @@
                     <span class="text-danger">{{ $errors->first('password') }}</span>
                 @endif
             </div>
+            <div class="input">
+                <div class="input-addon">
+                    <i class="material-icons">phone</i>
+                </div>
+                <input type="text" placeholder="Phone" id="phone" name="phone" required class="validate" autocomplete="off">
+                @if ($errors->has('phone'))
+                    <span class="text-danger">{{ $errors->first('phone') }}</span>
+                @endif
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="input">
+                <div class="input-addon">
+                    <i class="material-icons">image</i>
+                </div>
+                <input type="file" id="img" name="img" required class="validate" accept="image/*" onchange="previewImage(event)">
+                @if ($errors->has('img'))
+                    <span class="text-danger">{{ $errors->first('img') }}</span>
+                @endif
+            </div>
+
+            <div id="imagePreview" style="max-width:100%; max-height:200px; padding-top:20px;"></div>
+
+            <div class="clearfix"></div>
+
+            <div class="input">
+                <div class="input-addon">
+                    <i class="material-icons">location_on</i>
+                </div>
+                <input type="text" placeholder="Address" id="address" name="address" required class="validate" autocomplete="off">
+                @if ($errors->has('address'))
+                    <span class="text-danger">{{ $errors->first('address') }}</span>
+                @endif
+            </div>
 
             <div class="remember-me">
                 <input type="checkbox" id="terms_checkbox">
@@ -120,6 +155,19 @@
                 return false;
             }
             return true;
+        }
+    </script>
+    <script>
+        function previewImage(event) {
+            var file = event.target.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    var imagePreview = document.getElementById('imagePreview');
+                    imagePreview.innerHTML = '<img src="' + event.target.result + '" style="max-width:100%; max-height:200px;" />';
+                };
+                reader.readAsDataURL(file);
+            }
         }
     </script>
 </body>

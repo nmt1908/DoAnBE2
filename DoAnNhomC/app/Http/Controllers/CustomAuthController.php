@@ -194,28 +194,97 @@ class CustomAuthController extends Controller
         // $check = $this->create($data);
 
         // return redirect("login")->withSuccess('Đăng kí thành công! Bạn có thể đăng nhập vào tài khoản');
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
-        ]);
+        /////////////////////////////////////////////
+        // $request->validate([
+        //     'name' => 'required',
+        //     'email' => 'required|email|unique:users',
+        //     'password' => 'required|min:6',
+        // ]);
     
-        // Tạo mới user
-        $user = $this->create($request->all());
+        // // Tạo mới user
+        // $user = $this->create($request->all());
     
-        // Tạo token xác nhận
-        $token = Str::random(60); // Sử dụng Illuminate\Support\Str;
+        // // Tạo token xác nhận
+        // $token = Str::random(60); // Sử dụng Illuminate\Support\Str;
     
-        // Lưu token vào cột remember_token
-        $user->forceFill([
-            'remember_token' => $token,
-        ])->save();
+        // // Lưu token vào cột remember_token
+        // $user->forceFill([
+        //     'remember_token' => $token,
+        // ])->save();
     
-        // Gửi email xác nhận
-        Mail::to($user->email)->send(new VerifyEmail($token));
+        // // Gửi email xác nhận
+        // Mail::to($user->email)->send(new VerifyEmail($token));
     
-        // Chuyển hướng đến trang đăng nhập với thông báo
-        return redirect("login")->withSuccess('Đăng kí thành công! Vui lòng kiểm tra email để xác nhận.');
+        // // Chuyển hướng đến trang đăng nhập với thông báo
+        // return redirect("login")->withSuccess('Đăng kí thành công! Vui lòng kiểm tra email để xác nhận.');
+        //
+        // $request->validate([
+        //     'name' => 'required',
+        //     'email' => 'required|email|unique:users',
+        //     'password' => 'required|min:6',
+        //     'phone' => 'required|regex:/^[0-9]{1,15}$/',
+        //     'img' => 'required',
+        //     'address' => 'required|max:100',
+        // ]);
+    
+        // $user = $this->create($request->only('name', 'email', 'password', 'phone', 'img', 'address'));
+        // $token = Str::random(60);
+    
+        // $user->forceFill([
+        //     'remember_token' => $token,
+        // ])->save();
+    
+        // Mail::to($user->email)->send(new VerifyEmail($token));
+    
+        // return redirect("login")->withSuccess('Đăng kí thành công! Vui lòng kiểm tra email để xác nhận.');
+        ///
+        // Validate the incoming request data
+    $request->validate([
+        'name' => 'required',
+        'email' => 'required|email|unique:users',
+        'password' => [
+            'required',
+            'string',
+            'min:6',
+            'max:24',
+            'regex:/^(?=.*[A-Z])(?=.*\d).+$/',
+        ],
+        'phone' => 'required|regex:/^[0-9]{1,15}$/',
+        'img' => 'required',
+        'address' => 'required|max:100',
+    ], [
+        // Custom error messages for each validation rule
+        'name.required' => 'Trường tên là bắt buộc.',
+        'email.required' => 'Trường email là bắt buộc.',
+        'email.email' => 'Email phải là một địa chỉ email hợp lệ.',
+        'email.unique' => 'Email đã tồn tại trong hệ thống.',
+        'password.required' => 'Trường mật khẩu là bắt buộc.',
+        'password.min' => 'Mật khẩu phải có ít nhất :min ký tự.',
+        'password.max' => 'Mật khẩu tối đa có :max ký tự.',
+        'password.regex' => 'Mật khẩu phải chứa ít nhất một chữ cái viết hoa hoặc một số.',
+        'phone.required' => 'Trường số điện thoại là bắt buộc.',
+        'phone.regex' => 'Số điện thoại không hợp lệ.',
+        'img.required' => 'Trường ảnh là bắt buộc.',
+        'address.required' => 'Trường địa chỉ là bắt buộc.',
+        'address.max' => 'Địa chỉ không được vượt quá :max ký tự.',
+    ]);
+
+    // Tạo mới user
+    $user = $this->create($request->only('name', 'email', 'password', 'phone', 'img', 'address'));
+
+    // Tạo token xác nhận
+    $token = Str::random(60);
+
+    // Lưu token vào cột remember_token
+    $user->forceFill([
+        'remember_token' => $token,
+    ])->save();
+
+    // Gửi email xác nhận
+    Mail::to($user->email)->send(new VerifyEmail($token));
+
+    // Chuyển hướng đến trang đăng nhập với thông báo
+    return redirect("login")->withSuccess('Đăng kí thành công! Vui lòng kiểm tra email để xác nhận.');
     }
     public function verifyEmail(Request $request)
     {
@@ -239,7 +308,10 @@ class CustomAuthController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password'])
+            'password' => Hash::make($data['password']),
+            'phone' => $data['phone'],
+            'img' => $data['img'],
+            'address' => $data['address'],
         ]);
     }
 
@@ -272,9 +344,6 @@ class CustomAuthController extends Controller
     }
     public function showChangePasswordForm(Request $request)
     {
-        // Xử lý thay đổi mật khẩu ở đây
-
-        // Sau khi thay đổi mật khẩu thành công, chuyển hướng người dùng đến một trang khác
         return view('user.change-password');
     }
     public function changePassword(Request $request)

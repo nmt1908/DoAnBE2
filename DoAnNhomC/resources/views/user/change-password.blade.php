@@ -12,6 +12,30 @@
         {{ session('error') }}
     </div>
 @endif
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var successAlert = document.querySelector('.alert-danger');
+
+        if (successAlert) {
+            
+            setTimeout(function () {
+                successAlert.style.display = 'none'; 
+            }, 3000); 
+        }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var successAlert = document.querySelector('.alert-success');
+
+            if (successAlert) {
+                
+                setTimeout(function () {
+                    successAlert.style.display = 'none'; 
+                }, 3000); 
+            }
+        });
+    </script>
 <main>
     <section class="section-5 pt-3 pb-3 mb-3 bg-white">
         <div class="container">

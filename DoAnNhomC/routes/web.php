@@ -1,5 +1,6 @@
 <?php
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PasswordResetMail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\PageController;
@@ -9,6 +10,9 @@ use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\BrandController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\admin\BannerController;
+use App\Http\Controllers\admin\PagesController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +25,14 @@ use App\Http\Controllers\CartController;
 |
 */
 Route::get('dashboard', [CustomAuthController::class, 'dashboard'])->name('dashboard');
+Route::get('mail', function () {
+    Mail::to('ducmanh2017vtel@gmail.com')->send(new PasswordResetMail);
+    // return view('user/dashboard');
+});
+Route::get('reset-password/{token}', [CustomAuthController::class, 'showResetPasswordForm'])->name('reset-password');
+Route::post('reset-password', [CustomAuthController::class, 'resetPassword'])->name('reset-password.post');
+Route::get('forgotpassword', [CustomAuthController::class, 'goForgotPassword'])->name('goforgotpassword');
+Route::post('forgotpassword', [CustomAuthController::class, 'forgotPassword'])->name('forgotpassword');
 Route::get('login', [CustomAuthController::class, 'index'])->name('login')->middleware('checkLogin');
 Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name('login.custom');
 Route::get('registration', [CustomAuthController::class, 'registration'])->name('register-user');
@@ -30,11 +42,19 @@ Route::get('account', [PageController::class, 'accountProfile'])->name('accountP
 Route::get('change-password', [CustomAuthController::class, 'showChangePasswordForm'])->name('change-passwordPage');
 Route::post('change-password', [CustomAuthController::class, 'changePassword'])->name('change-password');
 Route::get('/cart',[CartController::class,'cart'])->name('user.cart');
+
 Route::post('/cart/add', [CartController::class, 'addCart'])->name('cart.add2');
 
 Route::get('/cart/total', [CartController::class, 'updateCart'])->name('total.product');
 Route::delete('/cart/delete/{id}', [CartController::class, 'deleteCart'])->name('cart.delete');
 
+Route::post('/add-to-cart',[CartController::class,'addToCart'])->name('user.addToCart');
+Route::get('/verify-email', [CustomAuthController::class, 'verifyEmail'])->name('verify.email');
+Route::get('shop', [CustomAuthController::class, 'showProductOnShop'])->name('goToShop');
+Route::get('shop/by-brand/{brandId}', [CustomAuthController::class, 'showProductOnShopByBrand'])->name('products.by.brand');
+Route::get('shop/by-category/{categoryId}', [CustomAuthController::class, 'showProductOnShopByCategory'])->name('products.by.category');
+Route::get('shop/sort/{type}', [CustomAuthController::class, 'sortByPrice'])->name('products.sortbyprice');
+Route::get('shop/search',[CustomAuthController::class,'searchProduct'])->name('searchProduct');
 
 
 
@@ -68,6 +88,7 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::get('update-brand', [BrandController::class, 'updateBrand'])->name('admin.updateBrand');
     Route::post('update-brand', [BrandController::class, 'postUpdateBrand'])->name('admin.postUpdateBrand');
     Route::get('admin/searchbrand',[BrandController::class,'searchBrand'])->name('admin.searchBrand');
+
     //Brand products
     Route::get('admin/product',[ProductController::class,'adminListProduct'])->name('admin.listProduct');
     Route::get('admin/addproduct',[ProductController::class,'addProduct'])->name('admin.addProduct');
@@ -77,6 +98,23 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::post('update-product', [ProductController::class, 'postUpdateProduct'])->name('admin.postUpdateProduct');
     Route::get('/product-images', [ProductController::class, 'getImage']);
     Route::get('admin/searchproduct',[ProductController::class,'searchProduct'])->name('admin.searchProduct');
+
+    //Banner routes
+    Route::get('admin/banner',[BannerController::class,'adminListBanner'])->name('admin.listbanner');
+    Route::get('admin/addcbanner',[BannerController::class,'addBanner'])->name('admin.addbanner');
+    Route::post('custom-addbanner', [BannerController::class, 'customAddBanner'])->name('admin.customaddbanner');
+    Route::delete('/delete-banner/{id}', [BannerController::class, 'deleteBanner'])->name('admin.deletebanner');
+    Route::get('update-banner', [BannerController::class, 'updateBanner'])->name('admin.updateBanner');
+    Route::post('update-banner', [BannerController::class, 'postUpdateBanner'])->name('admin.postUpdateBanner');
+    Route::get('admin/searchbanner',[BannerController::class,'searchBanner'])->name('admin.searchBanner');
+
+    //Page router
+    Route::get('admin/page',[PagesController::class,'adminListPage'])->name('admin.listpage');
+    Route::get('admin/addcpage',[PagesController::class,'addPage'])->name('admin.addPage');
+    Route::post('custom-addpage', [PagesController::class, 'customAddPage'])->name('admin.customaddpage');
+    Route::delete('/delete-page/{id}', [PagesController::class, 'deletePage'])->name('admin.deletePage');
+    Route::get('update-page', [PagesController::class, 'updatePage'])->name('admin.updatePage');
+    Route::post('update-page', [PagesController::class, 'postUpdatePage'])->name('admin.postUpdatePage');
 });
 // Route::get('/', function () {
 //     return view('user/dashboard');

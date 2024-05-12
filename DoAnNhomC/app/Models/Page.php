@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Categories extends Model
+class Page extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
+     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -19,12 +19,7 @@ class Categories extends Model
     protected $fillable = [
         'name',
         'slug',
-        'image',
-        'status',
-
+        'content',
     ];
-    public function products()
-    {
-        return $this->hasMany(Product::class, 'category_id');
-    }
+
 }

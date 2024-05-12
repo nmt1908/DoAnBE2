@@ -12,6 +12,30 @@
         {{ session('error') }}
     </div>
 @endif
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var successAlert = document.querySelector('.alert-danger');
+
+        if (successAlert) {
+            
+            setTimeout(function () {
+                successAlert.style.display = 'none'; 
+            }, 3000); 
+        }
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var successAlert = document.querySelector('.alert-success');
+
+        if (successAlert) {
+            
+            setTimeout(function () {
+                successAlert.style.display = 'none'; 
+            }, 3000); 
+        }
+    });
+</script>
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <div class="container-fluid my-2">
@@ -71,7 +95,7 @@
                             <td>{{ $user->phone }}</td>
                             <td>{{ $user->gender }}</td>
                             <td>
-                                @if($user->status == 'active')
+                                @if($user->status == '1')
                                 <svg class="text-success-500 h-6 w-6 text-success" xmlns="http://www.w3.org/2000/svg"
                                     fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                     aria-hidden="true">

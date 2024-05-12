@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('gender')->nullable();
             $table->tinyInteger('role')->default(0);
+            $table->integer('status')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });

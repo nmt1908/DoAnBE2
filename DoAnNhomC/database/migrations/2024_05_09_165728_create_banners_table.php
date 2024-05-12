@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('password_reset_tokens', function (Blueprint $table) {
+        Schema::create('banners', function (Blueprint $table) {
             $table->id();
-            $table->string('email', 255)->unique(); // Thêm độ dài tối đa
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
+            $table->string('img_banner'); 
+            $table->string('name_banner');
+            $table->string('description_banner');
+            $table->integer('status')->default(1);
+            $table->timestamps();
         });
     }
 
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('password_reset_tokens');
+        Schema::dropIfExists('banners');
     }
 };

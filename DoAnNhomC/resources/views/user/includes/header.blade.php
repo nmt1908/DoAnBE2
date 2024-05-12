@@ -73,6 +73,21 @@
 					</form>
 				</div>
 			</div>
+				</a>
+			</div>
+			<div class="col-lg-6 col-6 text-left  d-flex justify-content-end align-items-center">
+				<a href="{{route('accountProfile')}}" class="nav-link text-dark">Hi! {{ Auth::user()->name }}</a>
+				<form action="{{ route('searchProduct') }}" method="GET">					
+					<div class="input-group">
+						<input type="text" id="search" name="search" placeholder="Search For Products" class="form-control" aria-label="Amount (to the nearest dollar)">
+						<button type="submit"><span class="input-group-text">
+							<i class="fa fa-search"></i>
+					  	</span></button>
+					</div>
+					
+				</form>
+			</div>		
+		</div>
 		</div>
 	</div>
 
@@ -129,19 +144,45 @@
 							</ul>
 						</li>
 
-						<li class="nav-item dropdown">
-							<button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-								Appliances
-							</button>
-							<ul class="dropdown-menu dropdown-menu-dark">
-								<li><a class="dropdown-item" href="#">TV</a></li>
-								<li><a class="dropdown-item" href="#">Washing Machines</a></li>
-								<li><a class="dropdown-item" href="#">Air Conditioners</a></li>
-								<li><a class="dropdown-item" href="#">Vacuum Cleaner</a></li>
-								<li><a class="dropdown-item" href="#">Fans</a></li>
-								<li><a class="dropdown-item" href="#">Air Coolers</a></li>
-							</ul>
-						</li>
+					<li class="nav-item dropdown">
+						<button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+							Electronics
+						</button>
+						<ul class="dropdown-menu dropdown-menu-dark">
+							<li><a class="dropdown-item nav-link" href="#">Phone</a></li>
+							<li><a class="dropdown-item nav-link" href="#">Laptops</a></li>
+							<li><a class="dropdown-item nav-link" href="#">Speakers</a></li>
+						</ul>
+					</li>
+					<li class="nav-item dropdown">
+						<button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+							Men's Fashion
+						</button>
+						<ul class="dropdown-menu dropdown-menu-dark">
+							<li><a class="dropdown-item" href="#">Shirts</a></li>
+							<li><a class="dropdown-item" href="#">Jeans</a></li>
+							<li><a class="dropdown-item" href="#">Shoes</a></li>
+							<li><a class="dropdown-item" href="#">Watches</a></li>
+							<li><a class="dropdown-item" href="#">Perfumes</a></li>
+						</ul>
+					</li>
+					<li class="nav-item dropdown">
+						<button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+							Women's Fashion
+						</button>
+						<ul class="dropdown-menu dropdown-menu-dark">
+							<li><a class="dropdown-item" href="#">T-Shirts</a></li>
+							<li><a class="dropdown-item" href="#">Tops</a></li>
+							<li><a class="dropdown-item" href="#">Jeans</a></li>
+							<li><a class="dropdown-item" href="#">Shoes</a></li>
+							<li><a class="dropdown-item" href="#">Watches</a></li>
+							<li><a class="dropdown-item" href="#">Perfumes</a></li>
+						</ul>
+					</li>
+
+					<li class="nav-item dropdown">
+						<button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+							Appliances
 
 
 					</ul>
@@ -196,46 +237,60 @@
 				</div>
 			</div>
 		</div>
-	</footer>
-	<script src="{{ asset('user-acess/js/jquery-3.6.0.min.js') }}"></script>
-	<script src="{{ asset('user-acess/js/bootstrap.bundle.5.1.3.min.js') }}"></script>
-	<script src="{{ asset('user-acess/js/instantpages.5.1.0.min.js') }}"></script>
-	<script src="{{ asset('user-acess/js/lazyload.17.6.0.min.js') }}"></script>
-	<script src="{{ asset('user-acess/js/slick.min.js') }}"></script>
-	<script src="{{ asset('user-acess/js/custom.js') }}"></script>
+		</div>
+	</div>
+</footer>
+<script src="{{ asset('user-acess/js/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ asset('user-acess/js/bootstrap.bundle.5.1.3.min.js') }}"></script>
+<script src="{{ asset('user-acess/js/instantpages.5.1.0.min.js') }}"></script>
+<script src="{{ asset('user-acess/js/lazyload.17.6.0.min.js') }}"></script>
+<script src="{{ asset('user-acess/js/slick.min.js') }}"></script>
+<script src="{{ asset('user-acess/js/custom.js') }}"></script>
 
-	<link href="{{asset('summernote-0.8.18-dist/summernote.css') }}" rel="stylesheet">
-	<script src="{{asset('summernote-0.8.18-dist/summernote.js') }}"></script>
+<script>
+window.onscroll = function() {myFunction()};
 
-	<script>
-		window.onscroll = function() {
-			myFunction()
-		};
+var navbar = document.getElementById("navbar");
+var sticky = navbar.offsetTop;
 
-		var navbar = document.getElementById("navbar");
-		var sticky = navbar.offsetTop;
-
-		function myFunction() {
-			if (window.pageYOffset >= sticky) {
-				navbar.classList.add("sticky")
-			} else {
-				navbar.classList.remove("sticky");
-			}
-		}
-	</script>
-	<script type="text/javascript">
-		$.ajaxSetup({
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+function myFunction() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky")
+  } else {
+    navbar.classList.remove("sticky");
+  }
+}
+</script>
+<script type="text/javascript">
+	$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+	});
+	$(document).ready(function(){
+		$(".summernote").summernote({
+			height:250
+		});
+	});
+</script>
+<script type="text/javascript">
+    function addToCart(id){
+        $.ajax({
+			url:'{{route("user.addToCart")}}',
+			type: 'post',
+			data:{id:id},
+			dataType:'json',
+			success: function(response){
+				if(response.status == true){
+					window.location.href="{{route('user.cart')}}"
+				}else{
+					alert(response.message);
+				}
 			}
 		});
-		$(document).ready(function() {
-			$(".summernote").summernote({
-				height: 250
-			});
-		});
-	</script>
-	
+    }
+
+</script>
 </body>
 
 </html>

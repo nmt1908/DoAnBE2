@@ -3,219 +3,96 @@
 @section('content')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <main>
-    <section class="section-1">
-        <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="false">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <picture>
-                        <source media="(max-width: 799px)" srcset="{{ asset('user-acess/images/slide1.jpg') }}" />
-                        <source media="(min-width: 800px)" srcset="{{ asset('user-acess/images/slide1.jpg') }}" />
-                        <img src="{{ asset('user-acess/images/slide1.jpg') }}" alt="" />
-                    </picture>
+
+<section class="section-1">
+    <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="false">
+        <div class="carousel-inner">
+            @foreach ($banners as $key => $banner)
+                <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                    <img src="{{ asset('banner-image/' . $banner->img_banner) }}" alt="" />
 
                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                         <div class="p-3">
-                            <h1 class="display-4 text-white mb-3">Điện thoại</h1>
-                            <p class="mx-md-5 px-5">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam</p>
-                            <a class="btn btn-outline-light py-2 px-4 mt-3" href="#">Shop Now</a>
+                            <h1 class="display-4 text-white mb-3">{{ $banner->name_banner }}</h1>
+                            <p class="mx-md-5 px-5">{{ $banner->description_banner }}</p>
+                            <a class="btn btn-outline-light py-2 px-4 mt-3" href="{{route('goToShop')}}">Shop Now</a>
                         </div>
                     </div>
                 </div>
-
-                <!-- Thêm các carousel-item khác ở đây -->
-
-                <div class="carousel-item">
-                    <picture>
-                        <source media="(max-width: 799px)" srcset="{{ asset('user-acess/images/slide2.jpg') }}" />
-                        <source media="(min-width: 800px)" srcset="{{ asset('user-acess/images/slide2.jpg') }}" />
-                        <img src="{{ asset('user-acess/images/slide2.jpg') }}" alt="" />
-                    </picture>
-
-                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3">
-                            <h1 class="display-4 text-white mb-3">Laptop</h1>
-                            <p class="mx-md-5 px-5">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam</p>
-                            <a class="btn btn-outline-light py-2 px-4 mt-3" href="#">Shop Now</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="carousel-item">
-                    <picture>
-                        <source media="(max-width: 799px)" srcset="{{ asset('user-acess/images/carousel-3-m.jpg') }}" />
-                        <source media="(min-width: 800px)" srcset="{{ asset('user-acess/images/carousel-3.jpg') }}" />
-                        <img src="{{ asset('user-acess/images/carousel-3.jpg') }}" alt="" />
-                    </picture>
-
-                    <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                        <div class="p-3">
-                            <h1 class="display-4 text-white mb-3">Speaker</h1>
-                            <p class="mx-md-5 px-5">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam</p>
-                            <a class="btn btn-outline-light py-2 px-4 mt-3" href="#">Shop Now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
+            @endforeach
         </div>
-    </section>
-    <section class="section-2">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="box shadow-lg">
-                        <div class="fa icon fa-check text-primary m-0 mr-3"></div>
-                        <h2 class="font-weight-semi-bold m-0">Sản phẩm chất lượng</h5>
-                    </div>
-                </div>
-                <div class="col-lg-3 ">
-                    <div class="box shadow-lg">
-                        <div class="fa icon fa-shipping-fast text-primary m-0 mr-3"></div>
-                        <h2 class="font-weight-semi-bold m-0">Giao hàng miễn phí</h2>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="box shadow-lg">
-                        <div class="fa icon fa-exchange-alt text-primary m-0 mr-3"></div>
-                        <h2 class="font-weight-semi-bold m-0">Đổi trả thoải mái</h2>
-                    </div>
-                </div>
-                <div class="col-lg-3 ">
-                    <div class="box shadow-lg">
-                        <div class="fa icon fa-phone-volume text-primary m-0 mr-3"></div>
-                        <h2 class="font-weight-semi-bold m-0">Hỗ trợ 24/7</h5>
-                    </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</section>
+<section class="section-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="box shadow-lg">
+                    <div class="fa icon fa-check text-primary m-0 mr-3"></div>
+                    <h2 class="font-weight-semi-bold m-0">Sản phẩm chất lượng</h5>
+                </div>                    
+            </div>
+            <div class="col-lg-3 ">
+                <div class="box shadow-lg">
+                    <div class="fa icon fa-shipping-fast text-primary m-0 mr-3"></div>
+                    <h2 class="font-weight-semi-bold m-0">Giao hàng miễn phí</h2>
+                </div>                    
+            </div>
+            <div class="col-lg-3">
+                <div class="box shadow-lg">
+                    <div class="fa icon fa-exchange-alt text-primary m-0 mr-3"></div>
+                    <h2 class="font-weight-semi-bold m-0">Đổi trả thoải mái</h2>
+                </div>                    
+            </div>
+            <div class="col-lg-3 ">
+                <div class="box shadow-lg">
+                    <div class="fa icon fa-phone-volume text-primary m-0 mr-3"></div>
+                    <h2 class="font-weight-semi-bold m-0">Hỗ trợ 24/7</h5>
+                </div>                    
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section-3">
+    <div class="container">
+        <div class="section-title">
+            <h2>Categories</h2>
+        </div>           
+        <div class="row pb-3">
+        @foreach ($categories as $category)
+    <div class="col-lg-3">
+        <div class="cat-card">
+            <div class="left">
+                <img src="{{ asset('category-image/images/' . $category->image) }}"  alt="" class="img-fluid">
+            </div>
+            <div class="right">
+                <div class="cat-data">
+                    <h2>{{$category->name}}</h2>
+                    
+                    <p>{{ $category->products()->count() }} Products</p>
+                    
                 </div>
             </div>
         </div>
-    </section>
-    <section class="section-3">
-        <div class="container">
-            <div class="section-title">
-                <h2>Categories</h2>
-            </div>
-            <div class="row pb-3">
-                <div class="col-lg-3">
-                    <div class="cat-card">
-                        <div class="left">
-                            <img src="{{ asset('user-acess/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                        </div>
-                        <div class="right">
-                            <div class="cat-data">
-                                <h2>Mens</h2>
-                                <p>100 Products</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="cat-card">
-                        <div class="left">
-                            <img src="{{ asset('user-acess/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                        </div>
-                        <div class="right">
-                            <div class="cat-data">
-                                <h2>Mens</h2>
-                                <p>100 Products</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="cat-card">
-                        <div class="left">
-                            <img src="{{ asset('user-acess/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                        </div>
-                        <div class="right">
-                            <div class="cat-data">
-                                <h2>Mens</h2>
-                                <p>100 Products</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="cat-card">
-                        <div class="left">
-                            <img src="{{ asset('user-acess/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                        </div>
-                        <div class="right">
-                            <div class="cat-data">
-                                <h2>Mens</h2>
-                                <p>100 Products</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="cat-card">
-                        <div class="left">
-                            <img src="{{ asset('user-acess/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                        </div>
-                        <div class="right">
-                            <div class="cat-data">
-                                <h2>Mens</h2>
-                                <p>100 Products</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="cat-card">
-                        <div class="left">
-                            <img src="{{ asset('user-acess/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                        </div>
-                        <div class="right">
-                            <div class="cat-data">
-                                <h2>Mens</h2>
-                                <p>100 Products</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="cat-card">
-                        <div class="left">
-                            <img src="{{ asset('user-acess/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                        </div>
-                        <div class="right">
-                            <div class="cat-data">
-                                <h2>Mens</h2>
-                                <p>100 Products</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="cat-card">
-                        <div class="left">
-                            <img src="{{ asset('user-acess/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                        </div>
-                        <div class="right">
-                            <div class="cat-data">
-                                <h2>Mens</h2>
-                                <p>100 Products</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="section-4 pt-5">
-        <div class="container">
-            <div class="section-title">
-                <h2>Featured Products</h2>
-            </div>
-            <div class="row pb-3">
-                @foreach($products as $product)
+    </div>
+@endforeach
+    </div>
+</section>
+<section class="section-4 pt-5">
+    <div class="container">
+        <div class="section-title">
+            <h2>Featured Products</h2>
+        </div>    
+        <div class="row pb-3">
+            @foreach($products as $product)
                 @if($product->is_featured == 1)
                 <div class="col-md-3">
                     <div class="card product-card">

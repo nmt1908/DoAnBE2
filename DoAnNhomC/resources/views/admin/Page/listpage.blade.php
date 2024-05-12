@@ -20,7 +20,7 @@
                 <h1>Categories</h1>
             </div>
             <div class="col-sm-6 text-right">
-                <a href="#" class="btn btn-primary">New Page</a>
+                <a href="{{ route('admin.addPage') }}" class="btn btn-primary">New Page</a>
             </div>
         </div>
     </div>

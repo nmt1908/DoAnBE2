@@ -43,7 +43,10 @@ class PagesController extends Controller
        return view('admin.page.addpage');
     }
     public function deletePage(Request $request, $id) {
-
+        $page = Page::findOrFail($id);
+    
+        $page->delete();
+        return redirect()->back()->with('success', 'Page đã được xóa thành công');
     }
 
     public function updatePage(Request $request)

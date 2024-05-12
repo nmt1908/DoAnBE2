@@ -105,6 +105,7 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::get('admin/page',[PagesController::class,'adminListPage'])->name('admin.listpage');
     Route::get('admin/addcpage',[PagesController::class,'addPage'])->name('admin.addPage');
     Route::post('custom-addpage', [PagesController::class, 'customAddPage'])->name('admin.customaddpage');
+    Route::delete('/delete-page/{id}', [PagesController::class, 'deletePage'])->name('admin.deletePage');
 });
 // Route::get('/', function () {
 //     return view('user/dashboard');

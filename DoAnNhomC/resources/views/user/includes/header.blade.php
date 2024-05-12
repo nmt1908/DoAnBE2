@@ -62,20 +62,6 @@
 					</a>
 				</div>
 				<div class="col-lg-6 col-6 text-left  d-flex justify-content-end align-items-center">
-					<a href="{{route('accountProfile')}}" class="nav-link text-dark">Hi! {{ Auth::user()->name }}</a>
-					<form action="">
-						<div class="input-group">
-							<input type="text" placeholder="Search For Products" class="form-control" aria-label="Amount (to the nearest dollar)">
-							<span class="input-group-text">
-								<i class="fa fa-search"></i>
-							</span>
-						</div>
-					</form>
-				</div>
-			</div>
-				</a>
-			</div>
-			<div class="col-lg-6 col-6 text-left  d-flex justify-content-end align-items-center">
 				<a href="{{route('accountProfile')}}" class="nav-link text-dark">Hi! {{ Auth::user()->name }}</a>
 				<form action="{{ route('searchProduct') }}" method="GET">					
 					<div class="input-group">
@@ -86,7 +72,11 @@
 					</div>
 					
 				</form>
-			</div>		
+			</div>
+			</div>
+				</a>
+			</div>
+					
 		</div>
 		</div>
 	</div>
@@ -144,51 +134,10 @@
 							</ul>
 						</li>
 
-					<li class="nav-item dropdown">
-						<button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-							Electronics
-						</button>
-						<ul class="dropdown-menu dropdown-menu-dark">
-							<li><a class="dropdown-item nav-link" href="#">Phone</a></li>
-							<li><a class="dropdown-item nav-link" href="#">Laptops</a></li>
-							<li><a class="dropdown-item nav-link" href="#">Speakers</a></li>
-						</ul>
-					</li>
-					<li class="nav-item dropdown">
-						<button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-							Men's Fashion
-						</button>
-						<ul class="dropdown-menu dropdown-menu-dark">
-							<li><a class="dropdown-item" href="#">Shirts</a></li>
-							<li><a class="dropdown-item" href="#">Jeans</a></li>
-							<li><a class="dropdown-item" href="#">Shoes</a></li>
-							<li><a class="dropdown-item" href="#">Watches</a></li>
-							<li><a class="dropdown-item" href="#">Perfumes</a></li>
-						</ul>
-					</li>
-					<li class="nav-item dropdown">
-						<button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-							Women's Fashion
-						</button>
-						<ul class="dropdown-menu dropdown-menu-dark">
-							<li><a class="dropdown-item" href="#">T-Shirts</a></li>
-							<li><a class="dropdown-item" href="#">Tops</a></li>
-							<li><a class="dropdown-item" href="#">Jeans</a></li>
-							<li><a class="dropdown-item" href="#">Shoes</a></li>
-							<li><a class="dropdown-item" href="#">Watches</a></li>
-							<li><a class="dropdown-item" href="#">Perfumes</a></li>
-						</ul>
-					</li>
-
-					<li class="nav-item dropdown">
-						<button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-							Appliances
-
-
-					</ul>
+					
 				</div>
 				<div class="right-nav py-0">
-					<a href="cart.php" class="ml-3 d-flex pt-2">
+					<a href="/cart" class="ml-3 d-flex pt-2">
 						<i class="fas fa-shopping-cart text-primary"></i>
 					</a>
 				</div>

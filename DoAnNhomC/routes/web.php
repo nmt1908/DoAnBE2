@@ -103,7 +103,8 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
 
     //Page router
     Route::get('admin/page',[PagesController::class,'adminListPage'])->name('admin.listpage');
-
+    Route::get('admin/addcpage',[PagesController::class,'addPage'])->name('admin.addPage');
+    Route::post('custom-addpage', [PagesController::class, 'customAddPage'])->name('admin.customaddpage');
 });
 // Route::get('/', function () {
 //     return view('user/dashboard');

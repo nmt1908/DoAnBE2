@@ -71,7 +71,7 @@
                                         </path>
                                     </svg>
                                 </a>
-                                <a href="#" class="text-danger w-4 h-4 mr-1" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                <a href="#" class="text-danger w-4 h-4 mr-1" data-bs-toggle="modal" data-bs-target="#deleteModal{{$Page->id}}">
                                     <svg wire:loading.remove.delay="" wire:target=""
                                         class="filament-link-icon w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -82,6 +82,33 @@
                                 </a>
                             </td>
                         </tr>
+                         <!-- Modal -->
+                         <div class="modal fade" id="deleteModal{{$Page->id}}" tabindex="-1"
+                            aria-labelledby="deleteModalLabel{{$Page->id}}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel{{$Page->id}}">Xác nhận xóa</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Bạn có chắc chắn muốn xóa trang này không?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Hủy</button>
+                                        <form action="{{ route('admin.deletePage', ['id' => $Page->id]) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Xóa</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Modal -->
                         @endforeach
                     </tbody>
                 </table>

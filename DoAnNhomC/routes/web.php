@@ -12,7 +12,7 @@ use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\admin\BannerController;
 use App\Http\Controllers\admin\PagesController;
-
+use App\Http\Controllers\WishListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,7 +57,11 @@ Route::get('shop/sort/{type}', [CustomAuthController::class, 'sortByPrice'])->na
 Route::get('shop/search',[CustomAuthController::class,'searchProduct'])->name('searchProduct');
 
 
+// wishlist 
+Route::get('user/wishlist',[WishListController::class,'goToWishList'])->name('wishlist');
+Route::get('/wishList/add', [WishListController::class, 'wishListAdd'])->name('wishList.add');
 
+Route::delete('/wishlist/{id}', [WishListController::class, 'wishlistdelete'])->name('wishlist.delete');
 
 Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::get('admin/dashboard', [CustomAuthController::class, 'adminDashboard'])->name('admin.dashboard');

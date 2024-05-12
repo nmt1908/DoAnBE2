@@ -34,4 +34,8 @@ class Product extends Model
     {
         return $this->hasMany(ProductImage::class)->orderBy('sort_order');
     }
+    public function image()
+    {
+        return $this->hasMany(Images::class, 'productId');
+    }
 }

@@ -17,7 +17,7 @@
     <div class="container-fluid my-2">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Categories</h1>
+                <h1>Pages</h1>
             </div>
             <div class="col-sm-6 text-right">
                 <a href="{{ route('admin.addPage') }}" class="btn btn-primary">New Page</a>
@@ -63,7 +63,7 @@
                             <td>{{ $Page->slug }}</td>
 
                             <td>
-                                <a href="#">
+                                <a href="{{ route('admin.updatePage', ['id' => $Page->id] )}}">
                                     <svg class="filament-link-icon w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                         <path

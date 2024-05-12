@@ -51,10 +51,30 @@ class PagesController extends Controller
 
     public function updatePage(Request $request)
     {
-      
+        $page_id = $request->get('id');
+        $page = Page::find($page_id);
+
+        return view('admin.page.updatepage', ['page' => $page]);
     }
     public function postUpdatePage(Request $request) {
-       
+        $input = $request->all();
+    
+        // Kiểm tra dữ liệu
+        $validator = validator([
+            'name' => 'required',
+            'slug' => 'required|unique:pages',
+            'content' => 'required',
+        ]);
+    
+        $page = Page::find($input['id']);
+        $page->name = $input['name'];
+        $page->slug = $input['slug'];
+        $page->content = $input['content'];
+
+    
+        $page->save();
+    
+        return redirect()->route('admin.listpage')->withSuccess('Sửa page thành công!');
     }
     
     public function searchPage(Request $request){

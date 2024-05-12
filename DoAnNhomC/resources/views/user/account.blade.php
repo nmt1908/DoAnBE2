@@ -40,7 +40,7 @@
                                 Orders</a>
                         </li>
                         <li class="nav-item">
-                            <a href="wishlist.php" class="nav-link font-weight-bold" role="tab"
+                            <a href="{{route('wishlist')}}" class="nav-link font-weight-bold" role="tab"
                                 aria-controls="tab-register" aria-expanded="false"><i class="fas fa-heart"></i>
                                 Wishlist</a>
                         </li>

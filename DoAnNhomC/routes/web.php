@@ -12,7 +12,7 @@ use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\admin\BannerController;
 use App\Http\Controllers\admin\PagesController;
-
+use App\Http\Controllers\WishListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,13 +42,10 @@ Route::get('account', [PageController::class, 'accountProfile'])->name('accountP
 Route::get('change-password', [CustomAuthController::class, 'showChangePasswordForm'])->name('change-passwordPage');
 Route::post('change-password', [CustomAuthController::class, 'changePassword'])->name('change-password');
 Route::get('/cart',[CartController::class,'cart'])->name('user.cart');
-
 Route::post('/cart/add', [CartController::class, 'addCart'])->name('cart.add2');
-
 Route::get('/cart/total', [CartController::class, 'updateCart'])->name('total.product');
 Route::delete('/cart/delete/{id}', [CartController::class, 'deleteCart'])->name('cart.delete');
 
-Route::post('/add-to-cart',[CartController::class,'addToCart'])->name('user.addToCart');
 Route::get('/verify-email', [CustomAuthController::class, 'verifyEmail'])->name('verify.email');
 Route::get('shop', [CustomAuthController::class, 'showProductOnShop'])->name('goToShop');
 Route::get('shop/by-brand/{brandId}', [CustomAuthController::class, 'showProductOnShopByBrand'])->name('products.by.brand');
@@ -57,7 +54,11 @@ Route::get('shop/sort/{type}', [CustomAuthController::class, 'sortByPrice'])->na
 Route::get('shop/search',[CustomAuthController::class,'searchProduct'])->name('searchProduct');
 
 
+// wishlist 
+Route::get('user/wishlist',[WishListController::class,'goToWishList'])->name('wishlist');
+Route::get('/wishList/add', [WishListController::class, 'wishListAdd'])->name('wishList.add');
 
+Route::delete('/wishlist/{id}', [WishListController::class, 'wishlistdelete'])->name('wishlist.delete');
 
 Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::get('admin/dashboard', [CustomAuthController::class, 'adminDashboard'])->name('admin.dashboard');

@@ -16,6 +16,7 @@ use App\Models\PasswordResetToken;
 use App\Models\Banner;
 use App\Models\Categories;
 use App\Models\Brand;
+use App\Models\WishList;
 //Unknow
 class CustomAuthController extends Controller
 {
@@ -249,7 +250,8 @@ class CustomAuthController extends Controller
             $banners = Banner::all();
             $brand = Brand::all();
             $categories = Categories::all();
-            return view('user/dashboard', compact('products', 'banners','brand','categories'));
+            $wishlist = WishList::all();
+            return view('user/dashboard', compact('products', 'banners','brand','categories','wishlist'));
         }
         
         return redirect("login")->withSuccess('Bạn cần phải đăng nhập!');

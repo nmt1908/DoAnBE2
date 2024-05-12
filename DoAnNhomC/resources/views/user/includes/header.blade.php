@@ -222,24 +222,7 @@ function myFunction() {
 		});
 	});
 </script>
-<script type="text/javascript">
-    function addToCart(id){
-        $.ajax({
-			url:'{{route("user.addToCart")}}',
-			type: 'post',
-			data:{id:id},
-			dataType:'json',
-			success: function(response){
-				if(response.status == true){
-					window.location.href="{{route('user.cart')}}"
-				}else{
-					alert(response.message);
-				}
-			}
-		});
-    }
 
-</script>
 </body>
 
 </html>

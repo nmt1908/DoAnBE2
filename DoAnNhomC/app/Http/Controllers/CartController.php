@@ -85,21 +85,22 @@ class CartController
 
         $total .= '$' . $request->total * $price;
 
-        $totalPrice  =CartItem::with('product')->get()->sum(function ($item) {
+        $totalPrice  = CartItem::with('product')->get()->sum(function ($item) {
 
             return $item->product->price * $item->quantity;
         });
-        $subTotal .= '$'. $totalPrice;
+        $subTotal .= '$' . $totalPrice;
 
-        $totalAll .= '$' .$totalPrice + 20 ;
+        $totalAll .= '$' . $totalPrice + 20;
         return response()->json([
             'total' => $total,
             'totalPrice' => $subTotal,
             'totalAll' => $totalAll
         ]);
     }
+    //goToWishList
 
-
+ 
     public function deleteCart($id)
     {
         $user = Auth::user();

@@ -84,7 +84,7 @@ class CrudUserController extends Controller
     {
         $user = User::findOrFail($id);
         if ($user->role === 1) {
-            return redirect()->back()->with('error', 'Không thể xóa người dùng có vai trò là Admin');
+            return redirect()->route('admin.listuser')->with('error', 'Không thể xóa người dùng có vai trò là Admin');
         }
 
         $user->delete();

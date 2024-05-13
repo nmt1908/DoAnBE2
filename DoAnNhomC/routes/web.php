@@ -38,7 +38,11 @@ Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name(
 Route::get('registration', [CustomAuthController::class, 'registration'])->name('register-user');
 Route::post('custom-registration', [CustomAuthController::class, 'customRegistration'])->name('register.custom');
 Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout');
+
 Route::get('account', [PageController::class, 'accountProfile'])->name('accountProfile');
+Route::get('updateaccount', [PageController::class, 'updateUser'])->name('user.updateUser');
+Route::post('updateaccount', [PageController::class, 'postUpdateUser'])->name('user.postUpdateUser');
+
 Route::get('change-password', [CustomAuthController::class, 'showChangePasswordForm'])->name('change-passwordPage');
 Route::post('change-password', [CustomAuthController::class, 'changePassword'])->name('change-password');
 Route::get('/cart',[CartController::class,'cart'])->name('user.cart');

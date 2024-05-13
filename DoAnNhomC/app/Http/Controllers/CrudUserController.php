@@ -7,19 +7,41 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Hash;
+use Illuminate\Support\Facades\Validator;
+
 class CrudUserController extends Controller
 {
     public function customAddUser(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
+            'password' => 'required|min:6|max:24|regex:/^(?=.*[A-Z])(?=.*\d).+$/',
             'gender' => 'required',
-            'phone' => 'required',
-            'address' => 'required',
-            'img' => 'required', // Thêm validation cho ảnh
+            'phone' => 'required|regex:/^\d{10,15}$/',
+            'address' => 'required|min:10|max:250',
+            'img' => 'required', 
+        ], [
+            'name.required' => 'Trường tên là bắt buộc.',
+            'email.required' => 'Trường email là bắt buộc.',
+            'email.email' => 'Email không hợp lệ.',
+            'email.unique' => 'Email đã được sử dụng.',
+            'password.required' => 'Trường mật khẩu là bắt buộc.',
+            'password.min' => 'Mật khẩu phải có ít nhất :min ký tự.',
+            'password.max' => 'Mật khẩu không được vượt quá :max ký tự.',
+            'password.regex' => 'Mật khẩu phải có ít nhất một chữ số và một chữ cái in hoa.',
+            'gender.required' => 'Trường giới tính là bắt buộc.',
+            'phone.required' => 'Trường số điện thoại là bắt buộc.',
+            'phone.regex' => 'Số điện thoại phải có từ 11 đến 15 chữ số.',
+            'address.required' => 'Trường địa chỉ là bắt buộc.',
+            'address.min' => 'Địa chỉ phải có ít nhất :min ký tự.',
+            'address.max' => 'Địa chỉ không được vượt quá :max ký tự.',
+            'img.required' => 'Trường ảnh là bắt buộc.',
         ]);
+    
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
         $data = $request->all();
 
@@ -87,11 +109,22 @@ class CrudUserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$input['id'],
-            'password' => 'nullable|min:6', // Cho phép mật khẩu có thể trống
+            'password' => 'nullable|min:6|max:24|regex:/^(?=.*[A-Z])(?=.*\d).+$/',
             'gender' => 'required',
-            'phone' => 'required',
-            'address' => 'required', 
+            'phone' => 'required|regex:/^\d{10,15}$/',
+            'address' => 'required|min:10|max:250', 
             'img' => 'nullable', // Kiểm tra ảnh
+        ], [
+            'name.required' => 'Trường tên là bắt buộc.',
+            'password.min' => 'Mật khẩu phải có ít nhất :min ký tự.',
+            'password.max' => 'Mật khẩu không được vượt quá :max ký tự.',
+            'password.regex' => 'Mật khẩu phải có ít nhất một chữ số và một chữ cái in hoa.',
+            'gender.required' => 'Trường giới tính là bắt buộc.',
+            'phone.required' => 'Trường số điện thoại là bắt buộc.',
+            'phone.regex' => 'Số điện thoại phải có từ 11 đến 15 chữ số.',
+            'address.required' => 'Trường địa chỉ là bắt buộc.',
+            'address.min' => 'Địa chỉ phải có ít nhất :min ký tự.',
+            'address.max' => 'Địa chỉ không được vượt quá :max ký tự.',
         ]);
 
         $user = User::find($input['id']);

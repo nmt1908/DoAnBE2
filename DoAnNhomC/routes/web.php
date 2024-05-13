@@ -71,6 +71,9 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::delete('/delete-user/{id}', [CrudUserController::class, 'deleteUser'])->name('admin.deleteuser');
     Route::get('update', [CrudUserController::class, 'updateUser'])->name('admin.updateUser');
     Route::post('update', [CrudUserController::class, 'postUpdateUser'])->name('admin.postUpdateUser');
+    //ADMIN CHANGE PASSWORD
+    Route::get('changepassword', [CrudUserController::class, 'adminChangePassword'])->name('admin.changePassword');
+    Route::post('changepassword', [CrudUserController::class, 'postAdminChangePassword'])->name('admin.postChangePassword');
 
     // Category routes
     Route::get('admin/categories',[CategoryController::class,'adminListCategory'])->name('admin.listcategories');

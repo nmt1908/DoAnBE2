@@ -375,4 +375,5 @@ class CustomAuthController extends Controller
         return redirect()->route('accountProfile')->withSuccess('Mật khẩu của bạn đã được thay đổi thành công.');
 
     }
+    
 }

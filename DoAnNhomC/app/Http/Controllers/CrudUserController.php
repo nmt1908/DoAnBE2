@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Hash;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\Auth;
 class CrudUserController extends Controller
 {
     public function customAddUser(Request $request)
@@ -163,6 +163,31 @@ class CrudUserController extends Controller
 
         return view('crud_user.read', ['user' => $user]);
     }
-
+    public function adminChangePassword(){
+        return view('admin.change-password');
+    }
+    public function postAdminChangePassword(Request $request){
+        
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|min:6|max:24|regex:/^(?=.*[A-Z])(?=.*\d).+$/',
+            'confirm_password' => 'required',
+        ], [
+            'new_password.min' => 'Mật khẩu phải có ít nhất :min ký tự.',
+            'new_password.max' => 'Mật khẩu không được vượt quá :max ký tự.',
+            'new_password.regex' => 'Mật khẩu phải có ít nhất một chữ số và một chữ cái in hoa.',
+        ]);
+        if ($request->new_password !== $request->confirm_password) {
+            return redirect()->back()->with('error', 'Mật khẩu mới và xác nhận mật khẩu không giống nhau.');
+        }
+        $user = Auth::user();
+        if (!Hash::check($request->old_password, $user->password)) {
+            return redirect()->back()->with('error', 'Mật khẩu hiện tại không chính xác.');
+        }
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+    
+        return redirect()->route('admin.dashboard')->withSuccess('Mật khẩu của bạn đã được thay đổi thành công.');
+    }
 
 }

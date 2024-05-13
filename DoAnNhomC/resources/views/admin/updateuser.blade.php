@@ -46,7 +46,7 @@
         <div class="card">
             <div class="card-body">
                 <!-- Bắt đầu form -->
-                <form action="{{ route('admin.postUpdateUser') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('') }}" method="POST" enctype="multipart/form-data">
                     @csrf <!-- Thêm token CSRF -->
                     <input name="id" type="hidden" value="{{$user->id}}">
                     <div class="row">
@@ -167,6 +167,6 @@
     <img src="{{ asset('user-image/images/' . $user->img) }}" id="currentImage" style="display: none;">
     <div id="imagePreview"></div>
 @else
-    <p>No image available</p>
+
 @endif
 @endsection

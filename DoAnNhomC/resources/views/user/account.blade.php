@@ -61,9 +61,9 @@
                         <div class="card-header">
                             <h2 class="h5 mb-0 pt-2 pb-2">Personal Information</h2>
                         </div>
-                        <div class="card-body p-4 personal-info"> <!-- Thêm class personal-info vào đây -->
+                        <div class="card-body p-4 personal-info"> 
                             <div class="row">
-                                <div class="col-md-12 text-center"> <!-- Thêm class text-center để căn giữa theo chiều ngang -->
+                                <div class="col-md-12"> 
                                     <div class="mb-3">
                                         <td>
                                             <img src="{{ asset('user-image/images/' . $user->img) }}" alt="Avatar" class="rounded-circle avatar">
@@ -78,13 +78,15 @@
                                     <div class="mb-3">
                                         <label for="phone">Phone: {{ $user->phone }}</label>
                                     </div>
-
+                                    <div class="mb-3">
+                                        <label for="gender">Gender: <td>{{ $user->gender }}</td></label>
+                                    </div>
                                     <div class="mb-3">
                                         <label for="phone">Address: {{$user->address}}</label>
                                     </div>
 
                                     <div class="d-flex justify-content-center"> <!-- Thay đổi class d-flex thành justify-content-center để căn giữa theo chiều ngang -->
-                                        <button class="btn btn-dark">Cập nhật Profile</button>
+                                        <a href="{{route('user.updateUser', ['id' => $user->id])}}"><button class="btn btn-dark">Cập nhật Profile</button></a> 
                                     </div>
                                 </div>
                             </div>

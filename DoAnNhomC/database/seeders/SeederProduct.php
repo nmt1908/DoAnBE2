@@ -19,7 +19,7 @@ class SeederProduct extends Seeder
             'quantity' => 10 ,
             'is_featured' => 1 ,
             'category_id' => 1 ,
-            'brand_id' => 5 ,
+            'brand_id' => 3 ,
             'status' => 1,
         ]);
         DB::table('products')->insert([
@@ -29,7 +29,7 @@ class SeederProduct extends Seeder
             'quantity' => 10 ,
             'is_featured' => 1 ,
             'category_id' => 1 ,
-            'brand_id' => 3 ,
+            'brand_id' => 1 ,
             'status' => 1,
         ]);
         DB::table('products')->insert([
@@ -39,7 +39,7 @@ class SeederProduct extends Seeder
             'quantity' => 10 ,
             'is_featured' => 1 ,
             'category_id' => 1 ,
-            'brand_id' => 4 ,
+            'brand_id' => 2 ,
             'status' => 1,
         ]);
         DB::table('products')->insert([
@@ -49,7 +49,7 @@ class SeederProduct extends Seeder
             'quantity' => 10 ,
             'is_featured' => 1 ,
             'category_id' => 4 ,
-            'brand_id' => 6 ,
+            'brand_id' => 4 ,
             'status' => 1,
         ]);
     }

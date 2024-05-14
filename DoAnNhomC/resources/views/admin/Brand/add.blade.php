@@ -81,7 +81,7 @@
 </section>
 <!-- /.content -->
 <script>
-document.getElementById('img').addEventListener('change', function() {
+document.getElementById('image').addEventListener('change', function() {
     var file = this.files[0];
     if (file) {
         var reader = new FileReader();

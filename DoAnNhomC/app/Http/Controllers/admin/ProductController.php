@@ -119,7 +119,7 @@ class ProductController extends Controller
     public function deleteProduct(Request $request, $id)
     {
         $product = Product::findOrFail($id);
-        $imagePath = public_path('product-image/' . $product->image);
+        $imagePath = public_path('product-image/' . $product->images);
 
     // Kiểm tra xem tệp ảnh tồn tại trước khi xóa
     if (realpath($imagePath) && !is_dir($imagePath)) {

@@ -78,6 +78,12 @@ class PagesController extends Controller
     }
     
     public function searchPage(Request $request){
-
+        $search = $request->input('search');
+        
+        // Thực hiện truy vấn để tìm kiếm tên page
+        $page = Page::where('name', 'like', "%$search%")
+                        ->paginate(5);
+        
+        return view('admin.Page.listpage', compact('page'));
     }
 }

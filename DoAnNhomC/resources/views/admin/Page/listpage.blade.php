@@ -33,7 +33,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-tools">
-                <form action="#" method="GET" class="input-group"
+                    <form action="{{ route('admin.searchPage') }}" method="GET" class="input-group"
                         style="width: 250px;">
                         <input type="text" name="search" class="form-control float-right" placeholder="Search">
                         <div class="input-group-append">
@@ -71,7 +71,8 @@
                                         </path>
                                     </svg>
                                 </a>
-                                <a href="#" class="text-danger w-4 h-4 mr-1" data-bs-toggle="modal" data-bs-target="#deleteModal{{$Page->id}}">
+                                <a href="#" class="text-danger w-4 h-4 mr-1" data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal{{$Page->id}}">
                                     <svg wire:loading.remove.delay="" wire:target=""
                                         class="filament-link-icon w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -82,8 +83,8 @@
                                 </a>
                             </td>
                         </tr>
-                         <!-- Modal -->
-                         <div class="modal fade" id="deleteModal{{$Page->id}}" tabindex="-1"
+                        <!-- Modal -->
+                        <div class="modal fade" id="deleteModal{{$Page->id}}" tabindex="-1"
                             aria-labelledby="deleteModalLabel{{$Page->id}}" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">

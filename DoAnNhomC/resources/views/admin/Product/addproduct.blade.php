@@ -62,6 +62,7 @@
                                                 </div>
                                             </div> -->
                                             <input type="file" name="images[]" id="images" multiple>
+                                            <div id="imagePreview"></div>
                                         </div>	                                                                      
                                     </div>
                                     <div class="card mb-3">
@@ -160,4 +161,18 @@
                     </form>
 				</section>
 				<!-- /.content -->
+                <script>
+                document.getElementById('images').addEventListener('change', function() {
+                    var file = this.files[0];
+                    if (file) {
+                        var reader = new FileReader();
+                        reader.onload = function(event) {
+                            var imagePreview = document.getElementById('imagePreview');
+                            imagePreview.innerHTML = '<img  src="' + event.target.result +
+                                '" style="max-width:100%; max-height:200px;padding-top:20px" />';
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+                </script>
                 @endsection

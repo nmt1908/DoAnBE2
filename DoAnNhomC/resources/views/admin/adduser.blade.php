@@ -104,6 +104,9 @@
                             <div class="mb-3">
                                 <label for="address">Address</label>
                                 <textarea name="address" id="address" class="form-control" cols="30" rows="5"></textarea>
+                                @if ($errors->has('address'))
+                                    <span class="text-danger">{{ $errors->first('address') }}</span>
+                                @endif
                             </div>
                         </div>
                         <div class="col-md-6"></div>
@@ -112,8 +115,8 @@
                                 <label for="img">Image</label>
                                 <input type="file" name="img" id="img" class="form-control" accept="image/*">
                                 <div id="imagePreview"></div>
-                                @if ($errors->has('image'))
-                                    <span class="text-danger">{{ $errors->first('image') }}</span>
+                                @if ($errors->has('img'))
+                                    <span class="text-danger">{{ $errors->first('img') }}</span>
                                 @endif
                             </div>
                         </div>

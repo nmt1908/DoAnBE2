@@ -126,7 +126,7 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::delete('/delete-page/{id}', [PagesController::class, 'deletePage'])->name('admin.deletePage');
     Route::get('update-page', [PagesController::class, 'updatePage'])->name('admin.updatePage');
     Route::post('update-page', [PagesController::class, 'postUpdatePage'])->name('admin.postUpdatePage');
-    Route::get('admin/searchbanner',[PagesController::class,'searchPage'])->name('admin.searchPage');
+    Route::get('admin/searchpage',[PagesController::class,'searchPage'])->name('admin.searchPage');
 });
 // Route::get('/', function () {
 //     return view('user/dashboard');

@@ -34,7 +34,7 @@ class BannerController extends Controller
             // Kiểm tra xem có ảnh đã được tải lên trước đó hay không
             if (!empty($categories->image)) {
                 // Nếu có, sử dụng lại ảnh đã được tải lên trước đó
-                $data['image'] = $categories->image;
+                $data['image'] = $banner->image;
             } else {
                 // Nếu không có, xử lý tệp tin ảnh mới
                 $image->move(public_path('banner-image'), $imageName);

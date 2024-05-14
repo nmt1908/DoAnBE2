@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Page;
 
 use Hash;class PageController extends Controller
 {
@@ -75,4 +76,10 @@ use Hash;class PageController extends Controller
 
     }
 
+    public function page($slug) {
+        $page = Page::where('slug',$slug)->first();
+        return view('user.page',[
+            'page' => $page
+    ]);
+    }
 }

@@ -43,6 +43,10 @@ Route::get('account', [PageController::class, 'accountProfile'])->name('accountP
 Route::get('updateaccount', [PageController::class, 'updateUser'])->name('user.updateUser');
 Route::post('updateaccount', [PageController::class, 'postUpdateUser'])->name('user.postUpdateUser');
 
+// pages 
+Route::get('page/{slug}',[PageController::class,'page'])->name('page');
+
+
 Route::get('change-password', [CustomAuthController::class, 'showChangePasswordForm'])->name('change-passwordPage');
 Route::post('change-password', [CustomAuthController::class, 'changePassword'])->name('change-password');
 Route::get('/cart',[CartController::class,'cart'])->name('user.cart');
@@ -56,7 +60,6 @@ Route::get('shop/by-brand/{brandId}', [CustomAuthController::class, 'showProduct
 Route::get('shop/by-category/{categoryId}', [CustomAuthController::class, 'showProductOnShopByCategory'])->name('products.by.category');
 Route::get('shop/sort/{type}', [CustomAuthController::class, 'sortByPrice'])->name('products.sortbyprice');
 Route::get('shop/search',[CustomAuthController::class,'searchProduct'])->name('searchProduct');
-
 
 // wishlist 
 Route::get('user/wishlist',[WishListController::class,'goToWishList'])->name('wishlist');

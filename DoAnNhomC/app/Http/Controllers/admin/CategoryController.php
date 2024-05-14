@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Categories;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
@@ -17,12 +18,24 @@ class CategoryController extends Controller
         return view('admin.category.categories', compact('categories'));
     }
     public function customAddCategories(Request $request) {
-        $request->validate([
-            'name' => 'required',
-            'slug' => 'required|unique:categories',
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:categories,name',
+            'slug' => 'required|unique:categories,slug',
             'status' => 'required',
-            'image' => 'required', // Thêm validation cho ảnh
+            'image' => 'required',
+        ], [
+            'name.required' => 'Trường Categories là bắt buộc.',
+            'name.unique' => 'Categories đã được sử dụng.',
+            'slug.required' => 'Trường Slug là bắt buộc.',
+            'slug.unique' => 'Slug đã được sử dụng.',
+            'status.required' => 'Trường số điện thoại là bắt buộc.',
+            'image.required' => 'Trường ảnh là bắt buộc.',
         ]);
+    
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
     
         $data = $request->all();
     
@@ -83,13 +96,24 @@ class CategoryController extends Controller
     public function postUpdateCategories(Request $request) {
         $input = $request->all();
     
-        // Kiểm tra dữ liệu
-        $validator = validator([
-            'name' => 'required',
-            'slug' => 'required|unique:categories',
+        
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:categories,name',
+            'slug' => 'required|unique:categories,slug',
             'status' => 'required',
-            'image' => 'required|image', // Kiểm tra xem ảnh có đúng định dạng không
+            'image' => 'required',
+        ], [
+            'name.required' => 'Trường Categories là bắt buộc.',
+            'name.unique' => 'Categories đã được sử dụng.',
+            'slug.required' => 'Trường Slug là bắt buộc.',
+            'slug.unique' => 'Slug đã được sử dụng.',
+            'status.required' => 'Trường số điện thoại là bắt buộc.',
+            'image.required' => 'Trường ảnh là bắt buộc.',
         ]);
+    
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
     
         $category = Categories::find($input['id']);
         $category->name = $input['name'];

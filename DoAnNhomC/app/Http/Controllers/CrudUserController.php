@@ -45,6 +45,8 @@ class CrudUserController extends Controller
 
         $data = $request->all();
 
+        $user = new User();
+
         if ($request->hasFile('img')) {
             $image = $request->file('img');
             $imageName = $image->getClientOriginalName(); // Lấy tên gốc của ảnh

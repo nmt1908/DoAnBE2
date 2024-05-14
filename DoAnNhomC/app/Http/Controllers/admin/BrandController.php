@@ -17,8 +17,8 @@ class BrandController extends Controller
     }
     public function customAddBrand(Request $request) {
         $request->validate([
-            'name' => 'required',
-            'slug' => 'required|unique:categories',
+            'name' => 'required|unique:brands,name',
+            'slug' => 'required|unique:brands,slug',
             'status' => 'required',
             'image' => 'required', // Thêm validation cho ảnh
         ]);

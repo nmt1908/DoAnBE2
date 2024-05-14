@@ -41,13 +41,11 @@
 </section>
 <!-- Main content -->
 <section class="content">
-    <!-- Default box -->
     <div class="container-fluid">
         <div class="card">
             <div class="card-body">
-                <!-- Bắt đầu form -->
-                <form action="{{ route('') }}" method="POST" enctype="multipart/form-data">
-                    @csrf <!-- Thêm token CSRF -->
+                <form action="{{ route('admin.postUpdateUser') }}" method="POST" enctype="multipart/form-data">
+                    @csrf 
                     <input name="id" type="hidden" value="{{$user->id}}">
                     <div class="row">
                         <div class="col-md-6">
@@ -107,7 +105,7 @@
                             <div class="mb-3">
                                 <label for="address">New Address</label>
                                 <textarea name="address" id="address" class="form-control" cols="30" rows="5">{{$user->address}}</textarea>
-                                @if ($errors->has('address'))
+                                    @if ($errors->has('address'))
                                         <span class="text-danger">{{ $errors->first('address') }}</span>
                                     @endif
                             </div>

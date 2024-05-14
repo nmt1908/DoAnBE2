@@ -10,6 +10,7 @@ use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\BrandController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\admin\BannerController;
 use App\Http\Controllers\admin\PagesController;
 use App\Http\Controllers\WishListController;
@@ -50,6 +51,14 @@ Route::get('page/{slug}',[PageController::class,'page'])->name('page');
 Route::get('change-password', [CustomAuthController::class, 'showChangePasswordForm'])->name('change-passwordPage');
 Route::post('change-password', [CustomAuthController::class, 'changePassword'])->name('change-password');
 Route::get('/cart',[CartController::class,'cart'])->name('user.cart');
+
+Route::get('/orders',[OrderController::class,'orders'])->name('user.orders');
+Route::get('/addOrders',[OrderController::class,'addOrders'])->name('user.addOrders');
+
+Route::get('/detailOrders/{zip_order}',[OrderController::class,'detailOrders'])->name('user.orderDetail');
+//pay
+Route::get('/pays',[OrderController::class,'pays'])->name('user.checkOut');
+
 Route::post('/cart/add', [CartController::class, 'addCart'])->name('cart.add2');
 Route::get('/cart/total', [CartController::class, 'updateCart'])->name('total.product');
 Route::delete('/cart/delete/{id}', [CartController::class, 'deleteCart'])->name('cart.delete');

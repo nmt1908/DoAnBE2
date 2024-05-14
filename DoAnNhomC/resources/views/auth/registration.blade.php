@@ -61,7 +61,7 @@
             <i class="material-icons lock">lock</i> Register
         </div>
 
-        <form action="{{ route('register.custom') }}" method="POST" onsubmit="return validateForm()">
+        <form action="{{ route('register.custom') }}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
             @csrf
             <div class="input">
                 <div class="input-addon">

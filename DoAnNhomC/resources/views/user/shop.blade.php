@@ -15,16 +15,16 @@
 
     <section class="section-6 pt-5">
         <div class="container">
-            <div class="row">            
+            <div class="row">
                 <div class="col-md-3 sidebar">
                     <div class="sub-title">
                         <h2>Categories</h3>
                     </div>
-                    
+
                     <div class="card">
                         <div class="card-body">
                             <div class="accordion accordion-flush" id="accordionExample">
-                            @foreach($categories as $category)
+                                @foreach($categories as $category)
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="heading{{$category->id}}">
                                         <button onclick="window.location='{{ route('products.by.category', ['categoryId' => $category->id]) }}'" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$category->id}}" aria-expanded="true" aria-controls="collapse{{$category->id}}">
@@ -35,17 +35,17 @@
                                         <div class="accordion-body">
                                             <div class="navbar-nav">
                                                 @foreach($category->products as $product)
-                                                    <a href="" class="nav-item nav-link">{{$product->product_name}}</a>
+                                                <a href="" class="nav-item nav-link">{{$product->product_name}}</a>
                                                 @endforeach
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
+                                @endforeach
 
 
-                                               
-                                                    
+
+
                             </div>
                         </div>
                     </div>
@@ -53,33 +53,33 @@
                     <div class="sub-title mt-5">
                         <h2>Brand</h3>
                     </div>
-                    
+
                     <div class="card">
                         <div class="card-body">
-                            
+
                             @foreach($brands as $brand)
                             <div class="form-check mb-2">
-                                <a  href="{{ route('products.by.brand', $brand->id) }}" class="nav-item nav-link">{{$brand->name}}</a>
-                            </div> 
-                            @endforeach                
+                                <a href="{{ route('products.by.brand', $brand->id) }}" class="nav-item nav-link">{{$brand->name}}</a>
+                            </div>
+                            @endforeach
                         </div>
                     </div>
 
-                    
-                    
+
+
                 </div>
                 <div class="col-md-9">
                     <div class="row pb-3">
                         <div class="col-12 pb-1">
                             <div class="d-flex align-items-center justify-content-end mb-4">
                                 <div class="ml-2">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown">Sorting</button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="{{ route('products.sortbyprice', 'asc') }}">Price Low to High</a>
-                                        <a class="dropdown-item" href="{{ route('products.sortbyprice', 'desc') }}">Price High to Low</a>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown">Sorting</button>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a class="dropdown-item" href="{{ route('products.sortbyprice', 'asc') }}">Price Low to High</a>
+                                            <a class="dropdown-item" href="{{ route('products.sortbyprice', 'desc') }}">Price High to Low</a>
+                                        </div>
                                     </div>
-                                </div>                                   
                                 </div>
                             </div>
                         </div>
@@ -87,36 +87,72 @@
                         <div class="col-md-4">
                             <div class="card product-card">
                                 <div class="product-image position-relative">
-                                        @php
-                                        $productImage = $product->images->where('sort_order', 1)->first();
-                                        $imagePath = $productImage ? asset('product-image/' . $productImage->img) : '';
-                                        @endphp
-                                        @if($productImage)
-                                        <a href="" class="product-img"><img class="card-img-top" src="{{$imagePath}}" alt=""></a>
-                                        @endif
-                                    
-                                    <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
+                                    @php
+                                    $productImage = $product->images->where('sort_order', 1)->first();
+                                    $imagePath = $productImage ? asset('product-image/' . $productImage->img) : '';
+                                    @endphp
+                                    @if($productImage)
+                                    <a href="" class="product-img"><img class="card-img-top" src="{{$imagePath}}" alt=""></a>
+                                    @endif
+
+                                    @guest
+                                    <a data-product="{{$product->id}}" class="whishlist wishlist_add "><i class="far fa-heart"></i></a>
+                                    @else
+                                    @if (Auth::check())
+                                    <a data-product="{{$product->id}}" @if($wishlist->where('product_id', $product->id)->where('user_id',auth()->user()->id)->count() > 0)
+                                        style="color: red;"
+                                        @endif class="whishlist wishlist_add "><i class="far fa-heart"></i></a>
+
+
+                                    @endif
+                                    @endguest
 
                                     <div class="product-action">
-                                        <a class="btn btn-dark" href="#">
+                                        <a class="btn btn-dark" data-product-name="{{$product->id}}" id="add_carts{{$product->id}}" class="product-action ">
+
                                             <i class="fa fa-shopping-cart"></i> Add To Cart
-                                        </a>                            
+                                        </a>
                                     </div>
-                                </div>                        
+                                </div>
                                 <div class="card-body text-center mt-3">
                                     <a class="h6 link" href="product.php">{{$product->product_name}}</a>
                                     <div class="price mt-2">
                                         <span class="h5"><strong>${{$product->price}}</strong></span>
                                         <span class="h6 text-underline"><del>$120</del></span>
                                     </div>
-                                </div>                        
-                            </div>                                               
+                                </div>
+                            </div>
                         </div>
+                        <script>
+                            $('#add_carts{{$product->id}}').on('click', function() {
+                                var productId = $(this).data('product-name');
+
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '{{route('cart.add2')}}',
+                                    data: {
+                                        product_id: productId,
+                                        quantity: 1
+                                    },
+                                    success: function(response) {
+                                        if (response.success) {
+                                            alert('Sản phẩm đã được thêm vào giỏ hàng.');
+                                        } else {
+                                            alert('Không thể thêm sản phẩm vào giỏ hàng.');
+                                        }
+                                    },
+                                    error: function() {
+                                        alert('Có lỗi xảy ra.');
+                                    }
+                                });
+                            });
+                        </script>
                         @endforeach
+
                         <div class="col-md-12 pt-5">
-                        {{ $products->links('pagination::bootstrap-5') }}
+                            {{ $products->links('pagination::bootstrap-5') }}
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -132,6 +168,34 @@
                 if (this.checked) {
                     var brandId = this.value;
                     window.location.href = "{{ route('products.by.brand', ':brandId') }}".replace(':brandId', brandId);
+                }
+            });
+        });
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.wishlist_add').click(function() {
+            var productId = $(this).data('product');
+
+            console.log(productId);
+            $.ajax({
+                type: 'get',
+                url: '{{ route("wishList.add") }}',
+                data: {
+                    product_id: productId,
+                },
+                success: function(response) {
+                    if (response.success) {
+                        alert('Sản phẩm đã được thêm vào trang yêu thích.');
+                    } else {
+                        alert('Không thể thêm sản phẩm vào trang yêu thích.');
+                    }
+                },
+                error: function() {
+                    alert('Vui lòng đăng nhập');
                 }
             });
         });

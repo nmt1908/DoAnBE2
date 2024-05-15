@@ -51,9 +51,11 @@
                                                     
                                             </td>
                                         </tr>
-                                        @endforeach                         
+                                        @endforeach  
+
                                     </tbody>
                                 </table>
+                                {!! $dslist->links('pagination::bootstrap-5',) !!}
                             </div>                            
                         </div>
                     </div>

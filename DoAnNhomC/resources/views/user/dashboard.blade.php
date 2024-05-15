@@ -117,7 +117,7 @@
                             @endif
                             @endguest
 
-                            <div data-product-name="{{$product->id}}" class="product-action" id="add_cart{{$product->id}}">
+                            <div data-product-name="{{$product->id}}" class="product-action add_cart{{$product->id}}">
                                 <a class="btn btn-dark">
                                     <i class="fa fa-shopping-cart"></i> Add To Cart_1
                                 </a>
@@ -133,7 +133,7 @@
                     </div>
                 </div>
                 <script>
-                    $('#add_cart{{$product->id}}').on('click', function() {
+                    $('.add_cart{{$product->id}}').on('click', function() {
                         var productId = $(this).data('product-name');
 
                         $.ajax({
@@ -210,11 +210,22 @@
                             <a href="" class="product-img"><img class="card-img-top" src="{{ $imagePath }}" alt=""></a>
                             @endif
 
-                            <a class="whishlist" href="222"><i class="far fa-heart"></i></a>
+                            @guest
+                            <a data-product="{{$product->id}}" class="whishlist wishlist_add "><i class="far fa-heart"></i></a>
+                            @else
+                            @if (Auth::check())
+                            <a data-product="{{$product->id}}" @if($wishlist->where('product_id', $product->id)->where('user_id',auth()->user()->id)->count() > 0)
+                            style="color: red;"
+                                @endif class="whishlist wishlist_add "><i  class="far fa-heart"></i></a>
+
+
+                            @endif
+                            @endguest
 
                             <div class="product-action">
-                                <a class="btn btn-dark" href="#">
-                                    <i id="add_cart{{$product->id}}" class="fa fa-shopping-cart"></i> Add To Cart
+                                <a class="btn btn-dark" data-product-name="{{$product->id}}" id="add_carts{{$product->id}}" class="product-action ">
+                                    
+                                    <i class="fa fa-shopping-cart"></i> Add To Cart
                                 </a>
                             </div>
 
@@ -228,7 +239,30 @@
                         </div>
                     </div>
                 </div>
-
+                <script>
+                    $('#add_carts{{$product->id}}').on('click', function() {
+                        var productId = $(this).data('product-name');
+                     
+                        $.ajax({
+                            type: 'POST',
+                            url: '{{route('cart.add2')}}',
+                            data: {
+                                product_id: productId,
+                                quantity: 1
+                            },
+                            success: function(response) {
+                                if (response.success) {
+                                    alert('Sản phẩm đã được thêm vào giỏ hàng.');
+                                } else {
+                                    alert('Không thể thêm sản phẩm vào giỏ hàng.');
+                                }
+                            },
+                            error: function() {
+                                alert('Có lỗi xảy ra.');
+                            }
+                        });
+                    });
+                </script>
                 @endif
 
                 @endforeach

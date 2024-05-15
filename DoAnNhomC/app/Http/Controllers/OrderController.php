@@ -11,6 +11,7 @@ use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Console\Output\Output;
+use Illuminate\Pagination\Paginator;
 
 class OrderController
 {
@@ -93,26 +94,44 @@ class OrderController
 
     public function orders()
     {
-
+        // Get the current page from the request, default to 1 if not present
+        $currentPage = Paginator::resolveCurrentPage();
+    
+        // Define how many items we want to be visible in each page
+        $perPage = 1;
+    
+        // Get the distinct list of 'zip_order'
         $dsList = OrderItem::distinct()->pluck('zip_order');
-        $totals = [];
-
-        // Chuyển danh sách thành mảng và loại bỏ khoảng trắng
-        $dsList = $dsList->map(function ($item, $key) {
+    
+        // Map and trim the list
+        $dsList = $dsList->map(function ($item) {
             return trim($item);
-        })->toArray();
-
-        foreach ($dsList as $ds) {
-            // Lấy tổng số lượng của mỗi sản phẩm có 'zip_order' là $ds
-            $total = OrderItem::where('zip_order', $ds)
-                ->sum('total');
+        });
+    
+        // Get the current page slice of items
+        $currentPageItems = $dsList->slice(($currentPage - 1) * $perPage, $perPage);
+    
+        $totals = [];
+    
+        foreach ($currentPageItems as $ds) {
+            // Get the total quantity of each product with 'zip_order' = $ds
+            $total = OrderItem::where('zip_order', $ds)->sum('total');
             $createdAt = OrderItem::where('zip_order', $ds)->first()->created_at;
-
-            // Lưu tổng vào mảng
+    
+            // Save the total to the array
             $totals[$ds] = ['total' => $total, 'created_at' => $createdAt];
         }
-
-        return view('user.myOrders', ['dslist' => $dsList, 'totals' => $totals]);
+    
+        // Create a LengthAwarePaginator instance
+        $paginatedItems = new \Illuminate\Pagination\LengthAwarePaginator(
+            $currentPageItems,
+            $dsList->count(),
+            $perPage,
+            $currentPage,
+            ['path' => Paginator::resolveCurrentPath()]
+        );
+    
+        return view('user.myOrders', ['dslist' => $paginatedItems, 'totals' => $totals]);
     }
     public function detailOrders($zip_order)
     {
@@ -120,15 +139,15 @@ class OrderController
 
         $dsList = OrderItem::where('zip_order', $zip_order)->firstOrFail();
         $totalPrice = OrderItem::with('product')->get()->sum(function ($item) {
-           
+
             return $item->product->price * $item->quantity;
         });
-       
+
         $totalAllProduct = $totalPrice + 20;
         // Chuyển danh sách thành mảng và loại bỏ khoảng trắng
 
 
-        return view('user.orderDetail', ['order' => $order_detail,'dslist' => $dsList,'totalPrice'=>$totalPrice,'totalAll'=>$totalAllProduct]);
+        return view('user.orderDetail', ['order' => $order_detail, 'dslist' => $dsList, 'totalPrice' => $totalPrice, 'totalAll' => $totalAllProduct]);
     }
     public function pays()
     {

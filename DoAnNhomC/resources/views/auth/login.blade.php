@@ -67,6 +67,9 @@
                     <i class="material-icons">face</i>
                 </div>
                 <input id="email" name="email" placeholder="Username" type="text" required class="validate" autocomplete="off">
+                @if ($errors->has('email'))
+                                        <span class="text-danger">{{ $errors->first('email') }}</span>
+                                    @endif
             </div>
 
             <div class="clearfix"></div>
@@ -76,6 +79,9 @@
                     <i class="material-icons">vpn_key</i>
                 </div>
                 <input id="password" name="password" placeholder="Password" type="password" required class="validate" autocomplete="off">
+                @if ($errors->has('password'))
+                                        <span class="text-danger">{{ $errors->first('password') }}</span>
+                                    @endif
             </div>
 
             <div class="remember-me">

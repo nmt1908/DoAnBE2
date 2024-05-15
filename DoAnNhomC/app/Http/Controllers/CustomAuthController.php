@@ -29,10 +29,17 @@ class CustomAuthController extends Controller
     public function customLogin(Request $request)
     {
         $request->validate([
-            'email' => 'required',
-            'password' => 'required',
+            'email' => 'required|email|max:100|min:10',
+            'password' => 'required|max:24|min:6',
+        ], [
+            'password.required' => 'Mật khẩu không được bỏ trống.',
+            'email.required' => 'Tên đăng nhập không thể bỏ trống.',
+            'email.email' => 'Email phải là một địa chỉ email hợp lệ.',
+            'email.max' => 'Địa chỉ email không được vượt quá :max ký tự.',
+            'password.max' => 'Mật khẩu không được vượt quá :max ký tự.',
+            'email.min' => 'Email không được ít hơn :min ký tự.',
+            'password.min' => 'Mật khẩu không được ít hơn :min ký tự.',
         ]);
-    
         $credentials = $request->only('email', 'password');
     
         $user = User::where('email', $credentials['email'])->first();

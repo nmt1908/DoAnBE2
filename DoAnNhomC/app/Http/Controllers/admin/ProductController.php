@@ -8,6 +8,8 @@ use App\Models\Product;
 use App\Models\Categories;
 use App\Models\Brand;
 use App\Models\ProductImage;
+use Illuminate\Support\Facades\Validator;
+
 
 class ProductController extends Controller
 {
@@ -47,18 +49,38 @@ class ProductController extends Controller
     //     return redirect()->route('admin.listProduct')->withSuccess('Tạo sản phẩm thành công!');
     // }
     public function customAddProduct(Request $request) {
-        $request->validate([
-            'product_name' => 'required',
-            'price' => 'required',
-            'description' => 'required',
-            'quantity' => 'required',
+        $validator = Validator::make($request->all(),[
+            'product_name' => 'required|unique:products|max:255|min:10',
+            'price' => 'required|numeric|min:100|max:5000',
+            'description' => 'required|string|max:255',
+            'quantity' => 'required|integer|min:1|max:100',
             'status' => 'required',
             'is_featured' => 'required',
-            'images.*' => 'nullable', // Điều kiện cho hình ảnh
+            'images' => 'required|array|min:1',
             'category_id' => 'required',
             'brand_id' => 'required',
+        ], [
+            'product_name.required'=> 'Tên sản phẩm bắt buộc nhập',
+            'product_name.unique' => 'Tên sản phẩm đã tồn tại.',
+            'product_name.max' => 'Tên sản phẩm không được vượt quá 255 ký tự.',
+            'product_name.min' => 'Tên sản phẩm không được nhỏ hơn 10 ký tự.',
+            'price.numeric' => 'Giá sản phẩm phải là một số.',
+            'price.min' => 'Giá sản phẩm phải lớn hơn hoặc bằng 100.',
+            'price.max' => 'Giá sản phẩm phải nhỏ hơn hoặc bằng 5000.',
+            'price.required' => 'Giá sản phẩm phải bắt buộc nhập.',
+            'description.max' => 'Mô tả sản phẩm không được vượt quá 255 ký tự.',
+            'description.required' => 'Mô tả sản phẩm bắt buộc nhập.',
+
+            'quantity.integer' => 'Số lượng sản phẩm phải là một số nguyên.',
+            'quantity.min' => 'Số lượng sản phẩm phải lớn hơn hoặc bằng 1.',
+            'quantity.max' => 'Số lượng sản phẩm phải nhỏ hơn hoặc bằng 100.',
+            'quantity.required' => 'Số lượng sản phẩm phải bắt buộc nhập.',
+            'images.required' => 'Bạn phải tải lên ít nhất một ảnh.',
         ]);
-    
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        
         // Tạo mới sản phẩm
         $product = Product::create($request->except('image'));
     
@@ -142,16 +164,35 @@ class ProductController extends Controller
         return view('admin.product.updateproduct', ['product' => $product],compact('categories', 'brands'));
     }
     public function postUpdateProduct(Request $request) {
-        $request->validate([
-            'product_name' => 'required',
-            'price' => 'required',
-            'description' => 'required',
-            'quantity' => 'required',
+        $validator = Validator::make($request->all(),[
+            'product_name' => 'required|unique:products|max:255|min:10',
+            'price' => 'required|numeric|min:100|max:5000',
+            'description' => 'required|string|max:255',
+            'quantity' => 'required|integer|min:1|max:100',
             'status' => 'required',
             'is_featured' => 'required',
             'category_id' => 'required',
             'brand_id' => 'required',
+        ], [
+            'product_name.required'=> 'Tên sản phẩm bắt buộc nhập',
+            'product_name.unique' => 'Tên sản phẩm đã tồn tại.',
+            'product_name.max' => 'Tên sản phẩm không được vượt quá 255 ký tự.',
+            'product_name.min' => 'Tên sản phẩm không được nhỏ hơn 10 ký tự.',
+            'price.numeric' => 'Giá sản phẩm phải là một số.',
+            'price.min' => 'Giá sản phẩm phải lớn hơn hoặc bằng 100.',
+            'price.max' => 'Giá sản phẩm phải nhỏ hơn hoặc bằng 5000.',
+            'price.required' => 'Giá sản phẩm phải bắt buộc nhập.',
+            'description.max' => 'Mô tả sản phẩm không được vượt quá 255 ký tự.',
+            'description.required' => 'Mô tả sản phẩm bắt buộc nhập.',
+            'quantity.integer' => 'Số lượng sản phẩm phải là một số nguyên.',
+            'quantity.min' => 'Số lượng sản phẩm phải lớn hơn hoặc bằng 1.',
+            'quantity.max' => 'Số lượng sản phẩm phải nhỏ hơn hoặc bằng 100.',
+            'quantity.required' => 'Số lượng sản phẩm phải bắt buộc nhập.',
+            
         ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
     
         $input = $request->except(['_token', 'id']); // Loại bỏ các trường không cần thiết
     

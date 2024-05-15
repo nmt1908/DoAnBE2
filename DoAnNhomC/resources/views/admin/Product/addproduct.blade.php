@@ -13,6 +13,30 @@
         {{ session('error') }}
     </div>
 @endif
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var successAlert = document.querySelector('.alert-danger');
+
+        if (successAlert) {
+            
+            setTimeout(function () {
+                successAlert.style.display = 'none'; 
+            }, 3000); 
+        }
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var successAlert = document.querySelector('.alert-success');
+
+        if (successAlert) {
+            
+            setTimeout(function () {
+                successAlert.style.display = 'none'; 
+            }, 3000); 
+        }
+    });
+</script>
 <!-- Content Header (Page header) -->
 <section class="content-header">					
 					<div class="container-fluid my-2">
@@ -42,12 +66,18 @@
                                                     <div class="mb-3">
                                                         <label for="product_name">Product name</label>
                                                         <input type="text" name="product_name" id="product_name" class="form-control" placeholder="Name">	
+                                                        @if ($errors->has('product_name'))
+                                                            <span class="text-danger">{{ $errors->first('product_name') }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="mb-3">
                                                         <label for="description">Description</label>
                                                         <textarea name="description" id="description" cols="30" rows="10" class="summernote" placeholder="Description"></textarea>
+                                                        @if ($errors->has('description'))
+                                                            <span class="text-danger">{{ $errors->first('description') }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>                                            
                                             </div>
@@ -62,6 +92,9 @@
                                                 </div>
                                             </div> -->
                                             <input type="file" name="images[]" id="images" multiple>
+                                            @if ($errors->has('images'))
+                                                <span class="text-danger">{{ $errors->first('images') }}</span>
+                                            @endif
                                             <div id="imagePreview"></div>
                                         </div>	                                                                      
                                     </div>
@@ -72,7 +105,10 @@
                                                 <div class="col-md-12">
                                                     <div class="mb-3">
                                                         <label for="price">Price</label>
-                                                        <input type="text" name="price" id="price" class="form-control" placeholder="Price">	
+                                                        <input type="text" name="price" id="price" class="form-control" placeholder="Price">
+                                                        @if ($errors->has('price'))
+                                                            <span class="text-danger">{{ $errors->first('price') }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -132,6 +168,9 @@
                                             <div class="col-md-12">
                                                 <div class="mb-3">
                                                     <input type="number" min="0" name="quantity" id="quantity" class="form-control" placeholder="Quantity">	
+                                                    @if ($errors->has('quantity'))
+                                                        <span class="text-danger">{{ $errors->first('quantity') }}</span>
+                                                    @endif
                                                 </div>
                                             </div>                                         
                                         </div>

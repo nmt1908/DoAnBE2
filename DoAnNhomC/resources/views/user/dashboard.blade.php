@@ -124,7 +124,7 @@
                             </div>
                         </div>
                         <div class="card-body text-center mt-3">
-                            <a class="h6 link" href="product.php">{{$product->product_name}}</a>
+                            <a class="h6 link" href="{{ route('detail.product', ['id' => $product->id]) }}">{{$product->product_name}}</a>
                             <div class="price mt-2">
                                 <span class="h5"><strong>${{$product->price}}</strong></span>
                                 <span class="h6 text-underline"><del>$120</del></span>
@@ -231,7 +231,7 @@
 
                         </div>
                         <div class="card-body text-center mt-3">
-                            <a class="h6 link" href="product.php">{{ $product->product_name }}</a>
+                            <a class="h6 link" href="{{ route('detail.product', ['id' => $product->id]) }}">{{ $product->product_name }}</a>
                             <div class="price mt-2">
                                 <span class="h5"><strong>${{ $product->price }}</strong></span>
                                 <span class="h6 text-underline"><del>$120</del></span>

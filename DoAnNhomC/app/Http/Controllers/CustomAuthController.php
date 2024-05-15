@@ -17,6 +17,7 @@ use App\Models\Banner;
 use App\Models\Categories;
 use App\Models\Brand;
 use App\Models\WishList;
+use App\Models\ProductImage;
 //Unknow
 class CustomAuthController extends Controller
 {
@@ -64,7 +65,7 @@ class CustomAuthController extends Controller
     public function showProductOnShop()
     {
         $wishlist = WishList::all();
-        $products=Product::paginate(3);
+        $products=Product::paginate(9);
         $brands = Brand::all();
         $categories=Categories::all();
         return view('user.shop',compact('products','brands','categories','wishlist'));
@@ -74,7 +75,7 @@ class CustomAuthController extends Controller
         $categories = Categories::all(); 
         $products = Product::whereHas('brand', function ($query) use ($brandId) {
             $query->where('id', $brandId);
-        })->paginate(3);
+        })->paginate(9);
         return view('user.shop', compact('brands','categories','products'));
     }
     public function showProductOnShopByCategory($categoryId) {
@@ -82,7 +83,7 @@ class CustomAuthController extends Controller
         $categories = Categories::all(); 
         $products = Product::whereHas('category', function ($query) use ($categoryId) {
             $query->where('id', $categoryId);
-        })->paginate(3);
+        })->paginate(9);
         return view('user.shop', compact('brands','categories','products'));
     }
     public function sortByPrice(Request $request, $type)
@@ -116,7 +117,7 @@ class CustomAuthController extends Controller
                         ->orWhereHas('brand', function ($query) use ($search) {
                             $query->where('name', 'like', "%$search%");
                         })
-                        ->paginate(5);
+                        ->paginate(9);
     
         return view('user.shop', compact('brands','categories','products'));
     }
@@ -127,6 +128,12 @@ class CustomAuthController extends Controller
     public function showResetPasswordForm($token)
     {
         return view('auth.reset-password', compact('token'));
+    }
+    public function detailProduct($id){
+        $product = Product::find($id);
+        $product_image = ProductImage::where('product_id', $id)->get();
+
+        return view('user.detailproduct', compact('product','product_image'));
     }
     public function resetPassword(Request $request)
     {

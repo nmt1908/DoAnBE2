@@ -6,7 +6,7 @@
         <div class="container">
             <div class="light-font">
                 <ol class="breadcrumb primary-color mb-0">
-                    <li class="breadcrumb-item"><a class="white-text" href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a class="white-text" href="{{route('dashboard')}}">Home</a></li>
                     <li class="breadcrumb-item active">Shop</li>
                 </ol>
             </div>
@@ -35,7 +35,7 @@
                                         <div class="accordion-body">
                                             <div class="navbar-nav">
                                                 @foreach($category->products as $product)
-                                                <a href="" class="nav-item nav-link">{{$product->product_name}}</a>
+                                                <a href="{{ route('detail.product', ['id' => $product->id]) }}" class="nav-item nav-link">{{$product->product_name}}</a>
                                                 @endforeach
                                             </div>
                                         </div>
@@ -115,7 +115,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body text-center mt-3">
-                                    <a class="h6 link" href="product.php">{{$product->product_name}}</a>
+                                    <a class="h6 link" href="{{ route('detail.product', ['id' => $product->id]) }}">{{$product->product_name}}</a>
                                     <div class="price mt-2">
                                         <span class="h5"><strong>${{$product->price}}</strong></span>
                                         <span class="h6 text-underline"><del>$120</del></span>

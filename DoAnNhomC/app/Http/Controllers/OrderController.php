@@ -171,9 +171,10 @@ class OrderController
             // Get the total quantity of each product with 'zip_order' = $ds
             $total = OrderItem::where('zip_order', $ds)->sum('total');
             $createdAt = OrderItem::where('zip_order', $ds)->first()->created_at;
+            $status = OrderItem::where('zip_order', $ds)->first()->status;
 
             // Save the total to the array
-            $totals[$ds] = ['total' => $total, 'created_at' => $createdAt];
+            $totals[$ds] = ['total' => $total, 'created_at' => $createdAt,'status' => $status];
         }
 
         // Create a LengthAwarePaginator instance
@@ -184,8 +185,7 @@ class OrderController
             $currentPage,
             ['path' => Paginator::resolveCurrentPath()]
         );
-
-        return view('user.myOrders', ['dslist' => $paginatedItems, 'totals' => $totals]);
+        return view('user.myOrders', ['dslist' => $paginatedItems, 'totals' => $totals,]);
     }
     public function detailOrders($zip_order)
     {

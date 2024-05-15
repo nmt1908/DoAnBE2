@@ -43,7 +43,11 @@
                                             </td>
                                             <td>{{ $totals[$ds]['created_at'] }}</td>
                                             <td>
-                                                <span class="badge bg-success">Delivered</span>
+                                                @if($totals[$ds]['status'] == 0)
+                                                    <span class="badge bg-warning">Undelivery</span>
+                                                @else
+                                                    <span class="badge bg-success">Delivered</span>
+                                                @endif
                                                 
                                             </td>
                                             <td>

@@ -136,6 +136,8 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::get('update-page', [PagesController::class, 'updatePage'])->name('admin.updatePage');
     Route::post('update-page', [PagesController::class, 'postUpdatePage'])->name('admin.postUpdatePage');
     Route::get('admin/searchpage',[PagesController::class,'searchPage'])->name('admin.searchPage');
+    //Order route
+    Route::get('admin/order',[OrderController::class,'goAdminOrder'])->name('admin.listorder');
 });
 // Route::get('/', function () {
 //     return view('user/dashboard');

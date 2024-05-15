@@ -130,14 +130,15 @@ class CustomAuthController extends Controller
         return view('auth.reset-password', compact('token'));
     }
     public function detailProduct($id){
+        $wishlist = WishList::all();
         $product = Product::find($id);
         $product_image = ProductImage::where('product_id', $id)->get();
         $relatedProducts = Product::where('category_id', $product->category_id)
-                                ->where('brand_id', $product->brand_id) 
+                                ->orwhere('brand_id', $product->brand_id) 
                                 ->where('id', '!=', $id)    
                                 ->limit(4) 
                                 ->get();
-        return view('user.detailproduct', compact('product','product_image','relatedProducts'));
+        return view('user.detailproduct', compact('wishlist','product','product_image','relatedProducts'));
     }
     public function resetPassword(Request $request)
     {

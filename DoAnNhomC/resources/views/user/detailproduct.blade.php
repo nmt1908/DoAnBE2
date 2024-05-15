@@ -46,7 +46,8 @@
                         <div class="carousel-inner bg-light">
                             @foreach($product_image as $key => $product_image)
                                 <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                    <img class="w-100 h-100" src="{{ asset('product-image/' . $product_image->img) }}" alt="Image">
+                                    <img class="w-100 h-100" src="{{ asset('product-image/' . $product_image->img) }}"
+                                        alt="Image">
                                 </div>
                             @endforeach
                         </div>
@@ -75,7 +76,10 @@
                         <h2 class="price ">${{$product->price}}</h2>
 
                         <p>{!! $product->description !!}</p>
-                        <a href="cart.php" class="btn btn-dark"><i class="fas fa-shopping-cart"></i> &nbsp;ADD TO CART</a>
+                        <a class="btn btn-dark" data-product-name="{{$product->id}}" id="add_carts{{$product->id}}"
+                            class="product-action ">
+                            <i class="fa fa-shopping-cart"></i> Add To Cart
+                        </a>
                     </div>
                 </div>
 
@@ -83,31 +87,38 @@
                     <div class="bg-light">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab" aria-controls="description" aria-selected="true">Description</button>
+                                <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
+                                    data-bs-target="#description" type="button" role="tab" aria-controls="description"
+                                    aria-selected="true">Description</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="shipping-tab" data-bs-toggle="tab" data-bs-target="#shipping" type="button" role="tab" aria-controls="shipping" aria-selected="false">Shipping & Returns</button>
+                                <button class="nav-link" id="shipping-tab" data-bs-toggle="tab"
+                                    data-bs-target="#shipping" type="button" role="tab" aria-controls="shipping"
+                                    aria-selected="false">Shipping & Returns</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews" aria-selected="false">Reviews</button>
+                                <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews"
+                                    type="button" role="tab" aria-controls="reviews"
+                                    aria-selected="false">Reviews</button>
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+                            <div class="tab-pane fade show active" id="description" role="tabpanel"
+                                aria-labelledby="description-tab">
                                 <p>
-                                {!! $product->description !!}
+                                    {!! $product->description !!}
                                 </p>
                             </div>
                             <div class="tab-pane fade" id="shipping" role="tabpanel" aria-labelledby="shipping-tab">
-                            <p>{!! $product->description !!}</p>
+                                <p>{!! $product->description !!}</p>
                             </div>
                             <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
-                            {!! $product->description !!}
+                                {!! $product->description !!}
                             </div>
                         </div>
                     </div>
-                </div> 
-            </div>           
+                </div>
+            </div>
         </div>
     </section>
 
@@ -218,44 +229,100 @@
         </div>
     </section> -->
     <section class="pt-5 section-8">
-    <div class="container">
-        <div class="section-title">
-            <h2>Related Products</h2>
-        </div>
-        <div class="col-md-12">
-            <div id="related-products" class="carousel">
-                @foreach($relatedProducts as $relatedProduct)
-                <div class="card product-card">
-                    <div class="product-image position-relative">
-                        <a href="" class="product-img">
-                            @if($relatedProduct->images->isNotEmpty())
-                                <img class="card-img-top" src="{{ asset('product-image/' . $relatedProduct->images->where('sort_order', 1)->first()->img) }}" alt="">
-                            @endif
-                        </a>
-                        <a class="whishlist" href=""><i class="far fa-heart"></i></a>
+        <div class="container">
+            <div class="section-title">
+                <h2>Related Products</h2>
+            </div>
+            <div class="col-md-12">
+                <div id="related-products" class="carousel">
+                    @foreach($relatedProducts as $relatedProduct)
+                        <div class="card product-card">
+                            <div class="product-image position-relative">
+                                <a href="" class="product-img">
+                                    @if($relatedProduct->images->isNotEmpty())
+                                        <img class="card-img-top"
+                                            src="{{ asset('product-image/' . $relatedProduct->images->where('sort_order', 1)->first()->img) }}"
+                                            alt="">
+                                    @endif
+                                </a>
 
-                        <div class="product-action">
-                            <a class="btn btn-dark" href="#">
-                                <i class="fa fa-shopping-cart"></i> Add To Cart
-                            </a>
+                                <div class="product-action">
+                                    <a class="btn btn-dark add-to-cart" href=""
+                                        data-product-id="{{ $relatedProduct->id }}" id="add_carts{{$relatedProduct->id}}">
+                                        <i class="fa fa-shopping-cart"></i> Add To Cart
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body text-center mt-3">
+                                <a class="h6 link"
+                                    href="{{ route('detail.product', ['id' => $relatedProduct->id]) }}">{{ $relatedProduct->product_name }}</a>
+                                <div class="price mt-2">
+                                    <span class="h5"><strong>${{ $relatedProduct->price }}</strong></span>
+                                    @if($relatedProduct->discount_price)
+                                        <span class="h6 text-underline"><del>${{ $relatedProduct->discount_price }}</del></span>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card-body text-center mt-3">
-                        <a class="h6 link" href="{{ route('detail.product', ['id' => $relatedProduct->id]) }}">{{ $relatedProduct->product_name }}</a>
-                        <div class="price mt-2">
-                            <span class="h5"><strong>${{ $relatedProduct->price }}</strong></span>
-                            <!-- Thêm giá trị giảm giá nếu có -->
-                            @if($relatedProduct->discount_price)
-                            <span class="h6 text-underline"><del>${{ $relatedProduct->discount_price }}</del></span>
-                            @endif
-                        </div>
-                    </div>
+                    @endforeach
+
+
                 </div>
-                @endforeach
             </div>
         </div>
-    </div>
-</section>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $('#add_carts{{$product->id}}').on('click', function() {
+            var productId = $(this).data('product-name');
+
+            $.ajax({
+                type: 'POST',
+                url: '{{route('cart.add2')}}',
+                data: {
+                    product_id: productId,
+                    quantity: 1
+                },
+                success: function (response) {
+                    if (response.success) {
+                        alert('Sản phẩm đã được thêm vào giỏ hàng.');
+                    } else {
+                        alert('Không thể thêm sản phẩm vào giỏ hàng.');
+                    }
+                },
+                error: function () {
+                    alert('Có lỗi xảy ra.');
+                }
+            });
+        });
+    </script>
+    <script>
+    $(document).ready(function() {
+        $('.add-to-cart').on('click', function(event) {
+            event.preventDefault();
+            var productId = $(this).data('product-id');
+
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('cart.add2') }}',
+                data: {
+                    product_id: productId,
+                    quantity: 1
+                },
+                success: function(response) {
+                    if (response.success) {
+                        alert('Sản phẩm đã được thêm vào giỏ hàng.');
+                    } else {
+                        alert('Không thể thêm sản phẩm vào giỏ hàng.');
+                    }
+                },
+                error: function() {
+                    alert('Có lỗi xảy ra.');
+                }
+            });
+        });
+    });
+</script>
 
 </main>
 @endsection

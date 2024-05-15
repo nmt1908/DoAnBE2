@@ -139,6 +139,8 @@ Route::middleware(['auth', 'admin.access'])->group(function () {
     Route::get('admin/searchpage',[PagesController::class,'searchPage'])->name('admin.searchPage');
     //Order route
     Route::get('admin/order',[OrderController::class,'goAdminOrder'])->name('admin.listorder');
+    Route::post('/admin/orders/deliver/{zip_order}', [OrderController::class,'deliverOrder'])->name('admin.orders.deliver');
+
 });
 // Route::get('/', function () {
 //     return view('user/dashboard');

@@ -23,7 +23,7 @@ class OrderController
         $user = Auth::user();
         $order = Order::where('user_id', $user->id)->first();
         if ($order === null) {
-            $order =  order::create(
+            $order = order::create(
                 [
                     'user_id' => $user->id,
                 ]
@@ -128,8 +128,8 @@ class OrderController
         // ]);
         $perPage = 5;
 
-    // Sử dụng query builder của Laravel để nhóm và tổng hợp tổng số theo 'zip_order'
-    $dsList = OrderItem::select(
+        // Sử dụng query builder của Laravel để nhóm và tổng hợp tổng số theo 'zip_order'
+        $dsList = OrderItem::select(
             'zip_order',
             DB::raw('SUM(total) as total_sum'),
             DB::raw('MAX(created_at) as latest_created_at'),
@@ -139,43 +139,44 @@ class OrderController
             DB::raw('MIN(status) as first_status'),
             DB::raw('MIN(phone) as first_phone') // Ví dụ, lấy cái đầu tiên theo trạng thái
         )
-        ->groupBy('zip_order')
-        ->paginate($perPage);
-    // Truyền thực thể phân trang trực tiếp vào view
-    return view('admin.order.listoder', [
-        'dsList' => $dsList
-    ]);
+            ->groupBy('zip_order')
+            ->paginate($perPage);
+        // Truyền thực thể phân trang trực tiếp vào view
+        return view('admin.order.listoder', [
+            'dsList' => $dsList
+        ]);
     }
     public function orders()
     {
         // Get the current page from the request, default to 1 if not present
         $currentPage = Paginator::resolveCurrentPage();
-    
+
         // Define how many items we want to be visible in each page
         $perPage = 1;
-    
+
         // Get the distinct list of 'zip_order'
         $dsList = OrderItem::distinct()->pluck('zip_order');
-    
+
         // Map and trim the list
         $dsList = $dsList->map(function ($item) {
             return trim($item);
         });
-    
+
         // Get the current page slice of items
         $currentPageItems = $dsList->slice(($currentPage - 1) * $perPage, $perPage);
-    
+
         $totals = [];
-    
+
         foreach ($currentPageItems as $ds) {
             // Get the total quantity of each product with 'zip_order' = $ds
             $total = OrderItem::where('zip_order', $ds)->sum('total');
             $createdAt = OrderItem::where('zip_order', $ds)->first()->created_at;
-    
+            $status = OrderItem::where('zip_order', $ds)->first()->status;
+
             // Save the total to the array
-            $totals[$ds] = ['total' => $total, 'created_at' => $createdAt];
+            $totals[$ds] = ['total' => $total, 'created_at' => $createdAt,'status' => $status];
         }
-    
+
         // Create a LengthAwarePaginator instance
         $paginatedItems = new \Illuminate\Pagination\LengthAwarePaginator(
             $currentPageItems,
@@ -184,8 +185,7 @@ class OrderController
             $currentPage,
             ['path' => Paginator::resolveCurrentPath()]
         );
-    
-        return view('user.myOrders', ['dslist' => $paginatedItems, 'totals' => $totals]);
+        return view('user.myOrders', ['dslist' => $paginatedItems, 'totals' => $totals,]);
     }
     public function detailOrders($zip_order)
     {
@@ -200,7 +200,7 @@ class OrderController
         $totalAllProduct = $totalPrice + 20;
         // Chuyển danh sách thành mảng và loại bỏ khoảng trắng
 
-        
+
         return view('user.orderDetail', ['order' => $order_detail, 'dslist' => $dsList, 'totalPrice' => $totalPrice, 'totalAll' => $totalAllProduct]);
     }
     public function pays()
@@ -235,4 +235,18 @@ class OrderController
         session()->put('total', $total);
         return view('user.checkOut', ['listCartItem' => $listCartItem, 'total' => $total, 'totalPrice' => $totalPrice, 'totalAll' => $totalAllProduct]);
     }
+    public function deliverOrder($zip_order)
+    {
+        // Lấy tất cả các mục trong bảng OrderItem có zip_order giống với zip_order được truyền vào
+        $orders = OrderItem::where('zip_order', $zip_order)->get();
+    
+        // Duyệt qua từng mục và đánh dấu trạng thái là đã giao hàng
+        foreach ($orders as $order) {
+            $order->status = 1; // Đánh dấu đơn hàng là đã giao hàng
+            $order->save();
+        }
+    
+        return redirect()->back()->with('success', 'Tất cả các đơn hàng cùng mã đã được giao hàng thành công.');
+    }
+
 }

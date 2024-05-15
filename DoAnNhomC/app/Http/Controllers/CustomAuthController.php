@@ -132,8 +132,12 @@ class CustomAuthController extends Controller
     public function detailProduct($id){
         $product = Product::find($id);
         $product_image = ProductImage::where('product_id', $id)->get();
-
-        return view('user.detailproduct', compact('product','product_image'));
+        $relatedProducts = Product::where('category_id', $product->category_id)
+                                ->where('brand_id', $product->brand_id) 
+                                ->where('id', '!=', $id)    
+                                ->limit(4) 
+                                ->get();
+        return view('user.detailproduct', compact('product','product_image','relatedProducts'));
     }
     public function resetPassword(Request $request)
     {

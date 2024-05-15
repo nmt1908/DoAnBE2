@@ -111,7 +111,7 @@
         </div>
     </section>
 
-    <section class="pt-5 section-8">
+    <!-- <section class="pt-5 section-8">
         <div class="container">
             <div class="section-title">
                 <h2>Related Products</h2>
@@ -216,6 +216,46 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
+    <section class="pt-5 section-8">
+    <div class="container">
+        <div class="section-title">
+            <h2>Related Products</h2>
+        </div>
+        <div class="col-md-12">
+            <div id="related-products" class="carousel">
+                @foreach($relatedProducts as $relatedProduct)
+                <div class="card product-card">
+                    <div class="product-image position-relative">
+                        <a href="" class="product-img">
+                            @if($relatedProduct->images->isNotEmpty())
+                                <img class="card-img-top" src="{{ asset('product-image/' . $relatedProduct->images->where('sort_order', 1)->first()->img) }}" alt="">
+                            @endif
+                        </a>
+                        <a class="whishlist" href=""><i class="far fa-heart"></i></a>
+
+                        <div class="product-action">
+                            <a class="btn btn-dark" href="#">
+                                <i class="fa fa-shopping-cart"></i> Add To Cart
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body text-center mt-3">
+                        <a class="h6 link" href="{{ route('detail.product', ['id' => $relatedProduct->id]) }}">{{ $relatedProduct->product_name }}</a>
+                        <div class="price mt-2">
+                            <span class="h5"><strong>${{ $relatedProduct->price }}</strong></span>
+                            <!-- Thêm giá trị giảm giá nếu có -->
+                            @if($relatedProduct->discount_price)
+                            <span class="h6 text-underline"><del>${{ $relatedProduct->discount_price }}</del></span>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</section>
+
 </main>
 @endsection

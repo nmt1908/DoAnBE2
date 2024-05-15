@@ -200,7 +200,7 @@ class OrderController
         $totalAllProduct = $totalPrice + 20;
         // Chuyển danh sách thành mảng và loại bỏ khoảng trắng
 
-
+        
         return view('user.orderDetail', ['order' => $order_detail, 'dslist' => $dsList, 'totalPrice' => $totalPrice, 'totalAll' => $totalAllProduct]);
     }
     public function pays()

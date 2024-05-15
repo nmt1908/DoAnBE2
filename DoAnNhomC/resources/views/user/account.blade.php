@@ -17,7 +17,7 @@
         <div class="container">
             <div class="light-font">
                 <ol class="breadcrumb primary-color mb-0">
-                    <li class="breadcrumb-item"><a class="white-text" href="#">My Account</a></li>
+                    <li class="breadcrumb-item"><a class="white-text" href="/account">My Account</a></li>
                     <li class="breadcrumb-item">Settings</li>
                 </ol>
             </div>
@@ -35,7 +35,7 @@
                                 Profile</a>
                         </li>
                         <li class="nav-item">
-                            <a href="my-orders.php" class="nav-link font-weight-bold" role="tab"
+                            <a href="/orders" class="nav-link font-weight-bold" role="tab"
                                 aria-controls="tab-register" aria-expanded="false"><i class="fas fa-shopping-bag"></i>My
                                 Orders</a>
                         </li>

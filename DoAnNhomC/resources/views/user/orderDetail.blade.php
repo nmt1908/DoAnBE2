@@ -6,7 +6,7 @@
         <div class="container">
             <div class="light-font">
                 <ol class="breadcrumb primary-color mb-0">
-                    <li class="breadcrumb-item"><a class="white-text" href="#">My Account</a></li>
+                    <li class="breadcrumb-item"><a class="white-text" href="/account">My Profile</a></li>
                     <li class="breadcrumb-item">Settings</li>
                 </ol>
             </div>
@@ -71,7 +71,11 @@
                                             <h6 class="heading-xxxs text-muted">Status:</h6>
                                             <!-- Text -->
                                             <p class="mb-0 fs-sm fw-bold">
-                                                {{$dslist->status}}
+                                                @if($dslist->status == 0)
+                                                    <span class="badge bg-warning">Undelivery</span>
+                                                @else
+                                                    <span class="badge bg-success">Delivered</span>
+                                                @endif
                                             </p>
                                         </div>
 
@@ -99,7 +103,7 @@
                                       
                                         <div class="col-4 col-md-3 col-xl-2">
                                             <!-- Image -->
-                                            <a href="product.html"><img src="images/product-1.jpg" alt="..." class="img-fluid"></a>
+                                            <a href="product.html"><img src="{{ asset('product-image/' . $value->product->images->first()->img) }}" alt="..." class="img-fluid"></a>
                                         </div>
                                         <div class="col">
                                             <!-- Title -->

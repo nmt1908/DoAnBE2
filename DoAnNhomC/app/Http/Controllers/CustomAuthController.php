@@ -114,6 +114,7 @@ class CustomAuthController extends Controller
         $search = $request->input('search');
         $brands = Brand::all(); 
         $categories = Categories::all(); 
+        $wishlist = WishList::all();
         // Thực hiện truy vấn để tìm kiếm người dùng
         $products = Product::where('product_name', 'like', "%$search%")
                         ->orWhere('price', 'like', "%$search%")
@@ -126,7 +127,7 @@ class CustomAuthController extends Controller
                         })
                         ->paginate(9);
     
-        return view('user.shop', compact('brands','categories','products'));
+        return view('user.shop', compact('brands','categories','products','wishlist'));
     }
     public function goForgotPassword()
     {

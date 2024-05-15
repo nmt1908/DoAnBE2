@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\Console\Output\Output;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\DB;
 
 class OrderController
 {
@@ -91,7 +92,60 @@ class OrderController
 
         return $zipOrder;
     }
+    public function goAdminOrder()
+    {
+        // $perPage = 2;
 
+        // // Use Laravel's query builder to group and sum totals by 'zip_order'
+        // $dsList = OrderItem::select(
+        //         'zip_order',
+        //         DB::raw('SUM(total) as total_sum'),
+        //         DB::raw('MAX(created_at) as latest_created_at'),
+        //         DB::raw('MIN(fullName) as first_fullName'), // Example, taking the first alphabetically
+        //         DB::raw('MIN(email) as first_email'), // Example, taking the first alphabetically
+        //         DB::raw('MIN(address) as first_address'), // Example, taking the first alphabetically
+        //         DB::raw('MIN(status) as first_status'),
+        //         DB::raw('MIN(phone) as first_phone') // Example, taking the first status
+        //     )
+        //     ->groupBy('zip_order')
+        //     ->paginate($perPage);
+
+        // // Format the pagination result to include necessary details
+        // $results = $dsList->map(function ($item) {
+        //     return [
+        //         'zip_order' => $item->zip_order,
+        //         'total_sum' => $item->total_sum,
+        //         'latest_created_at' => $item->latest_created_at ? $item->latest_created_at : null,
+        //         'fullName' => $item->first_fullName,
+        //         'email' => $item->first_email,
+        //         'address' => $item->first_address,
+        //         'status' => $item->first_status,
+        //         'phone' => $item->first_phone,
+        //     ];
+        // });
+        // return view('admin.order.listoder', [
+        //     'dsList' => $results
+        // ]);
+        $perPage = 5;
+
+    // Sử dụng query builder của Laravel để nhóm và tổng hợp tổng số theo 'zip_order'
+    $dsList = OrderItem::select(
+            'zip_order',
+            DB::raw('SUM(total) as total_sum'),
+            DB::raw('MAX(created_at) as latest_created_at'),
+            DB::raw('MIN(fullName) as first_fullName'), // Ví dụ, lấy cái đầu tiên theo thứ tự chữ cái
+            DB::raw('MIN(email) as first_email'), // Ví dụ, lấy cái đầu tiên theo thứ tự chữ cái
+            DB::raw('MIN(address) as first_address'), // Ví dụ, lấy cái đầu tiên theo thứ tự chữ cái
+            DB::raw('MIN(status) as first_status'),
+            DB::raw('MIN(phone) as first_phone') // Ví dụ, lấy cái đầu tiên theo trạng thái
+        )
+        ->groupBy('zip_order')
+        ->paginate($perPage);
+    // Truyền thực thể phân trang trực tiếp vào view
+    return view('admin.order.listoder', [
+        'dsList' => $dsList
+    ]);
+    }
     public function orders()
     {
         // Get the current page from the request, default to 1 if not present

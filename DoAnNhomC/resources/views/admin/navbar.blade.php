@@ -100,7 +100,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ asset('admin-acess/orders.html') }}" class="nav-link">
+                        <a href="{{ route('admin.listorder') }}" class="nav-link">
                             <i class="nav-icon fas fa-shopping-bag"></i>
                             <p>Orders</p>
                         </a>

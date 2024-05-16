@@ -114,7 +114,7 @@
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        Bạn có chắc chắn muốn xóa thương hiệu này không?
+                                        Bạn có chắc chắn muốn xóa thương hiệu {{$brand->name}} này không?
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"

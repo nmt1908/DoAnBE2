@@ -17,7 +17,7 @@
     <div class="container-fluid my-2">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Create Category</h1>
+                <h1>Update Category</h1>
             </div>
             <div class="col-sm-6 text-right">
                 <a href="{{ route('admin.listcategories') }}" class="btn btn-primary">Back</a>

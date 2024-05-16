@@ -138,7 +138,7 @@
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        Bạn có chắc chắn muốn xóa danh mục này không?
+                                        Bạn có chắc chắn muốn xóa danh mục {{$category->name}} này không?
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"

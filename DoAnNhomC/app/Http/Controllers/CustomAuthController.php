@@ -75,23 +75,25 @@ class CustomAuthController extends Controller
         $products=Product::paginate(9);
         $brands = Brand::all();
         $categories=Categories::all();
-        return view('user.shop',compact('products','brands','categories','wishlist'));
+        return view('user.shop',compact('wishlist','products','brands','categories','wishlist'));
     }
     public function showProductOnShopByBrand($brandId) {
+        $wishlist = WishList::all();
         $brands = Brand::all(); 
         $categories = Categories::all(); 
         $products = Product::whereHas('brand', function ($query) use ($brandId) {
             $query->where('id', $brandId);
         })->paginate(9);
-        return view('user.shop', compact('brands','categories','products'));
+        return view('user.shop', compact('wishlist','brands','categories','products'));
     }
     public function showProductOnShopByCategory($categoryId) {
+        $wishlist = WishList::all();
         $brands = Brand::all(); 
         $categories = Categories::all(); 
         $products = Product::whereHas('category', function ($query) use ($categoryId) {
             $query->where('id', $categoryId);
         })->paginate(9);
-        return view('user.shop', compact('brands','categories','products'));
+        return view('user.shop', compact('wishlist','brands','categories','products'));
     }
     public function sortByPrice(Request $request, $type)
     {

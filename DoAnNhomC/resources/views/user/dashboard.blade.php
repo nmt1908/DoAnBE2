@@ -119,7 +119,7 @@
 
                             <div data-product-name="{{$product->id}}" class="product-action add_cart{{$product->id}}">
                                 <a class="btn btn-dark">
-                                    <i class="fa fa-shopping-cart"></i> Add To Cart_1
+                                    <i class="fa fa-shopping-cart"></i> Add To Cart
                                 </a>
                             </div>
                         </div>

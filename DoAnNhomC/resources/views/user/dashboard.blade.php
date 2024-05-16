@@ -1,6 +1,41 @@
 @extends('user.includes.header')
 
 @section('content')
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var successAlert = document.querySelector('.alert-danger');
+
+        if (successAlert) {
+            
+            setTimeout(function () {
+                successAlert.style.display = 'none'; 
+            }, 3000); 
+        }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var successAlert = document.querySelector('.alert-success');
+
+            if (successAlert) {
+                
+                setTimeout(function () {
+                    successAlert.style.display = 'none'; 
+                }, 3000); 
+            }
+        });
+    </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <main>
 

@@ -18,7 +18,7 @@ class AdminAccess
         $user = Auth::user();
         if ($user && $user->role != 1) {
             // Nếu người dùng không phải là admin, chuyển hướng về trang dashboard của họ
-            return redirect()->route('dashboard');
+            return redirect()->route('dashboard')->withErrors(['error' => 'Vai trò của bạn không được truy cập vào trang này']);
         }
 
         return $next($request);

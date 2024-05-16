@@ -279,7 +279,7 @@ class CustomAuthController extends Controller
         // Validate the incoming request data
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|max:100|min:10|email|unique:users',
             'password' => [
                 'required',
                 'string',
@@ -289,10 +289,12 @@ class CustomAuthController extends Controller
             ],
             'phone' => 'required|regex:/^[0-9]{1,15}$/',
             'img' => 'required',
-            'address' => 'required|max:100',
+            'address' => 'required||min:10|max:250',
         ], [
             'name.required' => 'Trường tên là bắt buộc.',
             'email.required' => 'Trường email là bắt buộc.',
+            'email.max' => 'Địa chỉ email không được vượt quá :max ký tự.',
+            'email.min' => 'Email không được ít hơn :min ký tự.',
             'email.email' => 'Email phải là một địa chỉ email hợp lệ.',
             'email.unique' => 'Email đã tồn tại trong hệ thống.',
             'password.required' => 'Trường mật khẩu là bắt buộc.',
@@ -303,6 +305,7 @@ class CustomAuthController extends Controller
             'phone.regex' => 'Số điện thoại không hợp lệ.',
             'img.required' => 'Trường ảnh là bắt buộc.',
             'address.required' => 'Trường địa chỉ là bắt buộc.',
+            'address.min' => 'Địa chỉ phải có ít nhất :min ký tự.',
             'address.max' => 'Địa chỉ không được vượt quá :max ký tự.',
         ]);
         if ($request->hasFile('img')) {

@@ -12,6 +12,19 @@
     {{ session('error') }}
 </div>
 @endif
+<section class="content-header">
+    <div class="container-fluid my-2">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Create Pages</h1>
+            </div>
+            <div class="col-sm-6 text-right">
+                <a href="{{ route('admin.listpage') }}" class="btn btn-primary">Back</a>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
 </section>
 <!-- Main content -->
 <section class="content">

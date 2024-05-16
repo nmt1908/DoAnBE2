@@ -97,6 +97,7 @@ class CustomAuthController extends Controller
     }
     public function sortByPrice(Request $request, $type)
     {
+        $wishlist = WishList::all();
         $brands = Brand::all(); 
         $categories = Categories::all(); 
         // Kiểm tra loại sắp xếp được yêu cầu
@@ -110,7 +111,7 @@ class CustomAuthController extends Controller
         }
 
         // Trả về view với sản phẩm đã được sắp xếp
-        return view('user.shop', compact('brands','categories','products'));
+        return view('user.shop', compact('wishlist','brands','categories','products'));
     }
     public function searchProduct(Request $request) {
         $search = $request->input('search');

@@ -92,7 +92,7 @@
                 <h2>Featured Products</h2>
             </div>
             <div class="row pb-3">
-                @foreach($products as $product)
+                @foreach($products->take(8) as $product)
                 @if($product->is_featured == 1)
                 <div class="col-md-3">
                     <div class="card product-card">
@@ -169,102 +169,74 @@
                 <h2>Latest Produsts</h2>
             </div>
             <div class="row pb-3">
-                <!-- @foreach($products as $product)
-                    @if($product->is_new == 1)
+                @php
+                $sevenDaysAgo = now()->subDays(7); // Tính ngày 7 ngày trước từ ngày hiện tại
+                $newProducts = $products->filter(function ($product) use ($sevenDaysAgo) {
+                    return $product->created_at >= $sevenDaysAgo;
+                })->take(8);
+                @endphp
+
+                @foreach($newProducts as $product)
                     <div class="col-md-3">
                         <div class="card product-card">
                             <div class="product-image position-relative">
-                                <a href="" class="product-img"><img class="card-img-top" src="{{ asset('user-acess/images/product-1.jpg') }}" alt=""></a>
-                                <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
+                                @php
+                                $productImage = $product->images->where('sort_order', 1)->first();
+                                $imagePath = $productImage ? asset('product-image/' . $productImage->img) : '';
+                                @endphp
+                                @if($productImage)
+                                <a href="" class="product-img"><img class="card-img-top" src="{{ $imagePath }}" alt=""></a>
+                                @endif
+
+                                @guest
+                                <a data-product="{{$product->id}}" class="whishlist wishlist_add "><i class="far fa-heart"></i></a>
+                                @else
+                                @if (Auth::check())
+                                <a data-product="{{$product->id}}" @if($wishlist->where('product_id', $product->id)->where('user_id', auth()->user()->id)->count() > 0)
+                                style="color: red;"
+                                    @endif class="whishlist wishlist_add "><i class="far fa-heart"></i></a>
+                                @endif
+                                @endguest
 
                                 <div class="product-action">
-                                    <a class="btn btn-dark" href="#">
+                                    <a class="btn btn-dark" data-product-name="{{$product->id}}" id="add_carts{{$product->id}}">
                                         <i class="fa fa-shopping-cart"></i> Add To Cart
-                                    </a>                            
+                                    </a>
                                 </div>
-                            </div>                        
+                            </div>
                             <div class="card-body text-center mt-3">
-                                <a class="h6 link" href="product.php">Dummy Product Title</a>
+                                <a class="h6 link" href="{{ route('detail.product', ['id' => $product->id]) }}">{{ $product->product_name }}</a>
                                 <div class="price mt-2">
-                                    <span class="h5"><strong>$100</strong></span>
+                                    <span class="h5"><strong>${{ $product->price }}</strong></span>
                                     <span class="h6 text-underline"><del>$120</del></span>
                                 </div>
-                            </div>                        
-                        </div>                                               
-                    </div>  
-                    @endif
-                @endforeach -->
-                @foreach($products as $product)
-                @php
-                $sevenDaysAgo = now()->subDays(7); // Tính ngày 7 ngày trước từ ngày hiện tại
-                @endphp
-                @if($product->created_at >= $sevenDaysAgo)
-                <div class="col-md-3">
-                    <div class="card product-card">
-                        <div class="product-image position-relative">
-                            @php
-                            $productImage = $product->images->where('sort_order', 1)->first();
-                            $imagePath = $productImage ? asset('product-image/' . $productImage->img) : '';
-                            @endphp
-                            @if($productImage)
-                            <a href="" class="product-img"><img class="card-img-top" src="{{ $imagePath }}" alt=""></a>
-                            @endif
-
-                            @guest
-                            <a data-product="{{$product->id}}" class="whishlist wishlist_add "><i class="far fa-heart"></i></a>
-                            @else
-                            @if (Auth::check())
-                            <a data-product="{{$product->id}}" @if($wishlist->where('product_id', $product->id)->where('user_id',auth()->user()->id)->count() > 0)
-                            style="color: red;"
-                                @endif class="whishlist wishlist_add "><i  class="far fa-heart"></i></a>
-
-
-                            @endif
-                            @endguest
-
-                            <div class="product-action">
-                                <a class="btn btn-dark" data-product-name="{{$product->id}}" id="add_carts{{$product->id}}" class="product-action ">
-                                    
-                                    <i class="fa fa-shopping-cart"></i> Add To Cart
-                                </a>
-                            </div>
-
-                        </div>
-                        <div class="card-body text-center mt-3">
-                            <a class="h6 link" href="{{ route('detail.product', ['id' => $product->id]) }}">{{ $product->product_name }}</a>
-                            <div class="price mt-2">
-                                <span class="h5"><strong>${{ $product->price }}</strong></span>
-                                <span class="h6 text-underline"><del>$120</del></span>
                             </div>
                         </div>
                     </div>
-                </div>
-                <script>
-                    $('#add_carts{{$product->id}}').on('click', function() {
-                        var productId = $(this).data('product-name');
-                     
-                        $.ajax({
-                            type: 'POST',
-                            url: '{{route('cart.add2')}}',
-                            data: {
-                                product_id: productId,
-                                quantity: 1
-                            },
-                            success: function(response) {
-                                if (response.success) {
-                                    alert('Sản phẩm đã được thêm vào giỏ hàng.');
-                                } else {
-                                    alert('Không thể thêm sản phẩm vào giỏ hàng.');
+                    <script>
+                        $('#add_carts{{$product->id}}').on('click', function() {
+                            var productId = $(this).data('product-name');
+                        
+                            $.ajax({
+                                type: 'POST',
+                                url: '{{ route('cart.add2') }}',
+                                data: {
+                                    product_id: productId,
+                                    quantity: 1
+                                },
+                                success: function(response) {
+                                    if (response.success) {
+                                        alert('Sản phẩm đã được thêm vào giỏ hàng.');
+                                    } else {
+                                        alert('Không thể thêm sản phẩm vào giỏ hàng.');
+                                    }
+                                },
+                                error: function() {
+                                    alert('Có lỗi xảy ra.');
                                 }
-                            },
-                            error: function() {
-                                alert('Có lỗi xảy ra.');
-                            }
+                            });
                         });
-                    });
-                </script>
-                @endif
-
+                    </script>
                 @endforeach
             </div>
         </div>

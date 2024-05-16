@@ -69,6 +69,9 @@
                     <i class="material-icons">vpn_key</i>
                 </div>
                 <input id="newpassword" name="newpassword" placeholder="New password" type="text" required class="validate" autocomplete="off">
+                @if ($errors->has('newpassword'))
+                                        <span class="text-danger">{{ $errors->first('newpassword') }}</span>
+                                    @endif
             </div>
 
             <div class="clearfix"></div>
@@ -78,6 +81,9 @@
                     <i class="material-icons">vpn_key</i>
                 </div>
                 <input id="confirmpassword" name="confirmpassword" placeholder="Confirmpassword" type="password" required class="validate" autocomplete="off">
+                @if ($errors->has('confirmpassword'))
+                                        <span class="text-danger">{{ $errors->first('confirmpassword') }}</span>
+                                    @endif
             </div>
             <div class="clearfix"></div>
             <input type="submit" value="OK" />

@@ -170,8 +170,14 @@ class CustomAuthController extends Controller
     }
     public function forgotPassword(Request $request)
     {
+        
         $request->validate([
-            'email' => 'required|email',
+            'email' => 'required|email|min:10|max:100',
+        ], [
+            'email.max' => 'Không được vượt quá :max là bắt buộc.',
+            'email.required' => 'Trường email là bắt buộc.',
+            'email.email' => 'Email phải là một địa chỉ email hợp lệ.',
+            'email.min' => 'Email dài tối thiểu :min kí tự.',
         ]);
     
         $user = User::where('email', $request->email)->first();

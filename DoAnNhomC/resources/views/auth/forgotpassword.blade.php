@@ -43,6 +43,9 @@
                     <i class="material-icons">face</i>
                 </div>
                 <input id="email" name="email" placeholder="Put your email and get your resetpassword mail!" type="text" required class="validate" autocomplete="off">
+                @if ($errors->has('email'))
+                                        <span class="text-danger">{{ $errors->first('email') }}</span>
+                                    @endif
             </div>
 
             <div class="clearfix"></div>

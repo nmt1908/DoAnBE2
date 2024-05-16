@@ -154,8 +154,16 @@ class CustomAuthController extends Controller
     {
         
         $request->validate([
-            'newpassword' => 'required',
+            'newpassword' => 'required|regex:/^(?=.*[A-Z])(?=.*\d).+$/|min:6|max:24',
             'confirmpassword' => 'required',
+        ], [
+            'newpassword.regex' => 'Mật khẩu phải chứa ít nhất một chữ cái viết hoa hoặc một số.',
+            'newpassword.required' => 'Mật khẩu không thể bỏ trống.',
+            'newpassword.max' => 'Mật khẩu tối đa có :max ký tự.',
+            'newpassword.min' => 'Mật khẩu không được ít hơn :min ký tự.',
+            'confirmpassword.max' => 'Mật khẩu không được vượt quá :max ký tự.',
+            'confirmpassword.min' => 'Email không được ít hơn :min ký tự.',
+            'confirmpassword.required' => 'Mật khẩu nhập lại không thể bỏ trống.',
         ]);
         if ($request->newpassword !== $request->confirmpassword) {
             return redirect()->back()->with('error', 'Mật khẩu mới và xác nhận mật khẩu không giống nhau.');

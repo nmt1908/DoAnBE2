@@ -75,7 +75,7 @@ class CustomAuthController extends Controller
         $products=Product::paginate(9);
         $brands = Brand::all();
         $categories=Categories::all();
-        return view('user.shop',compact('wishlist','products','brands','categories','wishlist'));
+        return view('user.shop',compact('wishlist','products','brands','categories'));
     }
     public function showProductOnShopByBrand($brandId) {
         $wishlist = WishList::all();

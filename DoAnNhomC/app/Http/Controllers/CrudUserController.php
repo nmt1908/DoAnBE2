@@ -175,6 +175,9 @@ class CrudUserController extends Controller
             'new_password' => 'required|min:6|max:24|regex:/^(?=.*[A-Z])(?=.*\d).+$/',
             'confirm_password' => 'required',
         ], [
+            'old_password.required' => 'Mật khẩu không được bỏ trống.',
+            'confirm_password.required' => 'Mật khẩu không được bỏ trống.',
+            'new_password.required' => 'Mật khẩu không được bỏ trống.',
             'new_password.min' => 'Mật khẩu phải có ít nhất :min ký tự.',
             'new_password.max' => 'Mật khẩu không được vượt quá :max ký tự.',
             'new_password.regex' => 'Mật khẩu phải có ít nhất một chữ số và một chữ cái in hoa.',

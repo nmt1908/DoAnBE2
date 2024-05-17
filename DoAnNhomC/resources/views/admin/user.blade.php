@@ -12,6 +12,7 @@
         {{ session('error') }}
     </div>
 @endif
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var successAlert = document.querySelector('.alert-danger');
@@ -70,6 +71,7 @@
                 </div>
             </div>
             <div class="card-body table-responsive p-0">
+            
                 <table class="table table-hover text-nowrap">
                     <thead>
                         <tr>
@@ -84,7 +86,11 @@
                         </tr>
                     </thead>
                     <tbody>
+                    @if ($users->isEmpty())
+            <p>Không có kết quả</p>
+            @else
                         @foreach($users as $user)
+                        
                         <tr>
                             <td>{{ $user->id }}</td>
                             <td>
@@ -154,8 +160,10 @@
                         </div>
                         <!-- End Modal -->
                         @endforeach
+                        @endif
                     </tbody>
                 </table>
+                
             </div>
             <div class="card-footer clearfix">
                 {{ $users->links('pagination::bootstrap-5') }}

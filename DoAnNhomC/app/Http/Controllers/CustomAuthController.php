@@ -285,7 +285,8 @@ class CustomAuthController extends Controller
                 'string',
                 'min:6',
                 'max:24',
-                'regex:/^(?=.*[A-Z])(?=.*\d).+$/',
+                'regex:/^(?=.*[A-Z])(?=.*\d)(?!.*\s)(?!.*[\x{3000}\x{1680}\x{2000}-\x{200A}\x{2028}\x{2029}\x{202F}\x{205F}\x{3000}\x{180E}\x{200B}\x{200C}\x{200D}\x{2060}\x{FEFF}]).*$/u',
+                
             ],
             'phone' => 'required|regex:/^[0-9]{1,15}$/',
             'img' => 'required',
@@ -392,9 +393,21 @@ class CustomAuthController extends Controller
     {
             // Validate the form data
         $request->validate([
-            'old_password' => 'required',
-            'new_password' => 'required',
+            'old_password' => 'required|min:6|max:24',
+            'new_password' => 'required|regex:/^(?=.*[A-Z])(?=.*\d).+$/|min:6|max:24',
             'confirm_password' => 'required',
+        ], [
+            'old_password.required' => 'Mật khẩu không thể bỏ trống.',
+            'old_password.max' => 'Mật khẩu không được vượt quá :max ký tự.',
+            'old_password.min' => 'Mật khẩu không được vượt quá :min ký tự.',
+            
+            'new_password.regex' => 'Mật khẩu phải chứa ít nhất một chữ cái viết hoa hoặc một số.',
+            'new_password.required' => 'Mật khẩu không thể bỏ trống.',
+            'new_password.max' => 'Mật khẩu tối đa có :max ký tự.',
+            'new_password.min' => 'Mật khẩu không được ít hơn :min ký tự.',
+            'confirm_password.max' => 'Mật khẩu không được vượt quá :max ký tự.',
+            'confirm_password.min' => 'Mật khẩu không được ít hơn :min ký tự.',
+            'confirm_password.required' => 'Mật khẩu nhập lại không thể bỏ trống.',
         ]);
         if ($request->new_password !== $request->confirm_password) {
             // Return the change-password view with error message

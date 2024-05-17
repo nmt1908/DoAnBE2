@@ -41,12 +41,18 @@
                             <div class="mb-3">
                                 <label for="name">Name</label>
                                 <input type="text" name="name" id="name" class="form-control" placeholder="Name">
+                                @if ($errors->has('name'))
+                                    <span class="text-danger">{{ $errors->first('name') }}</span>
+                                @endif
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="email">Slug</label>
                                 <input type="text" name="slug" id="slug" class="form-control" placeholder="Slug">
+                                @if ($errors->has('slug'))
+                                    <span class="text-danger">{{ $errors->first('slug') }}</span>
+                                @endif
                             </div>
                         </div>
                         <div class="col-md-6">

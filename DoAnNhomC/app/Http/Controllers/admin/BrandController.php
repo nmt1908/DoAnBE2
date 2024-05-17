@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\admin;
-
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Brand;
@@ -16,25 +16,36 @@ class BrandController extends Controller
         return view('admin.brand.list', compact('brands'));
     }
     public function customAddBrand(Request $request) {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|unique:brands,name',
             'slug' => 'required|unique:brands,slug',
             'status' => 'required',
-            'image' => 'required', // Thêm validation cho ảnh
+            'image' => 'required',
+        ], [
+            'name.required' => 'Trường Brand là bắt buộc.',
+            'name.unique' => 'Brand đã được sử dụng.',
+            'slug.required' => 'Trường Slug là bắt buộc.',
+            'slug.unique' => 'Slug đã được sử dụng.',
+            'status.required' => 'Trường số điện thoại là bắt buộc.',
+            'image.required' => 'Trường ảnh là bắt buộc.',
         ]);
+    
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
     
         $data = $request->all();
     
-        // Truy vấn dữ liệu từ model Categories
-        $categories = new Brand();
+        // Truy vấn dữ liệu từ model Brand
+        $Brand = new Brand();
     
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = $image->getClientOriginalName(); // Lấy tên gốc của ảnh
             // Kiểm tra xem có ảnh đã được tải lên trước đó hay không
-            if (!empty($categories->image)) {
+            if (!empty($Brand->image)) {
                 // Nếu có, sử dụng lại ảnh đã được tải lên trước đó
-                $data['image'] = $categories->image;
+                $data['image'] = $Brand->image;
             } else {
                 // Nếu không có, xử lý tệp tin ảnh mới
                 $image->move(public_path('brand-image/images'), $imageName);
@@ -80,13 +91,23 @@ class BrandController extends Controller
     public function postUpdateBrand(Request $request) {
         $input = $request->all();
     
-        // Kiểm tra dữ liệu
-        $validator = validator([
-            'name' => 'required',
-            'slug' => 'required|unique:brands',
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:brands,name',
+            'slug' => 'required|unique:brands,slug',
             'status' => 'required',
-            'image' => 'required|image', // Kiểm tra xem ảnh có đúng định dạng không
+            'image' => 'required',
+        ], [
+            'name.required' => 'Trường Brand là bắt buộc.',
+            'name.unique' => 'Brand đã được sử dụng.',
+            'slug.required' => 'Trường Slug là bắt buộc.',
+            'slug.unique' => 'Slug đã được sử dụng.',
+            'status.required' => 'Trường số điện thoại là bắt buộc.',
+            'image.required' => 'Trường ảnh là bắt buộc.',
         ]);
+    
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
     
         $brands = Brand::find($input['id']);
         $brands->name = $input['name'];

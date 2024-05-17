@@ -82,14 +82,23 @@
                                     <div class="mb-3">               
                                         <label for="old_password">Old Password</label>
                                         <input type="password" name="old_password" id="old_password" placeholder="Old Password" class="form-control">
+                                        @if ($errors->has('old_password'))
+                                        <span class="text-danger">{{ $errors->first('old_password') }}</span>
+                                    @endif
                                     </div>
                                     <div class="mb-3">               
                                         <label for="new_password">New Password</label>
                                         <input type="password" name="new_password" id="new_password" placeholder="New Password" class="form-control">
+                                        @if ($errors->has('new_password'))
+                                        <span class="text-danger">{{ $errors->first('new_password') }}</span>
+                                    @endif
                                     </div>
                                     <div class="mb-3">               
                                         <label for="confirm_password">Confirm Password</label>
                                         <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password" class="form-control">
+                                        @if ($errors->has('confirm_password'))
+                                        <span class="text-danger">{{ $errors->first('confirm_password') }}</span>
+                                    @endif
                                     </div>
                                     <div class="d-flex">
                                         <button type="submit" class="btn btn-dark">Save</button>
